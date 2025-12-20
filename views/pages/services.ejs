@@ -1,0 +1,55 @@
+<div id="animated-3d-background-container">
+    <!-- Services Section -->
+    <div class="features-section-sixteen aos" data-aos="fade-up" style="background: #00000000;">
+        <div class="container video-content px-4 py-5">
+            <!-- Title -->
+            <h1 class="text-white text-center"><%- component_text.menu_services %></h1>
+            <p class="text-white fs-5 mb-4 text-center"><%- component_text.t_service_desc %></p>
+            <!-- Services -->
+            <div class="row features-slider-sixteen">
+                <% for (let i = 0; i < services.length; i++) { %>
+                    <div class="col-12 col-md-6 col-lg-4 feature-sixteen-main mb-3" style="height: 450px;">
+                        <div class="feature-six-img" style="height: 450px;">
+                            <img src="./assets/service/image/<%= services[i].image %>" alt="<%= services[i].title %>" class="img-fluid rounded-top-4 w-100">
+                            <div class="mask-premium">
+                                <div class="d-flex justify-content-start align-items-center px-3">
+                                    <% if (services[i].online_payment == 1) { %>
+                                        <i class="fa-solid fa-crown text-warning fs-4"></i>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="mask-price">
+                                <div class="d-flex justify-content-end align-items-center px-3">
+                                    <% if (services[i].online_payment == 1) { %>
+                                        <span class="badge badge-danger fs-6">$ <%= services[i].cost %></span>
+                                    <% } else { %>
+                                        <span class="badge badge-success fs-6"><%= component_text.c_eligible_health_plan %></span>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="feature-content-six">
+                                <div class="feature-content-one">
+                                    <h5><%= services[i].title %></h5>
+                                    <span><i class="fa-solid fa-angle-up"></i></span>
+                                </div>
+                                <div class="feature-content-two">
+                                    <div class="overflow-y-auto no-scroll" style="height: 300px;">
+                                        <p><%- services[i].short_desc %></p>
+                                    </div>
+                                    <span><i class="fa-solid fa-angle-down"></i></span>
+                                </div>
+                                <div class="d-flex justify-content-around align-items-center feature-content-three">
+                                    <button data-bs-toggle="modal" data-bs-target="#payment-modal" class="btn btn-sm bg-info-light d-none" id="show-service-payment-modal-btn"></button>
+                                    <button data-bs-toggle="modal" data-bs-target="#service_request_modal" class="btn btn-sm bg-info-light d-none" id="show-service-modal-btn"></button>
+                                    <a href="javascript:;" class="text-primary service_request fs-5" data-id="<%= services[i].id %>" data-title="<%= services[i].title %>"><%= component_text.t_request %></a>
+                                    <a href="./services/detail?s=<%= services[i].id %>" class="fs-5 text-info" target="_blank"><%= component_text.btn_read_more %></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <!-- /Services Section -->
+</div>

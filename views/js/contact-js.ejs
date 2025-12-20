@@ -1,0 +1,10 @@
+<script>
+    $(document).ready(function() {
+        const isPt = parseInt('<%= patient_info.id %>');
+        if (isPt > 0) {
+            $("#contact_pt_info").addClass("d-none");
+        } else {
+            $("#contact_pt_info").removeClass("d-none");
+        }
+    })
+</script>

@@ -1,0 +1,77 @@
+<script>
+    lottie.loadAnimation({
+        container: document.getElementById('signin-lottie'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: './assets/animations/lock-blue.json'
+    })
+</script>
+<script>
+    function showAlert(title, message, type) {
+        if (title) {
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: type,
+                confirmButtonText: 'Close'
+            })
+        } else {
+            Swal.fire({
+                text: message,
+                icon: type,
+                confirmButtonText: 'Close'
+            })
+        }
+    }
+
+    $(document).ready(function () {
+        $("#submit").click(function (e) {
+            e.preventDefault()
+
+            const params = {
+                name: $("#name").val(),
+                password: $("#password").val()
+            }
+
+            if (!params.name) {
+                const input = document.getElementById('name-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!params.password) {
+                const input = document.getElementById('password-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+
+            $.post({
+                url: "./confirmSignIn",
+                data: params,
+                dataType: "json",
+                success: function (res) {
+                    if (res.status === "success") {
+                        window.location.href = res.url
+                    } else {
+                        $("#alert-message").removeClass("shake")
+                        $("#alert-message").html(res.error_message)
+                        $("#alert-message").addClass("shake")
+                        $("#alert-message").removeClass("d-none")
+                    }
+                }, error: function (xhr, status, error) {
+                    showAlert("", "<%= component_text.t_pa_ah_alert_failed %>", "error")
+                }
+            })
+            
+        })
+        
+    })
+</script>

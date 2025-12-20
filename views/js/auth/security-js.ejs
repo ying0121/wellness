@@ -1,0 +1,49 @@
+<script>
+    lottie.loadAnimation({
+        container: document.getElementById('security-lottie'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: './assets/animations/questions.json'
+    })
+</script>
+<script>
+    function showAlert(title, message, type) {
+        if (title) {
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: type,
+                confirmButtonText: 'Close'
+            })
+        } else {
+            Swal.fire({
+                text: message,
+                icon: type,
+                confirmButtonText: 'Close'
+            })
+        }
+    }
+
+    $(document).ready(function() {
+        $("#submit").click(function (e) {
+            e.preventDefault()
+
+            const params = {
+                answer: $("#password").val()
+            }
+
+            $.post({
+                url: "./confirmSecurity",
+                data: params,
+                dataType: "json",
+                success: function (res) {
+                    window.location.href = res.url
+                }, error: function (xhr, status, error) {
+                    showAlert("", "<%= component_text.t_pa_ah_alert_failed %>", "error")
+                }
+            })
+        })
+
+    })
+</script>

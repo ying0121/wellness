@@ -1,0 +1,32 @@
+<div class="container">
+    <!-- Service Detail title -->
+    <div class="container my-5">
+        <p class="h1"><%= service.title %></p>
+    </div>
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="w-100 bg-image hover-zoom mb-3 mb-md-0">
+                    <img src="<%= site_url %>/assets/service/image/<%= service.image %>" class="w-100 rounded rounded-5" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="w-100 d-flex justify-content-center justify-content-md-start align-items-center flex-wrap gap-4 mb-3">
+                    <button data-bs-toggle="modal" data-bs-target="#payment-modal" class="d-none" id="show-service-payment-modal-btn"></button>
+                    <button data-bs-toggle="modal" data-bs-target="#service_request_modal" class="d-none" id="show-service-modal-btn"></button>
+                    <button data-bs-toggle="modal" data-bs-target="#service_friend_modal" class="d-none" id="show-service-friend-modal-btn"></button>
+                    <button id="request_service" type="button" class="btn btn-lg btn-danger" data-title="<%= service.title %>"><%= component_text.c_service_request %></button>
+                    <button id="send_friend" type="button" class="btn btn-lg btn-info text-white"><%= component_text.c_service_send_friend %></button>
+                </div>
+                <div class="d-flex justify-content-center justify-content-md-start align-items-center flex-wrap">
+                    <img src="<%= qrcode %>" style="margin-left: -5px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service Details -->
+    <div class="container mb-5">
+        <div class="mb-3 service-desc text-black"><%- service.short_desc %></div>
+        <div class="mb-3 service-desc text-black"><%- service.long_desc %></div>
+    </div>
+</div>

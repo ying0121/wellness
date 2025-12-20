@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../header') %>
+
+<style>
+    .deleteqbtn{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #f44336;
+        cursor: pointer;
+    }
+    .questionitem{
+        cursor: pointer;
+    }
+    .questionitem:hover{
+        text-decoration:underline;
+    }
+    .field_ul{
+        list-style: none;
+        font-size: .875rem;
+        padding:0!important;
+    }
+    .field_ul li{
+        padding: 10px;
+        border: 1px solid #eee;
+        padding-left: 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom:5px;
+        position: relative;
+    }
+    .response-item{
+        padding: 10px;
+        border: 1px solid #eee;
+        padding-left: 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom:5px;
+    }
+    .response-item:hover{
+        background: #eee;
+    }
+    .btn-group, .btn-group-vertical {
+        margin: 0!important;
+    }
+    .ui-helper-hidden-accessible{
+        display:none;
+    }
+    .text-danger{
+        color:#f00;
+    }
+</style>    
+
+<body>
+    <div class="wrapper">
+        <div class="main-panel" style="width: 100%;">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-light-primary btn-sm generatebtn">Save</button>
+                            <input type="hidden" id="chosen_id" value="<%= id %>" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-header card-header-icon card-header-primary">
+                                    <div class="card-icon">
+                                    <i class="material-icons">widgets</i>
+                                    </div>
+                                    <div class = 'row'>
+                                        <div class = 'col-md-12'><h4 class="card-title ">Category</h4></div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="accordion" id="accordionExample">
+                                        <% let count = 0; %>
+                                        <% Object.entries(questions).forEach(([key, questions_array]) => { %>
+                                            <% count++; %>
+                                            <div class="card" style="margin:5px">
+                                                <div class="card-header" id="<%= count %>_heading" style="padding:0">
+                                                    <h2 class="mb-0">
+                                                        <button style="width:100%;text-align:left;" class="btn btn-link text-success" data-toggle="collapse" data-target="#<%= count %>_collapse" aria-expanded="false" aria-controls="<%= count %>_collapse">
+                                                            <%= key %>
+                                                        </button >
+                                                    </h2>
+                                                </div>
+                                                <div id="<%= count %>_collapse" class="collapse" aria-labelledby="<%= count %>_heading" data-parent="#accordionExample">
+                                                    <div class="card-body">
+                                                        <% questions_array.forEach(items => { %>
+                                                            <p class="text-primary questionitem" key="<%= items.id %>" catname="<%= key %>">
+                                                                <%= items.question %>
+                                                            </p>
+                                                        <% }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card" style="min-height:800px;">
+                                <div class="card-header card-header-icon card-header-primary no-print">
+                                </div>
+                                <div class="card-body form-area">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul id="question_area" class="field_ul">
+                                                <% if (result.quiz && result.quiz.length > 0 && result.quiz[0] != null) { %>
+                                                    <% for (let i = 0; i < result.quiz.length; i++) { %>
+                                                        <li class="parent" key="<%= result.quiz[i].id %>">
+                                                            <p>
+                                                                <%= result.quiz[i].quiz %> 
+                                                                (<span class="text-danger"><%= result.quiz[i].catname %></span>)
+                                                            </p>
+                                                            <i class="fa fa-trash deleteqbtn"></i>
+                                                            <div class="<%= result.quiz[i].id %>_response response_area">
+                                                                <% let tmpresArr = result.res[i].res ? result.res[i].res.split(",") : []; %>
+                                                                <% if (tmpresArr.length === 1 && tmpresArr[0] === "") { %>
+                                                                    <div reskey="<%= result.res[i].id %>" id="<%= result.quiz[i].id + '_' + result.res[i].id %>_response_item">
+                                                                        <textarea class="form-control" rows="3" placeholder="General Response"></textarea>
+                                                                    </div>
+                                                                <% } else { %>
+                                                                    <div reskey="<%= result.res[i].id %>" id="<%= result.quiz[i].id + '_' + result.res[i].id %>_response_item">
+                                                                        <% tmpresArr.forEach((resItem, j) => { %>
+                                                                            <div class="form-check form-check-radio form-check-inline">
+                                                                                <label class="form-check-label">
+                                                                                    <input class="form-check-input" type="radio" name="<%= result.quiz[i].id + '_' + result.res[i].id + '_option' %>" />
+                                                                                    <%= resItem %>
+                                                                                    <span class="circle">
+                                                                                        <span class="check"></span>
+                                                                                    </span>
+                                                                                </label>
+                                                                            </div>
+                                                                        <% }) %>
+                                                                    </div>
+                                                                <% } %>
+                                                            </div>
+                                                        </li>
+                                                    <% } %>
+                                                <% } %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-header card-header-icon card-header-primary">
+                                    <div class="card-icon">
+                                        <i class="material-icons">widgets</i>
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-12'><h4 class="card-title">Response Widgets</h4></div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <% responses.forEach((responses_array, key) => { %>
+                                                <% let tmparray = responses_array.response ? responses_array.response.split(",") : []; %>
+                                                <div class="response-item" reskey="<%= responses_array.id %>">
+                                                    <% if (tmparray.length === 1 && tmparray[0] === "") { %>
+                                                        <textarea class="form-control" rows="3" disabled placeholder="General Response"></textarea>
+                                                    <% } else { %>
+                                                        <% tmparray.forEach(item => { %>
+                                                            <div class="form-check form-check-radio form-check-inline">
+                                                                <label class="form-check-label">
+                                                                    <input class="form-check-input" type="radio" disabled /> <%= item %>
+                                                                    <span class="circle">
+                                                                        <span class="check"></span>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        <% }) %>
+                                                    <% } %>
+                                                </div>
+                                            <% }) %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    $(function() {
+        $( "#question_area" ).sortable()
+        $( "#question_area" ).disableSelection()
+    })
+</script>
+
+<script>
+    var question_arr = []
+    
+    $(document).ready(function() {
+        $(".questionitem").click(function() {
+            if (!question_arr.includes($(this).attr("key"))) {
+                if ($("#question_area li").length > 0 && $("#question_area li:last-child div.response_area div").length == 0) {
+                    toastr.warning("Please add response option before adding new question")
+                } else {
+                    question_arr.push($(this).attr("key"));
+                    $("#question_area").append(`<li class='parent' key = "${$(this).attr("key")}">
+                                                    <p>${$(this).html()} (<span class="text-danger">${$(this).attr("catname")}</span>)</p>
+                                                    <i class="fa fa-trash deleteqbtn"></i>
+                                                    <div class="${$(this).attr("key")}_response response_area"></div>
+                                                </li>`)
+                }
+            } else {
+                toastr.warning("This question is already added")
+            }
+        })
+        
+        $(document).on("click",".deleteqbtn",function() {
+            var tmpid = $(this).parent().attr("key")
+            const index = question_arr.indexOf(tmpid)
+            if (index > -1) {
+                question_arr.splice(index, 1)
+            }
+            $(this).parent().remove()
+        })
+        
+        $(".response-item").click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/surveys/chosenResponse',
+                type: 'post',
+                data: {
+                    id: $(this).attr("reskey")
+                },
+                dataType: "json",
+                success: function (data) {
+                    var tmpArr = data['response'].split(",")
+                    if ($("#question_area li:last-child div.response_area div").length == 0) {
+                        if (tmpArr.length == 1 && tmpArr[0] == "") {
+                            $("#question_area li:last-child div.response_area").append(`
+                                <div reskey=${data['id']} id=${$("#question_area li:last-child").attr("key")+"_"+data['id']}_response_item>
+                                    <textarea class="form-control" rows="3" placeholder="General Response"></textarea>
+                                </div>
+                            `)
+                        } else {
+                            $("#question_area li:last-child div.response_area").append(`
+                                <div reskey=${data['id']} id=${$("#question_area li:last-child").attr("key")+"_"+data['id']}_response_item></div>
+                            `)
+                            for (var i = 0;i < tmpArr.length;i++) {
+                                $("#"+$("#question_area li:last-child").attr("key")+"_"+data['id']+"_response_item").append(`
+                                    <div class="form-check form-check-radio form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="${$("#question_area li:last-child").attr("key")+"_"+data['id']}_option"> ${tmpArr[i]}
+                                            <span class="circle">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                `)
+                            }
+                        }
+                    } else {
+                        toastr.warning("Response is already added")
+                    }
+                }
+            })
+        })
+        
+        $(".generatebtn").click(function() {
+            var questionArr = []
+            var responseArr = []
+            for (var i = 0;i < $("#question_area li").length;i++) {
+                questionArr.push($("#question_area").children().eq(i).attr("key"))
+                responseArr.push($("#question_area").children().eq(i).find("div.response_area").find("div").attr("reskey"))
+            }
+            if (questionArr.length == 0) {
+                toastr.info("Please add some questions to create survey")
+            } else {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, submit it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '<%= site_url + prefix %>/surveys/generateSurvey',
+                            type: 'post',
+                            data: {id:$("#chosen_id").val(),quiz:questionArr,res:responseArr},
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.status == "success") {
+                                    toastr.success("Action Success!")
+                                } else {
+                                    toastr.info("Action failed!")
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+        })
+        
+    })
+</script>
+</html>

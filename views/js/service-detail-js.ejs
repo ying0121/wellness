@@ -1,0 +1,271 @@
+<script>
+    const id = "<%= service.id %>"
+    $(document).ready(function() {
+        // request service
+        $("#request_service").click(function() {
+            const title = $(this).attr("data-title")
+            $.ajax({
+                url: '<%= site_url %>/services/getCost',
+                method: 'POST',
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(res) {
+                    const cost = parseFloat(res.cost)
+                    if (cost > 0) { // payment modal
+                        $("#payment-modal-title").text(title + ` - $${cost}`)
+
+                        $("#show-service-payment-modal-btn").click()
+
+                        // initialize payment form
+                        $("#payment-category").val("service")
+                        $("#payment-category-id").val(id)
+                        
+                        payment_items = [{
+                            id: title,
+                            amount: cost * 100.0
+                        }]
+                        initialize()
+                    } else { // request modal
+                        // if login
+                        const isLogged = "<%= patient_id > 0 %>"
+                        if (isLogged == 1) {
+                            $("#service-fname").val("<%= patient_info.fname %>")
+                            $("#service-lname").val("<%= patient_info.lname %>")
+                            $("#service-phone").val("<%= patient_info.phone %>")
+                            $("#service-dob").val("<%= patient_info.dob %>")
+                            $("#service-email").val("<%= patient_info.email %>")
+                        } else {
+                            $("#service-fname").val("")
+                            $("#service-lname").val("")
+                            $("#service-dob").val("")
+                            $("#service-email").val("")
+                            $("#service-phone").val("")
+                        }
+                        $("#service-message").val("")
+                        $("#service-captcha").val("")
+
+                        $("#service_name").val(title)
+                        $("#service_title").text(`<%= component_text.t_request_service %> - ${title}`)
+
+                        $("#show-service-modal-btn").click()
+                    }
+                }
+            })
+        })
+
+        $("#service_request_modal_send").click(function() {
+            const entry = {
+                fname: $("#service-fname").val(),
+                lname: $("#service-lname").val(),
+                dob: $("#service-dob").val(),
+                email: $("#service-email").val(),
+                phone: $("#service-phone").val(),
+                subject: "Service Category",
+                contact_reason: $("#service_name").val(),
+                message: $("#service-message").val(),
+                captcha: $("#service-captcha").val(),
+                opt_status: $('input[name="opt_status"]:checked').val()
+            }
+
+            var errors = ""
+            if (entry.fname == "" || entry.lname == "") {
+                errors += '<%= component_text.m_invalid_name %>'
+            } else if (entry.dob == "") {
+                errors += '<%= component_text.m_invalid_dob %>'
+            } else if (entry.email == "") {
+                errors += '<%= component_text.m_invalid_email %>'
+            } else if (entry.phone == "") {
+                errors += '<%= component_text.m_invalid_phone %>'
+            } else if (entry.subject == "") {
+                errors += '<%= component_text.m_invalid_subject %>'
+            } else if (entry.message == "") {
+                errors += '<%= component_text.m_invalid_message %>'
+            } else if (entry.captcha == "") {
+                errors += '<%= component_text.m_invalid_captcha %>'
+            }
+            if (errors) {
+                Swal.fire({
+                    title: '<%= component_text.t_invalid_info %>',
+                    text: errors,
+                    icon: 'warning',
+                    confirmButtonText: 'Cool'
+                })
+                return false;
+            } else {
+                const encrypt = new JSEncrypt();
+                encrypt.setPublicKey(`<%= public_key %>`);
+
+                $.post({
+                    method: "POST",
+                    url: '<%= site_url %>/services/submitForService',
+                    data: {
+                        contact_name: entry.fname + " " + entry.lname,
+                        contact_email: entry.email,
+                        contact_cel: entry.phone,
+                        contact_dob: entry.dob,
+                        contact_captcha: entry.captcha,
+                        contact_lang: `<%= language %>`,
+                        contact_subject: entry.subject,
+                        contact_message: entry.message,
+                        contact_time: "Anytime",
+                        opt_status: entry.opt_status,
+                        contactpttype: "",
+                        contactusertype: "Patient",
+                        contactreason: entry.contact_reason
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            Swal.fire({
+                                title: '<%= component_text.c_case %>' + '#: ' + data.id + '<%= acronym %>',
+                                text: '<%= component_text.t_contact_result_success %>',
+                                icon: 'success',
+                            });
+
+                            $("#service_request_modal_close").click()
+                        } else if (data.status == "error" && data.message == "captcha") {
+                            Swal.fire({
+                                title: '<%= component_text.c_alert_incorrect_captcha %>',
+                                text: data.status,
+                                icon: 'error',
+                            });
+                            $('#service_captcha_image').html(data.captcha)
+                        } else if (data.status == "error" && data.message == "mail") {
+                            Swal.fire({
+                                title: '<%= component_text.c_failed_mail %>',
+                                text: data.status,
+                                icon: 'error',
+                            });
+                            $('#service_captcha_image').html(data.captcha)
+                        } else {
+                            Swal.fire({
+                                title: '<%= component_text.c_error %>',
+                                text: data.status,
+                                icon: 'error',
+                            });
+                            $('#service_captcha_image').html(data.captcha)
+                        }
+                    }
+                })
+            }
+        })
+
+        $("#service_captcha_change").click(function() {
+            $.post({
+                url: '<%= site_url %>/changeCaptchaImage',
+                method: 'POST',
+                data: {
+                    type: "service"
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#service_captcha_image').html(res.image)
+                }
+            })
+        })
+
+        // send friend
+        $("#send_friend").click(function() {
+            $("#friend_name").val("")
+            $("#friend_email").val("")
+            $("#friend_captcha").val("")
+
+            $("#friend_service_title").text(`<%= component_text.c_service_send_friend %> - <%= service.title %>`)
+
+            $("#show-service-friend-modal-btn").click()
+        })
+
+        $("#friend_captcha_change").click(function() {
+            $.post({
+                url: '<%= site_url %>/changeCaptchaImage',
+                method: 'POST',
+                data: {
+                    type: "service"
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#friend_captcha_image').html(res.image)
+                }
+            })
+        })
+
+        $("#service_friend_modal_send").click(function() {
+            const entry = {
+                name: $("#friend_name").val(),
+                email: $("#friend_email").val(),
+                captcha: $("#friend_captcha").val(),
+                id: id
+            }
+
+            var errors = ""
+            if (entry.name == "") {
+                errors += "<%= component_text.m_invalid_name %>"
+            } else if (entry.email == "") {
+                errors += "<%= component_text.m_invalid_email %>"
+            } else if (entry.captcha == "") {
+                errors += "<%= component_text.m_invalid_captcha %>"
+            }
+            if (errors) {
+                Swal.fire({
+                    title: "<%= component_text.t_invalid_info %>",
+                    text: errors,
+                    icon: 'warning',
+                    confirmButtonText: 'Cool'
+                })
+                return false;
+            } else {
+                const encrypt = new JSEncrypt();
+                encrypt.setPublicKey(`<%= public_key %>`);
+
+                $.post({
+                    method: "POST",
+                    url: '<%= site_url %>/services/sendEmailToFriend',
+                    data: {
+                        name: entry.name,
+                        email: entry.email,
+                        captcha: entry.captcha,
+                        id: id,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            Swal.fire({
+                                title: "<%= component_text.c_success %>",
+                                icon: 'success',
+                            })
+
+                            $("#service_friend_modal_close").click()
+
+                            $('#friend_captcha_image').html(data.captcha)
+                        } else if (data.status == "error" && data.message == "captcha") {
+                            Swal.fire({
+                                title: "<%= component_text.c_alert_incorrect_captcha %>",
+                                icon: 'error',
+                            })
+                            $('#friend_captcha_image').html(data.captcha)
+                        } else {
+                            Swal.fire({
+                                title: "<%= component_text.c_error %>",
+                                icon: 'error',
+                            })
+                            $('#friend_captcha_image').html(data.captcha)
+                        }
+                    }
+                });
+            }
+        })
+
+        $('#service_opt_more_info_btn').click(function(e) {
+            e.preventDefault()
+            if ($('#service_opt_moreinfo').hasClass('d-none')) {
+                $('#service_opt_moreinfo').removeClass('d-none')
+                $('#service_opt_more_info_btn').text("<< " + "<%= component_text.t_opt_less_info %>")
+            } else {
+                $('#service_opt_moreinfo').addClass('d-none')
+                $('#service_opt_more_info_btn').text("<%= component_text.t_opt_more_info %>" + " >>")
+            }
+        })
+    })
+</script>

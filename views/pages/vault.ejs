@@ -1,0 +1,234 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar-two m-0 p-0 min-h-auto">
+    <div class="container">
+        <div class="row align-items-center inner-banner">
+            <div class="col-md-12 col-12 text-center">
+                <h2 class="breadcrumb-title"><%= component_text.menu_vault %></h2>
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <p></p>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Contact Information -->
+<div class="container my-5">
+    <div class="d-flex justify-content-start align-items-center flex-wrap gap-3 mb-3 aos" data-aos="fade-right">
+        <p class="fs-3 m-0"><%= component_text.t_vault_title %></p>
+        <p class="fs-3 m-0 text-danger"><%= patient_info.fname + " " + patient_info.lname %></p>
+        <p class="fs-3 m-0">
+            <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+            <%  const dob = new Date(patient_info.dob); 
+                const options = { year: 'numeric', month: '2-digit', day: '2-digit' }; 
+                const formattedDate = dob.toLocaleDateString('en-US', options); 
+            %>
+            <%= formattedDate %>
+        </p>
+        <p class="fs-3 m-0"><%= component_text.v_acc_no %> : <%= patient_info.id %></p>
+        <button class="btn btn-tertiary text-primary fs-5 btn btn-tertiary" id="view_appt_info">
+            <%= component_text.btn_appt_info %>
+        </button>
+    </div>
+    <div class="d-flex justify-content-start align-items-center flex-wrap gap-3 mb-3 aos" data-aos="fade-left">
+        <p class="fs-5 cursor-pointer">
+            <i class="fa fa-location-arrow"></i>&nbsp;&nbsp;
+            <% if (patient_info.address) { %>
+                <%= patient_info.address %>, <%= patient_info.state %> <%= patient_info.zip %>
+            <% } %>
+        </p>
+        <p class="fs-5 cursor-pointer">
+            <i class="fa fa-phone"></i>&nbsp;&nbsp;
+            <% if (patient_info.phone) { %>
+                <%= patient_info.phone %>
+            <% } %>&nbsp;|&nbsp;
+            <i class="fa fa-fax"></i>&nbsp;&nbsp;
+            <% if (patient_info.mobile) { %>
+                <%= patient_info.mobile %>
+            <% } %>
+        </p>
+        <p class="fs-5 cursor-pointer">
+            <i class="fa fa-envelope"></i>&nbsp;&nbsp;
+            <% if (patient_info.email) { %>
+                <%= patient_info.email %>
+            <% } %>
+        </p>
+    </div>
+    <p class="lead aos" data-aos="fade-down"><%= component_text.t_pa_v_htext %></p>
+</div>
+<!-- /Contact Information -->
+<div class="container card aos" data-aos="fade-up">
+    <div class="card-body pt-0">
+        <!-- Tab Menu -->
+        <nav class="user-tabs mb-4">
+            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#pat_inbox" data-bs-toggle="tab"><%= component_text.v_inbox %></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#pat_compose" data-bs-toggle="tab"><%= component_text.v_compose %></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#pat_documents" data-bs-toggle="tab"><span class="med-records"><%= component_text.v_document %></span></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /Tab Menu -->
+        <!-- Tab Content -->
+        <div class="tab-content pt-0">
+            <!-- Inbox Tab -->
+            <div id="pat_inbox" class="tab-pane fade show active">
+                <div class="card card-table mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive scroll-y h-500px mb-3 px-2">
+                            <table class="table table-hover table-center mb-0" id="inbox_table">
+                                <thead class="sticky-top" style="box-shadow: 0px 1px 20px 0px #A0A0A060;">
+                                    <tr>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Case</th>
+                                        <th scope="col">Updated Time</th>
+                                        <th scope="col">Reason</th>
+                                        <th scope="col">Subject</th>
+                                        <th scope="col">Assigned</th>
+                                        <th scope="col">Priority</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Turn Around</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Inbox Tab -->
+            <!-- Compose Tab -->
+            <div class="tab-pane fade" id="pat_compose">
+                <div class="card card-table mb-0">
+                    <div class="card-body p-3">
+                        <form class="content-form" id="contact_form" action="#" method="post" accept-charset="utf-8" novalidate="novalidate">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="fs-5"><%= component_text.t_contact_reason %> (*):</p>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="t_contact_reason_1" value="Appointment Request" checked />
+                                        <label class="form-check-label" for="t_contact_reason_1"> <%= component_text.t_contact_reason_1 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="t_contact_reason_2" value="Letter Request" />
+                                        <label class="form-check-label" for="t_contact_reason_2"> <%= component_text.t_contact_reason_2 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="t_contact_reason_3" value="Prescription Refill Request" />
+                                        <label class="form-check-label" for="t_contact_reason_3"> <%= component_text.t_contact_reason_3 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="t_contact_reason_4" value="Referral Request" />
+                                        <label class="form-check-label" for="t_contact_reason_4"> <%= component_text.t_contact_reason_4 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="t_contact_reason_5" value="Test Results Request" />
+                                        <label class="form-check-label" for="t_contact_reason_5"> <%= component_text.t_contact_reason_5 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="t_contact_reason_6" value="General Message" />
+                                        <label class="form-check-label" for="t_contact_reason_6"> <%= component_text.t_contact_reason_6 %> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mb-4" />
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-focus">
+                                        <input type="text" id="contact_subject" class="form-control floating" name="contact_subject" />
+                                        <label class="focus-label" for="contact_subject"><%= component_text.placeholder_subject %></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <textarea class="form-control" id="contact_message" rows="4" name="contact_message" placeholder="<%= component_text.placeholder_message %>"></textarea>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-focus">
+                                        <input type="text" id="contact_time" class="form-control floating" name="contact_time" />
+                                        <label class="focus-label" for="contact_time"><%= component_text.placeholder_besttime %></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-3" />
+                            <div class="row mb-3">
+                                <div class="col-md-12 mb-3">
+                                    <p class="fs-6 my-1"><%= component_text.t_opt_in_out_header %></p>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="opt_status" id="home_opt_in" value="1" checked />
+                                        <label class="form-check-label" for="home_opt_in"> <%= component_text.t_opt_in_out_in %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="opt_status" id="home_opt_out" value="0" />
+                                        <label class="form-check-label" for="home_opt_out"> <%= component_text.t_opt_in_out_out %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 d-none" id="home_opt_moreinfo">
+                                    <p class="fs-6"><%- component_text.t_opt_in_out_footer %></p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="fs-6 m-0"><%- component_text.t_opt_in_out_more %></p>
+                                </div>
+                                <div class="col-md-12">
+                                    <a href="#" id="home_opt_more_info_btn"><%- component_text.t_opt_more_info %> >></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button id="btn_submit_contact" type="button" class="btn banner-btn btn-sm w-100 fs-6" style="padding: 12px 16px;"><%= component_text.btn_send %></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /Compose Tab -->
+            <!-- Documents Tab -->
+            <div id="pat_documents" class="tab-pane fade">
+                <div class="card card-table mb-0">
+                    <div class="card-body p-3">
+                        <p class="fs-6 mb-0"><%- component_text.t_pa_v_desc %></p>
+                        <% for (let i = 0; i < vault.length; i++) { %>
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <p class="h4 my-2"><%= vault[i].title %> (<%= vault[i].submit_date %>)</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-title"><%- vault[i].desc %></div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a class="btn btn-link text-white" data-mdb-ripple-init style="background-color: #55acee;" href="<%= "./home/gf?category=vault&filename=" + vault[i].document %>" target="_blank">
+                                        <i class="fas fa-download me-2"></i>
+                                        <%= component_text.t_download %> (<%= vault[i].size %>)
+                                    </a>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <!-- /Documents Tab -->
+        </div>
+        <!-- Tab Content -->
+    </div>
+</div>

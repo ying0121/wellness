@@ -1,0 +1,44 @@
+<div id="animated-3d-background-container">
+    <!-- Letter Section -->
+    <section class="container py-5">
+        <div class="main-wrapper home-twelve p-0 m-0">
+            <div class="services-section-fourteen video-content rounded-5 aos" data-aos="fade-up" style="text-align: left; padding: 1.5rem !important;">
+                <button data-bs-toggle="modal" data-bs-target="#payment-modal" class="d-none" id="show-letter-payment-modal-btn"></button>
+                <button data-bs-toggle="modal" data-bs-target="#letter_request_modal" class="d-none" id="show-letter-modal-btn"></button>
+                <!-- Title -->
+                <h1 class="text-white text-center mb-4"><%- component_text.menu_letters %></h1>
+                <div class="row features-slider-sixteen">
+                    <% for (let i = 0; i < letters.length; i++) { %>
+                        <div class="col-12 col-md-6 col-lg-4 feature-sixteen-main mb-3 h-100">
+                            <div class="our-services-list w-100 mt-3 h-100" style="cursor: default;">
+                                <div style="position: relative;" class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <% if (letters[i].online_payment == 1) { %>
+                                            <i class="fa-solid fa-crown text-warning fs-4"></i>
+                                            <span class="badge badge-danger fs-6">$ <%= letters[i].cost %></span>
+                                        <% } else { %>
+                                            <span class="w-10px"></span>
+                                            <span class="badge badge-success fs-6"><%= component_text.c_eligible_health_plan %></span>
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <a href="./letters/detail?s=<%= letters[i].id %>" target="_blank">
+                                    <div class="service-icon">
+                                        <i class="fa fa-<%= letters[i].icon %> text-white" style="font-size: 50px;"></i>
+                                    </div>
+                                    <h4><%= letters[i].title %></h4>
+                                    <div class="mb-2" style="flex-grow: 1;"><p><%- letters[i].short_desc %></p></div>
+                                </a>
+                                <div class="d-flex justify-content-around align-items-center" style="position:relative;">
+                                    <a href="javascript:;" class="text-primary letter_request fs-5" data-id="<%= letters[i].id %>" data-title="<%= letters[i].title %>"><%= component_text.t_request %></a>
+                                    <a href="./letters/detail?s=<%= letters[i].id %>" class="fs-5 text-info" target="_blank"><%= component_text.btn_read_more %></a>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Letter Section -->
+</div>

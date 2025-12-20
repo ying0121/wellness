@@ -1,0 +1,39 @@
+<div class="parallax-container min-vh-100">
+    <video class="parallax-video" autoplay muted loop playsinline>
+        <source src="./assets/videos/lock.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="d-flex align-items-center min-vh-100 video-blur">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-md-8 rounded p-4 aos" data-aos="fade-up" style="background-color: #10101060; border: 1px solid #FAFAFA80;">
+                    <!-- Title -->
+                    <div class="w-100 d-flex justify-content-center align-items-center mb-2">
+                        <div class="d-none d-md-block" id="security-lottie" style="width: 150px; height: 150px;"></div>
+                        <div class="d-block d-md-none fs-1 text-white fw-bold"><%= component_text.link_sign_in %></div>
+                    </div>
+                    <!-- Desc -->
+                    <div class="text-white fw-bold mb-2 mx-3 fs-5"><%= component_text.t_pa_si_welcome %></div>
+                    <!-- Alert Begin -->
+                    <div class="alert alert-danger alert-dismissible fade show d-none" id="alert-message"></div>
+                    <!-- Alert End -->
+                    <div class="fs-5 mb-3 text-primary"><%= question[language] ? question[language] : "" %></div>
+                    <!-- Form Begin -->
+                    <div>
+                        <!-- Answer input -->
+                        <div class="pass-group form-focus mb-4">
+                            <input type="password" name="answer" id="password" class="form-control floating pass-input bg-transparent text-white" />
+                            <label class="focus-label" for="password"><%= component_text.placeholder_answer_security %></label>
+                            <span class="feather-eye toggle-password text-white"></span>
+                        </div>
+                        <!-- Submit button -->
+                        <button name="submit" id="submit" class="btn btn-rounded btn-outline-info w-100 py-2"><%= component_text.btn_submit %></button>
+                    </div>
+                    <!-- Form End -->
+                    <hr class="my-1" />
+                    <p class="text-white m-0 mt-3"><%= component_text.t_pa_pr_footer %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

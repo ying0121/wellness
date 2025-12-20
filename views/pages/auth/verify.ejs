@@ -1,0 +1,78 @@
+<div class="parallax-container min-vh-100">
+    <video class="parallax-video" autoplay muted loop playsinline>
+        <source src="./assets/videos/lock.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="d-flex align-items-center min-vh-100 video-blur">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-md-8 rounded p-4 aos" data-aos="fade-up" style="background-color: #10101060; border: 1px solid #FAFAFA80;">
+                    <!-- Title -->
+                    <div class="w-100 d-flex justify-content-center align-items-center mb-2">
+                        <div class="d-none d-md-block" id="verify-lottie" style="width: 150px; height: 150px;"></div>
+                        <div class="d-block d-md-none fs-1 text-white fw-bold"><%= component_text.c_item_reset_pwd %></div>
+                    </div>
+                    <!-- Desc -->
+                    <div class="text-white fw-bold mb-2 mx-3 fs-5"><%= component_text.t_pa_ah_rpheader %></div>
+                    <!-- Alert Bgin -->
+                    <div class="alert alert-danger alert-dismissible fade show d-none" id="alert-message"></div>
+                    <!-- Alert End -->
+                    <!-- Form Begin -->
+                    <div>
+                        <!-- Password input -->
+                        <div class="pass-group form-focus mb-4">
+                            <input type="password" name="password" id="password" class="form-control floating pass-input bg-transparent text-white" />
+                            <label class="focus-label" for="password"><%= component_text.placeholder_password %></label>
+                            <span class="feather-eye toggle-password text-white"></span>
+                        </div>
+                        <!-- Re-Password input -->
+                        <div class="pass-group form-focus mb-4">
+                            <input type="password" name="repassword" id="repassword" class="form-control floating pass-input bg-transparent text-white" />
+                            <label class="focus-label" for="repassword"><%= component_text.placeholder_confirm_password %></label>
+                            <span class="feather-eye toggle-password text-white"></span>
+                        </div>
+                        <ul class="list-group list-group-light mb-4">
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_length" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "8 to 72 characters" : "De 8 a 72 caracteres" %></span>
+                            </li>
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_lower" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "At least one Lowercase letter (a,b,c...)" : "Al menos una letra minúscula (a,b,c...)" %></span>
+                            </li>
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_upper" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "At least one Uppercase letter (A,B,C...)" : "Al menos una letra mayúscula (A,B,C...)" %></span>
+                            </li>
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_number" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "At least one Number (1,2,3...)" : "Al menos un número (1,2,3...)" %></span>
+                            </li>
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_special" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "At least one Special character (@,_,#,*...)" : "Al menos un carácter especial (@,_,#,*...)" %></span>
+                            </li>
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_sequential" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "Not be sequential numbers" : "No sean números secuenciales" %></span>
+                            </li>
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_repeat" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "Not be repeating numbers, letters, special characters" : "No repetir números, letras, caracteres especiales" %></span>
+                            </li>
+                            <li class="list-group-item border-0 py-1">
+                                <span><i id="verify_pwd_match" class="verify-icons fa fa-warning text-warning"></i></span>
+                                <span class="text-info"><%= language === 'en' ? "Matched password" : "Contraseña coincidente" %></span>
+                            </li>
+                        </ul>
+                        <!-- Submit button -->
+                        <button id="submit" class="btn btn-rounded btn-outline-info w-100 py-2" status="disable" disabled><%= component_text.btn_submit %></button>
+                    </div>
+                    <!-- Form End -->
+                    <hr class="my-1" />
+                    <p class="text-white m-0 mt-3"><%= component_text.t_pa_pr_footer %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

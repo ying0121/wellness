@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<!-- Include Head Info -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <meta name="description" content="<%= page_desc %>">
+    <meta name="keywords" content="medical service, medication, the heights wellness, appointment, clinic">
+    <meta name="author" content="ying0121 - The Heights Wellness">
+    <meta property="og:url" content="<%= site_url %>">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<%= og_title %>">
+    <meta property="og:description" content="<%= og_desc %>">
+    <% if (page_tag === "home") { %>
+        <meta property="og:image" content="<%= site_url %>/assets/images/facebook_meta.jpg">
+    <% } else { %>
+        <meta property="og:image" content="<%= site_url %>/assets/meta/facebook-<%= page_tag %>.jpg">
+    <% } %>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="<%= site_url %>">
+    <meta property="twitter:url" content="<%= site_url %>">
+    <meta name="twitter:title" content="<%= twitter_title %>">
+    <meta name="twitter:description" content="<%= twitter_desc %>">
+    <% if (page_tag === "home") { %>
+        <meta name="twitter:image" content="<%= site_url %>/assets/images/twitter_meta.jpg">
+    <% } else { %>
+        <meta name="twitter:image" content="<%= site_url %>/assets/meta/twitter-<%= page_tag %>.jpg">
+    <% } %>
+    <title><%= page_title %></title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<%= site_url %>/assets/images/favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/bootstrap.min.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="<%= site_url %>/assets/plugins/fontawesome/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/feather.css">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/bootstrap-datetimepicker.min.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/owl.carousel.min.css">
+    <!-- Animation CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/aos.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/custom.css">
+    <!-- Need Popup CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/needpopup.min.css">
+    <!-- Index CSS -->
+    <link rel="stylesheet" href="<%= site_url %>/assets/css/index.css">
+    <!-- Fancybox CSS -->
+	<link rel="stylesheet" href="<%= site_url %>/assets/plugins/fancybox/jquery.fancybox.min.css">
+</head>	
+<!-- /Include Head Info -->
+
+<!--  -->
+<body>
+    <!-- Loading -->
+    <div id="preloader">
+        <div id="loading-lottie-container"></div>
+    </div>
+    <!-- /Loading -->
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper" data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Header -->
+        <%- include('header') %>
+        <!-- /Header -->
+
+        <!-- Page Layout -->
+        <%- include("pages/" + page_tag) %>
+        <!-- /Page Layout -->
+
+        <!-- Footer -->
+        <%- include('footer') %>
+        <!-- /Footer -->
+
+        <!-- Cursor -->
+        <!-- <div class="mouse-cursor cursor-outer"></div>
+        <div class="mouse-cursor cursor-inner"></div> -->
+        <!-- /Cursor -->
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- Modals -->
+    <% if (patient_id > 0) { %>
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="info-manage-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 d-flex justify-content-center" style="margin-bottom: 42px;">
+                                <h6 class="p-2"><%= patient_info.email %></h6>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-center mb-3">
+                                <span class="bg-success text-white d-flex justify-content-center align-items-center fs-1 rounded rounded-pill" style="width: 72px; height: 72px;">
+                                    <%= patient_info.fname[0] %>
+                                </span>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-center" style="margin-bottom: 42px;">
+                                <h3><%= component_text.c_item_hello + " " + patient_info.fname + " " + patient_info.lname %></h3>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <button class="d-none" id="info-edit-modal-view" data-bs-toggle="modal" data-bs-target="#person_info_modal"></button>
+                                <button type="button" class="btn btn-link fs-6" id="info_edit_btn" data-bs-dismiss="modal"><%= component_text.c_item_edit_info %></button>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <button class="d-none" id="pwd-reset-modal-view" data-bs-toggle="modal" data-bs-target="#pwd_reset_modal"></button>
+                                <button type="button" class="btn btn-link fs-6" id="info_pwd_reset_btn" data-bs-dismiss="modal"><%= component_text.c_item_reset_pwd %></button>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <button class="d-none" id="opt-in-out-modal-view" data-bs-toggle="modal" data-bs-target="#opt_in_out_modal"></button>
+                                <button type="button" class="btn btn-link fs-6" id="info_edit_comm" data-bs-dismiss="modal"><%= component_text.c_item_edit_comm %></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <a href="./logout" class="text-danger px-3 mx-1"><span><%= component_text.link_sign_out %></span></a>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="person_info_modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title"><%= component_text.c_item_edit_info %></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3 mb-4">
+                                <div class="form-focus"ialized="true">
+                                    <input type="text" id="epatient_id" class="form-control floating" />
+                                    <label class="focus-label" for="epatient_id"><%= component_text.t_contact_option_patient %> ID</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="efname" class="form-control floating" required />
+                                    <label class="focus-label" for="efname"><%= component_text.placeholder_first_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="emname" class="form-control floating" />
+                                    <label class="focus-label" for="emname"><%= component_text.placeholder_middle_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="elname" class="form-control floating" required />
+                                    <label class="focus-label" for="elname"><%= component_text.placeholder_last_name %></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="ephone" class="form-control floating" />
+                                    <label class="focus-label" for="ephone"><%= component_text.placeholder_phone_number %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="emobile" class="form-control floating" />
+                                    <label class="focus-label" for="emobile"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="eemail" class="form-control floating" required />
+                                    <label class="focus-label" for="eemail"><%= component_text.placeholder_email_address %></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="eaddress" class="form-control floating" />
+                                    <label class="focus-label" for="eaddress"><%= component_text.placeholder_address %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="ecity" class="form-control floating" />
+                                    <label class="focus-label" for="ecity"><%= component_text.placeholder_city %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="estate" class="form-control floating" />
+                                    <label class="focus-label" for="estate"><%= component_text.placeholder_state %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="ezip" class="form-control floating" />
+                                    <label class="focus-label" for="ezip"><%= component_text.placeholder_zip %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <select id="egender" class="form-select form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <div class="form-focus">
+                                    <input type="date" id="edob" class="form-control" required />
+                                    <label class="focus-label" for="edob"><%= component_text.placeholder_dob %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <select id='elanguage' class="form-select form-control">
+                                    <% for (let i = 0; i < languages.length; i++) { %>
+                                        <option value="<%= languages[i].code %>"><%= languages[i].English %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="eethnicity" class="form-control floating" />
+                                    <label class="focus-label" for="eethnicity"><%= component_text.placeholder_eth %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="erace" class="form-control floating" />
+                                    <label class="focus-label" for="erace"><%= component_text.placeholder_rate %></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <div class="d-flex w-100 justify-content-between align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="patient_active" />
+                                <label class="form-check-label" for="patient_active"><%= component_text.placeholder_active %></label>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary personeditsubmitbtn" data-bs-dismiss="modal"><%= component_text.c_item_done %></button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="pwd_reset_modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title"><%= component_text.c_item_reset_pwd %></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="new-password" class="form-control floating" required />
+                                    <label class="focus-label" for="new-password"><%= component_text.c_item_new_pwd %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="form-focus">
+                                    <input type="text" id="re-password" class="form-control floating" required />
+                                    <label class="focus-label" for="re-password"><%= component_text.placeholder_confirm_password %></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary resetpwdbtn" data-bs-dismiss="modal"><%= component_text.c_item_done %></button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="opt_in_out_modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title "><%= component_text.c_item_comm %></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="my-1"><%= component_text.t_opt_in_out_header %></p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check my-1">
+                                    <input class="form-check-input" type="radio" value="1" name="opt_status" id="pt_opt_in" checked />
+                                    <label class="form-check-label" for="pt_opt_in"><%= component_text.t_opt_in_out_in %></label>
+                                </div>
+                                <div class="form-check my-1">
+                                    <input class="form-check-input" type="radio" value="0" name="opt_status" id="pt_opt_out" />
+                                    <label class="form-check-label" for="pt_opt_out"><%= component_text.t_opt_in_out_out %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="my-1 pb-0"><%- component_text.t_opt_in_out_footer %></p>
+                            </div>
+                            <div class="col-md-12 d-none" id="pt_opt_moreinfo">
+                                <p><%- component_text.t_opt_in_out_more %></p>
+                            </div>
+                            <div class="col-md-12 mb-1 pt-0">
+                                <a href="#" id="pt_opt_more_info_btn"><%- component_text.t_opt_more_info %> >></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" id="payment-modal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="payment-modal-title">Payment Modal Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row payment-container">
+                        <form id="payment-form">
+                            <input type="hidden" id="payment-category" />
+                            <input type="hidden" id="payment-category-id" />
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-focus">
+                                        <input type="text" id="payment-name" class="form-control floating" />
+                                        <label class="focus-label" for="payment-name">Your Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-focus">
+                                        <input type="text" id="payment-email" class="form-control floating" />
+                                        <label class="focus-label" for="payment-email">Your Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-focus">
+                                        <input type="text" id="payment-phone" class="form-control floating" />
+                                        <label class="focus-label" for="payment-phone">Your Phone</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="payment-element"></div>
+                            <div id="payment-message" class="hidden"></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="d-none" id="payment-modal-close" data-bs-dismiss="modal"></button>
+                    <button class="payment-button" id="payment-submit">
+                        <div class="spinner hidden" id="payment-pay-submit-spinner"></div>
+                        <span id="payment-pay-text">Pay now</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Payment Modal -->
+    <!-- Service Modal -->
+    <% if (page_tag === "home" || page_tag === "services" || page_tag === "service-detail") { %>
+        <div class="modal fade custom-modal" id="service_request_modal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <input type="hidden" id="service_name" />
+                    <div class="modal-header">
+                        <p class="h4 m-0 mx-1" id="service_title"><%= component_text.t_request_service %></p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="service-fname" class="form-control floating" required />
+                                    <label class="focus-label" for="service-fname"><%= component_text.placeholder_first_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="service-lname" class="form-control floating" required />
+                                    <label class="focus-label" for="service-lname"><%= component_text.placeholder_last_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-focus">
+                                    <input type="date" id="service-dob" class="form-control floating" required />
+                                    <label class="focus-label" for="service-dob"><%= component_text.placeholder_dob %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="service-email" class="form-control floating" required />
+                                    <label class="focus-label" for="service-email"><%= component_text.placeholder_email %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="service-phone" class="form-control floating" required />
+                                    <label class="focus-label" for="service-phone"><%= component_text.placeholder_phone %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <textarea class="form-control" id="service-message" rows="5" placeholder="<%= component_text.placeholder_message %>"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <hr class="my-3" />
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <p class="fs-6 my-1"><%- component_text.t_opt_in_out_header %></p>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="opt_status" id="opt_in" value="1" checked />
+                                        <label class="form-check-label" for="opt_in"> <%= component_text.t_opt_in_out_in %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="opt_status" id="opt_out" value="0" />
+                                        <label class="form-check-label" for="opt_out"> <%= component_text.t_opt_in_out_out %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="fs-6 m-0"><%- component_text.t_opt_in_out_more %></p>
+                                </div>
+                                <div class="col-md-12 d-none" id="service_opt_moreinfo">
+                                    <p class="fs-6"><%- component_text.t_opt_in_out_footer %></p>
+                                </div>
+                                <div class="col-md-12">
+                                    <a href="#" id="service_opt_more_info_btn"><%= component_text.t_opt_more_info %> &gt;&gt;</a>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <div class="row justify-content-start align-items-center">
+                                <div class="col-md-4">
+                                    <div class="d-flex justify-content-between align-items-center gap-1">
+                                        <div id="service_captcha_image"><%- service_captcha_image %></div>
+                                        <i id="service_captcha_change" class="fa fa-lg fa-rotate-right fs-2 text-primary" style="cursor: pointer;"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-focus">
+                                        <input type="text" id="service-captcha" class="form-control floating" />
+                                        <label class="focus-label" for="service-captcha"><%= component_text.placeholder_captcha %></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="service_request_modal_send"><%= component_text.t_request %></button>
+                        <button type="button" class="btn btn-danger" id="service_request_modal_close" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- /Service Modal -->
+
+    <% if (page_tag === "service-detail") { %>
+        <!-- Sending Friend Modal -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="service_friend_modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <input type="hidden" id="friend_service_name" />
+                    <div class="modal-header py-3">
+                        <h3 class="my-2" style="font-size: 16px;" id="friend_service_title"><%= component_text.t_request_service %></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-focus">
+                                    <input type="text" id="friend_name" class="form-control floating" required />
+                                    <label class="focus-label" for="friend_name"><%= component_text.placeholder_your_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="form-focus">
+                                    <input type="text" id="friend_email" class="form-control floating" required />
+                                    <label class="focus-label" for="friend_email"><%= component_text.placeholder_email %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between align-items-center gap-1">
+                                    <div id="friend_captcha_image"><%- friend_captcha_image %></div>
+                                    <i id="friend_captcha_change" class="fa fa-lg fa-rotate-right fs-2 text-primary" style="cursor: pointer;"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-focus">
+                                    <input type="text" id="friend_captcha" class="form-control floating" />
+                                    <label class="focus-label" for="friend_captcha"><%= component_text.placeholder_captcha %></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="service_friend_modal_send"><%= component_text.t_request %></button>
+                        <button type="button" class="btn btn-danger" id="service_friend_modal_close" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- /Service Modal -->
+    <!-- Letter Modal -->
+    <% if (page_tag === "letters" || page_tag === "letter-detail") { %>
+        <div class="modal fade" id="letter_request_modal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <input type="hidden" id="letter_name" />
+                    <div class="modal-header">
+                        <p class="h4 m-0 mx-1" id="letter_title"><%= component_text.t_request_letter %></p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="letter-fname" class="form-control floating" required />
+                                    <label class="focus-label" for="letter-fname"><%= component_text.placeholder_first_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="letter-lname" class="form-control floating" required />
+                                    <label class="focus-label" for="letter-lname"><%= component_text.placeholder_last_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-focus">
+                                    <input type="date" id="letter-dob" class="form-control floating" required />
+                                    <label class="focus-label" for="letter-dob"><%= component_text.placeholder_dob %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="letter-email" class="form-control floating" required />
+                                    <label class="focus-label" for="letter-email"><%= component_text.placeholder_email %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="letter-phone" class="form-control floating" required />
+                                    <label class="focus-label" for="letter-phone"><%= component_text.placeholder_phone %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <textarea class="form-control" id="letter-message" rows="5" placeholder="<%= component_text.placeholder_message %>"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <hr class="my-3" />
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <p class="fs-6 my-1"><%= component_text.t_opt_in_out_header %></p>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="letter-opt_status" id="letter-opt_in" value="1" checked />
+                                        <label class="form-check-label" for="letter-opt_in"> <%= component_text.t_opt_in_out_in %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="opt_status" id="letter-opt_out" value="0" />
+                                        <label class="form-check-label" for="letter-opt_out"> <%= component_text.t_opt_in_out_out %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="fs-6 m-0"><%- component_text.t_opt_in_out_more %></p>
+                                </div>
+                                <div class="col-md-12 d-none" id="letter_opt_moreinfo">
+                                    <p class="fs-6"><%- component_text.t_opt_in_out_footer %></p>
+                                </div>
+                                <div class="col-md-12">
+                                    <a href="#" id="letter_opt_more_info_btn"><%= component_text.t_opt_more_info %> >></a>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <div class="row justify-content-start align-items-center">
+                                <div class="col-md-4">
+                                    <div class="d-flex justify-content-between align-items-center gap-1">
+                                        <div id="letter_captcha_image"><%- letter_captcha_image %></div>
+                                        <i id="letter_captcha_change" class="fa fa-lg fa-rotate-right fs-2 text-primary" style="cursor: pointer;"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-focus">
+                                        <input type="text" id="letter-captcha" class="form-control floating" />
+                                        <label class="focus-label" for="captcha"><%= component_text.placeholder_captcha %></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="letter_request_modal_send"><%= component_text.t_request %></button>
+                        <button type="button" class="btn btn-danger" id="letter_request_modal_close" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- /Letter Modal -->
+    <!-- Education Video View Modal -->
+    <% if (page_tag === "educations") { %>
+        <div class="modal fade modal-content-video" id="education-video-modal" tabindex="-1" aria-labelledby="video">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="video-home">
+                            <video controls id="promovideo">
+                                <iframe src="" id="education-video-frame"></iframe>
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- /Education Video View Modal -->
+    
+    <!-- Vault Modal -->
+    <% if (page_tag === "vault") { %>
+        <button class="d-none" data-bs-toggle="modal" data-bs-target="#history_modal" id="history-modal-view"></button>
+        <div class="modal fade" tabindex="-1" aria-hidden="true" id="history_modal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <input type="hidden" id="reply-contact_id" />
+                    <input type="hidden" id="reply-assigned" />
+                    <input type="hidden" id="reply-case_number" />
+                    <input type="hidden" id="reply-patient_id" />
+                    <div class="modal-header">
+                        <div class="">
+                            <h4 id="modal_history_title" class="modal-title fs-6 mb-2"><%= component_text.c_item_contact_history %></h4>
+                            <h6 id="modal_history_title_patient" class="fs-6"></h6>
+                            <h6 id="modal_history_title_status" class="fs-6"></h6>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content-chat p-0 m-0">
+                            <div class="chat-window min-w-100 w-100">
+                                <div class="chat-cont-right min-w-100" style="opacity: 1; visibility: visible; position: relative;">
+                                    <div id="contact_history_panel" class="chat-body min-w-100 scroll-y h-300px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <textarea class="form-control w-100" id="message-modal-input" name="message-modal-input" rows="4" placeholder="<%= component_text.c_item_msg_placeholder %>"></textarea>
+                        <button type="button" class="btn btn-primary" id="message_modal_reply" data-bs-dismiss="modal"><%= component_text.c_item_send_msg %></button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="d-none" data-bs-toggle="modal" data-bs-target="#view_appt_info_modal" id="appt-info-modal-view"></button>
+        <div class="modal fade" tabindex="-1" aria-hidden="true" id="view_appt_info_modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title mb-2"><%= component_text.btn_appt_info %></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="contact_history_panel" class="w-100"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- /Vault Modal -->
+
+    <!-- /Modals -->
+
+    <!-- ScrollToTop -->
+    <div class="progress-wrap active-progress">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919px, 307.919px; stroke-dashoffset: 228.265px;"></path>
+        </svg>
+    </div>
+    <!-- /ScrollToTop -->
+
+    <!-- jQuery -->
+    <script src="<%= site_url %>/assets/js/jquery-3.7.0.min.js"></script>
+    <!-- Captcha API -->
+    <script src="https://www.google.com/recaptcha/api.js?" async defer></script>
+    <!-- JS Encrypt API -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js" integrity="sha512-94ncgEEqkuZ4yNTFmu2dSn1TJ6Ij+ANQqpR7eLVU99kzvYzu6UjBxuVoNHtnd29R+T6nvK+ugCVI698pbyEkvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Stripe API -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="<%= site_url %>/assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Feather Icon JS -->
+    <script src="<%= site_url %>/assets/js/feather.min.js"></script>
+    <!-- Datepicker JS -->
+    <script src="<%= site_url %>/assets/js/moment.min.js"></script>
+    <script src="<%= site_url %>/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="<%= site_url %>/assets/js/owl.carousel.min.js"></script>
+    <!-- Slick JS -->
+    <script src="<%= site_url %>/assets/js/slick.js"></script>
+    <!-- Animation JS -->
+    <script src="<%= site_url %>/assets/js/aos.js"></script>
+    <!-- BacktoTop JS -->
+    <script src="<%= site_url %>/assets/js/backToTop.js"></script>
+    <!-- Custom JS -->
+    <script src="<%= site_url %>/assets/js/script.js"></script>
+    <!-- Need Popup JS -->
+    <script src="<%= site_url %>/assets/js/needpopup.min.js"></script>
+    <!-- Lottie Files -->
+    <script src="<%= site_url %>/assets/js/lottie.min.js"></script>
+    <!-- Fancybox -->
+	<script src="<%= site_url %>/assets/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <!-- DataTable -->
+    <script type="text/javascript" src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+    <!-- Counter JS (We use if counter component is existed) -->
+    <!-- <script src="<%= site_url %>/assets/js/counter.js"></script> -->
+
+    <% if (page_tag === "insurances" || page_tag === "orientation" || page_tag === "services" || page_tag === "letters" || page_tag === "about-us") { %>
+        <!-- <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+    <% } %>
+
+    <!-- Layout Script -->
+    <%- include("js/layout-js") %>
+    <!-- Payment Script -->
+    <% if (page_tag === "home" || page_tag === "services" || page_tag === "letters") { %>
+        <%- include("js/payment-js") %>
+    <% } %>
+    <!-- Page Script -->
+    <%- include("js/" + page_tag + "-js") %>
+</body>
+
+</html>

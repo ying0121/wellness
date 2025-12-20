@@ -1,0 +1,228 @@
+<!-- Header -->
+<header class="sticky-md-top" style="border-bottom: 2px solid #1B5D92; box-shadow: 0px 4px 4px 0px #A0A0A060;" id="main-header">
+    <div class="d-none d-lg-flex d-flex justify-content-center align-items-center flex-wrap py-1" style="background-color: #407081;">
+        <div>
+            <i class="fa fa-phone text-primary fs-6"></i>&nbsp;:&nbsp;
+            <a href="tel:<%= contact_info.tel %>" class="text-white fs-7"><%= contact_info.tel %></a>
+        </div>
+        <div class="text-white">
+            &nbsp;&nbsp;|&nbsp;
+            <i class="fa fa-fax text-info fs-6"></i>&nbsp;:&nbsp;
+            <a href="tel:<%= contact_info.tel %>" class="text-white fs-7"><%= contact_info.tel %></a>
+        </div>
+        <% if (contact_info.email) { %>
+            <div>
+                <span class="d-none d-md-inline text-white">&nbsp;&nbsp;|&nbsp;&nbsp;</span><i class="fa fa-envelope text-success fs-6"></i>&nbsp;:&nbsp;
+                <a href="mailto:<%= contact_info.email %>" class="text-white fs-7"><%= contact_info.email %></a>
+            </div>
+        <% } %>
+        <div class="text-white">
+            &nbsp;&nbsp;|&nbsp;<%= component_text.t_topbar_emergency_call %>
+        </div>
+    </div>
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="d-none d-sm-block navbar-brand" href="<%= site_url %>"><img src="<%= site_url %>/assets/images/logo.png" class="img-fluid" alt="Logo" /></a>
+            <a class="d-block d-sm-none navbar-brand" href="<%= site_url %>"><img src="<%= site_url %>/assets/images/favicon.png" class="img-fluid" alt="Logo" style="width: 40px;" /></a>
+            <!-- Sign In/Out, Pt Info, Language Buttons In Mobile Mode -->
+            <div class="d-flex justify-content-start align-items-center flex-wrap gap-1 d-lg-none">
+                <div class="d-flex justify-content-start align-items-center gap-1">
+                    <% if (contact_info.portal_show == 1) { %>
+                        <a href="<%= contact_info.portal %>" class="themesflat-button font-default process mx-1 text-gray" target="_blank"><span><%= component_text.link_portal %></span></a>
+                    <% } %>
+                    <% if (area_toggle.vault_area) { %>
+                        <% if (!patient_id || !patient_name) { %>
+                            <a href="<%= site_url %>/login" class="themesflat-button font-default process mx-1 text-gray"><span><%= component_text.link_sign_in %></span></a>
+                        <% } %>
+                    <% } %>
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                    <div class="btn py-0 px-1 langbtn <%= language === "en" ? "active" : "" %>" onclick="setLang('en');">
+                        <img src="<%= site_url %>/assets/images/flags/en.png" style="width: 16px; height: 16px;" />
+                    </div>
+                    <div class="btn py-0 px-1 langbtn <%= language === "en" ? "" : "active" %>" onclick="setLang('es');">
+                        <img src="<%= site_url %>/assets/images/flags/es.png" style="width: 16px; height: 16px;" />
+                    </div>
+                    <% if (patient_id && patient_name) { %>
+                        <div class="d-flex justify-content-center align-items-center mx-3">
+                            <button class="d-none" data-bs-toggle="modal" data-bs-target="#info-manage-modal" id="patient-info-modal-view"></button>
+                            <div class="patient-info bg-primary d-flex justify-content-center align-items-center rounded rounded-pill fs-4 text-white m-0" style="width: 32px; height: 32px; cursor: pointer;">
+                                <%= patient_info.fname[0] %>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+                <!-- Notifications -->
+                <ul class="nav header-navbar-rht">
+                    <li class="nav-item dropdown noti-nav ms-3 pe-0">
+                        <a href="javascript:;" class="dropdown-toggle nav-link p-0" data-bs-toggle="dropdown">
+                            <i class="fa fa-bell fs-4"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle p-2 <%= alerts.length > 0 ? "bg-danger border border-light rounded-circle" : "" %>">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div class="topnav-dropdown-header">
+                                <div class="d-flex justify-content-between align-items-center px-4 my-3">
+                                    <div class="fw-bold"><%= component_text.t_notification %></div>
+                                    <div class="avatar" style="width: 2rem !important; height: 2rem !important;">
+                                        <span class="avatar-title rounded-circle border border-white bg-danger"><%= alerts.length %></span>
+                                    </div>
+                                </div>
+                                <hr class="mt-0" />
+                            </div>
+                            <div class="noti-content px-3">
+                                <% if (!alerts.length) { %>
+                                    <div class="w-100 d-flex justify-content-center align-items-center text-secondary fs-4 my-4 mb-4"><%= component_text.t_no_alert %>!</div>
+                                <% } %>
+                                <% for (let i = 0; i < alerts.length; i ++) { %>
+                                    <div class="d-flex justify-content-between align-items-center gap-2 mb-4">
+                                        <% if (alerts[i].image) { %>
+                                            <img src="<%= site_url + "/assets/images/alerts/" + alerts[i].image %>" class="rounded-pill" style="width: 4rem !important; height: 4rem !important;" />
+                                        <%  } else { %>
+                                            <i class="fa fa-bell fs-2 text-secondary"></i>
+                                        <% } %>
+                                        <div class="w-100">
+                                            <div class="fst-italic fw-semibold" style="text-align: end;"><%= new Date(alerts[i].start).toLocaleDateString() %> ~ <%= new Date(alerts[i].end).toLocaleDateString() %></div>
+                                            <div><%- alerts[i].message %></div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- /Notifications -->
+            </div>
+            <!-- Item Button In Mobile Mode -->
+            <button class="btn btn-transparent-secondary navbar-toggler p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Nav Items -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="w-auto navbar-nav me-auto mb-2 mb-lg-0 gap-1 scroll-y overflow-lg-x-visible overflow-lg-y-visible h-lg-240px flex-lg-wrap">
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "home" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>"><%= component_text.menu_home %></a></li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "the-clinic" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/the-clinic"><%= component_text.menu_the_clinic %></a></li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "about-us" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/about-us"><%= component_text.menu_about_us %></a></li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "services" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/services"><%= component_text.menu_services %></a></li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "letters" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/letters"><%= component_text.menu_letters %></a></li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "orientation" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/orientation"><%= component_text.menu_orientation %></a></li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "community-resources" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/community-resources"><%= component_text.menu_community_resources %></a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <%= page_tag == "educations" ? "active fw-bold" : "fw-semibold" %>" href="javascript:;" role="button" data-bs-toggle="dropdown" aria-expanded="false"><%= component_text.menu_education %></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=asthma"><%= component_text.menu_asthma %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=aye_vision"><%= component_text.menu_aye_vision %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=cholesterol"><%= component_text.menu_cholesterol %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=diabietes"><%= component_text.menu_diabietes %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=drug_abuse"><%= component_text.menu_drug_abuse %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=nutrition"><%= component_text.menu_nutrition %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=pain"><%= component_text.menu_pain %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=pain_back"><%= component_text.menu_pain_back %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=pulmonary_disease"><%= component_text.menu_pulmonary_disease %></a></li>
+                            <li><a class="dropdown-item" href="<%= site_url %>/educations?p=tobacco_treatment"><%= component_text.menu_tobacco_treatment %></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "insurances" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/insurances"><%= component_text.menu_insurances %></a></li>
+                    <li class="nav-item"><a class="nav-link <%= page_tag == "contact" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/contact"><%= component_text.menu_contact %></a></li>
+                    <% if (patient_id && patient_name) { %>
+                        <li class="nav-item"><a class="nav-link <%= page_tag == "vault" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/vault"><%= component_text.menu_vault %></a></li>
+                    <% } %>
+                </ul>
+                <!-- Sign In/Out, Pt Info, Language Buttons In Browser Mode -->
+                <div class="d-none d-lg-flex justify-content-lg-start align-items-lg-center gap-4">
+                    <!-- Notifications -->
+                    <ul class="nav header-navbar-rht">
+                        <li class="nav-item dropdown noti-nav me-3 pe-0">
+                            <a href="javascript:;" class="dropdown-toggle nav-link p-0" data-bs-toggle="dropdown">
+                                <i class="fa fa-bell fs-4"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle p-2 <%= alerts.length > 0 ? "bg-danger border border-light rounded-circle" : "" %>">
+                                    <span class="visually-hidden">New alerts</span>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div class="topnav-dropdown-header">
+                                    <div class="d-flex justify-content-between align-items-center px-4 my-3">
+                                        <div class="fw-bold"><%= component_text.t_notification %></div>
+                                        <div class="avatar" style="width: 2rem !important; height: 2rem !important;">
+                                            <span class="avatar-title rounded-circle border border-white bg-danger"><%= alerts.length %></span>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-0" />
+                                </div>
+                                <div class="noti-content px-3">
+                                    <% if (!alerts.length) { %>
+                                        <div class="w-100 d-flex justify-content-center align-items-center text-secondary fs-4 my-4 mb-4"><%= component_text.t_no_alert %>!</div>
+                                    <% } %>
+                                    <% for (let i = 0; i < alerts.length; i ++) { %>
+                                        <div class="d-flex justify-content-between align-items-center gap-2 mb-4">
+                                            <% if (alerts[i].image) { %>
+                                                <img src="<%= site_url + "/assets/images/alerts/" + alerts[i].image %>" class="rounded-pill" style="width: 4rem !important; height: 4rem !important;" />
+                                            <%  } else { %>
+                                                <i class="fa fa-bell fs-2 text-secondary"></i>
+                                            <% } %>
+                                            <div class="w-100">
+                                                <div class="fst-italic fw-semibold" style="text-align: end;"><%= new Date(alerts[i].start).toLocaleDateString() %> ~ <%= new Date(alerts[i].end).toLocaleDateString() %></div>
+                                                <div><%- alerts[i].message %></div>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- /Notifications -->
+                    <div class="d-flex justify-content-start align-itmes-center gap-1">
+                        <% if (contact_info.portal_show == 1) { %>
+                            <a href="<%= contact_info.portal %>" class="themesflat-button font-default process mx-1 text-gray" target="_blank"><span><%= component_text.link_portal %></span></a>
+                        <% } %>
+                        <% if (area_toggle.vault_area) { %>
+                            <% if (!patient_id || !patient_name) { %>
+                                <a href="<%= site_url %>/login" class="themesflat-button font-default process mx-1 text-gray"><span><%= component_text.link_sign_in %></span></a>
+                            <% } %>
+                        <% } %>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <div class="btn p-1 langbtn <%= language === "en" ? "active" : "" %>" onclick="setLang('en');">
+                            <img src="<%= site_url %>/assets/images/flags/en.png" style="min-width: 20px; max-width: 20px; min-height: 20px; max-height: 20px;" />
+                        </div>
+                        <div class="btn p-1 langbtn <%= language === "en" ? "" : "active" %>" onclick="setLang('es');">
+                            <img src="<%= site_url %>/assets/images/flags/es.png" style="min-width: 20px; max-width: 20px; min-height: 20px; max-height: 20px;" />
+                        </div>
+                        <% if (patient_id && patient_name) { %>
+                            <div class="d-flex justify-content-center align-items-center mx-3">
+                                <button class="d-none" data-bs-toggle="modal" data-bs-target="#info-manage-modal" id="patient-info-modal-view"></button>
+                                <div class="patient-info text-white bg-primary d-flex justify-content-center align-items-center rounded rounded-pill fs-3 m-0" style="width: 36px; height: 36px; cursor: pointer;">
+                                    <%= patient_info.fname[0] %>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- /Nav Bar -->
+</header>
+<!-- /Header -->
+<!-- Work Time -->
+<div id="hours-toggle" class="hours-toggle aos" data-aos="fade-left">
+    <i class="fa fa-clock fs-5"></i>
+</div>
+<!-- /Work Time -->
+<!-- Working Hours Panel -->
+<div id="working-hours" class="working-hours">
+    <p class="h4 my-3 ms-4"><%= component_text.t_working_hour %></p>
+    <ul>
+        <% for (let i=0; i < working_hours.length; i++) { %>
+            <div class="mx-1 text-black">
+                <i class="fa fa-check text-success mx-2 fs-4"></i>
+                <%= working_hours[i].name %> : <%= working_hours[i].time %>
+                <hr class="my-3">
+            </div>
+        <% } %>
+    </ul>
+</div>
+<!-- /Working Hours Panel -->

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+    function dateDifference(startDate, endDate) {
+        // calculatig the difference in timestamps
+        const s = new Date(strDate)
+        const e = new Date(endDate)
+        const d = s - e
+        return Math.ceil(Math.abs(d / 86400))
+    }
+%>
+
+<%- include('../header') %>
+
+<style>
+    p{
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .expired-text{
+        font-weight: 500;
+    }
+</style>
+
+<body>
+    <div class="wrapper ">
+        <div class="main-panel" style="width:100%">
+            <div class="content mt-0">
+                <div class="container-fluid">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <img src="<%= site_url + prefix %>/assets/images/logo.png'; ?>" alt="" width="200" />
+                                    </div>
+                                    <div class="col-md-12 text-center mt-5">
+                                        <h4 class="text-center expired-text"><?php echo $langs[array_search('t_survey_result', array_column($langs, 'keyvalue'))]['lang'] ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('header') %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <div><h3>Page Videos</h3></div>
+                            <div><span class='add_video_btn btn btn-light-primary btn-icon' ><i class='fa fa-plus'></i></span></div>
+                        </div>
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table" id="aboutus_video_tb">
+                                    <thead>
+                                        <th>ID</th>
+                                        <th>Video URL</th>
+                                        <th>Page</th>
+                                        <th>Position</th>
+                                        <th>Display</th>
+                                        <th style="width: 200px;">Action</th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="video_add_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add Video</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class = "row">
+                        <div class = 'col-md-12'>
+                            <div class="form-groupp">
+                                <h6>Video URL</h6>
+                                <input type="text" class="form-control" id="add_video_url" name="video">
+                            </div>
+                            <div class="form-group">
+                                <h6>Page</h6>
+                                <select class="form-control" id="apage">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <h6>Position</h6>
+                                <select class="form-control" id="aposition">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" id="page_video_add_btn">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="video_edit_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit Video</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class = "row">
+                        <div class = 'col-md-12'>
+                            <div class="form-group">
+                                <h6>Video URL</h6>
+                                <input class="form-control" id="edit_video_url" type="text">
+                            </div>
+                            <div class="form-group">
+                                <h6>Page</h6>
+                                <select class="form-control" id="edit_video_page">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <h6>Position</h6>
+                                <select class="form-control" id="edit_video_position">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <h6>Status</h6>
+                                <select class="form-control" id="edit_video_status" style="height:36px;">
+                                    <option value="1">Visible</option>
+                                    <option value="0">Invisible</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" id="page_video_edit_btn">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function() {
+        var keys = Object.keys(VIDEO_POSITION)
+        $("#apage").html("")
+        for(i = 0 ; i < keys.length ; i++)
+            $("#apage").append("<option value='"+keys[i]+"'>"+keys[i]+"</option>")
+        for(i = 0 ; i < VIDEO_POSITION[keys[0]].length ; i++)
+            $("#aposition").append("<option value='"+VIDEO_POSITION[keys[0]][i]+"'>"+VIDEO_POSITION[keys[0]][i]+"</option>")
+
+        $("#apage").change(function() {
+            $("#aposition").html("")
+            var page = $("#apage").val()
+            for(i = 0 ; i < VIDEO_POSITION[page].length ; i++)
+                $("#aposition").append("<option value='"+VIDEO_POSITION[page][i]+"'>"+VIDEO_POSITION[page][i]+"</option>")
+        })
+
+        $(".add_video_btn").click(function() {
+            $("#video_add_modal").modal('show')
+        })
+
+        $("#edit_video_page").html("")
+        for(i = 0 ; i < keys.length ; i++)
+            $("#edit_video_page").append("<option value='"+keys[i]+"'>"+keys[i]+"</option>")
+        for(i = 0 ; i < VIDEO_POSITION[keys[0]].length ; i++)
+            $("#edit_video_position").append("<option value='"+VIDEO_POSITION[keys[0]][i]+"'>"+VIDEO_POSITION[keys[0]][i]+"</option>")
+
+        $("#edit_video_page").change(function() {
+            $("#edit_video_position").html("")
+            var page = $("#edit_video_page").val()
+            for(i = 0 ; i < VIDEO_POSITION[page].length ; i++)
+                $("#edit_video_position").append("<option value='"+VIDEO_POSITION[page][i]+"'>"+VIDEO_POSITION[page][i]+"</option>")
+        })
+
+        const aboutus_video_tb = $('#aboutus_video_tb').DataTable({
+            "autoWidth": false,
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search video",
+            },
+            "ajax": {
+                "url": "<%= site_url + prefix %>/page-videos/read",
+                "type": "GET"
+            },
+            "columns": [
+                { data:'id', render:function(data, type, row){
+                        return `<div class = "d-flex align-items-center" style = "height:40px;">`+row.id+`</div>`;
+                    }
+                },
+                { data: 'video' },
+                { data: 'page' },
+                { data: 'position' },
+                { data: 'status', render: function(data, type, row){
+                    if(row.status == 1)
+                        return `<div class="text-success">Visible</div>`;
+                    else
+                        return `<div class="text-danger">Invisible</div>`;
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, row) {
+                    return `
+                        <div data-id = "`+row.id+`">
+                        <span class="btn btn-icon btn-sm btn-light-warning edit_video_btn"><i class="fas fa-edit"></i></span>
+                        <span class="btn btn-icon btn-sm btn-light-danger  delete_video_btn"><i class="fas fa-trash"></i></span>
+                        </div>
+                        `
+                    } 
+                }
+            ]
+        });
+        
+        $(document).on('click', '.delete_video_btn', function() {
+            var id = $(this).closest('div').attr('data-id')
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax ({
+                        url: '<%= site_url + prefix %>/page-videos/delete',
+                        method: "POST",
+                        data: {id: id},
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.status == "success") {
+                                aboutus_video_tb.ajax.reload()
+                                toastr.success("Deleted Successfully!")
+                            }
+                        },
+                        error: function () {
+                            toastr.error("An error was occurred on the server")
+                        }
+                    })
+                }
+            })
+        })
+
+        $(document).on('click', '.edit_video_btn', function() {
+            var id = $(this).closest('div').attr('data-id')
+            var page, position, video, status;
+            $.ajax({
+                url: '<%= site_url + prefix %>/page-videos/choose',
+                method: "POST",
+                data: {id: id},
+                dataType: "json",
+                success: function (data) {
+                    video = data['video']
+                    page = data['page']
+                    position = data['position']
+                    status = data['status']
+                }
+            }).then(() => {
+                window.id = id
+                $("#edit_video_url").val(video)
+                $("#edit_video_page").val(page)
+                $("#edit_video_position").html("")
+                for(i = 0 ; i < VIDEO_POSITION[page].length ; i++)
+                    $("#edit_video_position").append("<option value='"+VIDEO_POSITION[page][i]+"'>"+VIDEO_POSITION[page][i]+"</option>")
+                $("#edit_video_position").val(position)
+                $("#edit_video_status").val(status)
+                $("#video_edit_modal").modal('show')
+            })
+        })
+
+        $("#page_video_add_btn").click(function () {
+            var video = $("#add_video_url").val()
+            var page = $("#apage").val()
+            var position = $("#aposition").val()
+            $.ajax ({
+                url: '<%= site_url + prefix %>/page-videos/create',
+                method: "POST",
+                data: {
+                    video: video, 
+                    page:page, 
+                    position:position
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == "success") {
+                        aboutus_video_tb.ajax.reload()
+                        mynotify('success', 'Added Successfully!')
+                    }
+                },
+                error: function () {
+                    toastr.error("An error was occurred on the server!")
+                }
+            })
+        })
+
+        $("#page_video_edit_btn").click(function () {
+            var id = window.id
+            var video = $("#edit_video_url").val()
+            var page = $("#edit_video_page").val()
+            var position = $("#edit_video_position").val()
+            var status = $("#edit_video_status").val()
+            
+            $.ajax ({
+                url: '<%= site_url + prefix %>/page-videos/update',
+                method: "POST",
+                data: {id: id, video: video, page:page, position:position, status: status},
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == "success") {
+                        aboutus_video_tb.ajax.reload()
+                        mynotify('success', 'Updated Successfully')
+                    }
+                },
+                error: function () {
+                    toastr.error("An error was occurred on the server!")
+                }
+            })
+        })
+
+    })
+</script>
+
+</html>

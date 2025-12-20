@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../header') %>
+
+<style>
+    /* input-shake */
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        20% { transform: translateX(-7px); }
+        40% { transform: translateX(5px); }
+        60% { transform: translateX(-3px); }
+        80% { transform: translateX(1px); }
+        100% { transform: translateX(0); }
+    }
+    .shake {
+        animation: shake 0.4s ease-in-out;
+    }
+    .password-container {
+        position: relative;
+    }
+    .password-container .toggle-answer {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="wrapper border">
+        <div class="main">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class = 'container' style = 'max-width:500px!important;margin-top: 50px;'>
+                        <div class="text-center mb-10">
+                            <a href="" class="brand-logo">
+                                <img class="logo-img" alt="Logo" src="<%= site_url %>/assets/images/logo.png" style="width:90%;"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header card-header-primary">
+                                        <h1 class="card-title text-center">USER SECURITY</h1>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-7">
+                                                    <h4 class="card-category" id="question"><%= question.en %></h4>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="password-container">
+                                                            <input type="password" class="form-control" name="answer" id="answer" placeholder="Input your answer" required data-eye />
+                                                            <i class="fas fa-eye toggle-answer"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button id="submit" type="submit" class="btn btn-light-primary pull-right" style = 'width:100%;'>SUBMIT</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(async function () {
+        $("#submit").click(function () {
+            const entry = {
+                answer: $("#answer").val()
+            }
+
+            if (!entry.answer) {
+                const input = document.getElementById('answer')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+
+            $.post({
+                url: "<%= site_url + prefix %>/confirmSecurity",
+                data: entry,
+                dataType: "json",
+                success: function (res) {
+                    if (res.status === "success") {
+                        window.location.href = res.url
+                    }
+                }, error: function (xhr, status, error) {
+                    toastr.error("Error has occurred on the server!")
+                }
+            })
+
+        })
+
+        $('.toggle-answer').on('click', function () {
+            const answerInput = $('#answer')
+            const type = answerInput.attr('type') === 'password' ? 'text' : 'password'
+            answerInput.attr('type', type)
+            $(this).toggleClass('fa-eye fa-eye-slash')
+        })
+
+    })
+</script>
+
+</html>

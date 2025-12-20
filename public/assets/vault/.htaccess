@@ -1,0 +1,8 @@
+# Deny all access by default
+Deny from all
+
+# Allow access to ServeAsset controller
+<Files "index.php">
+    Order Allow,Deny
+    Allow from all
+</Files>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('header') %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row mb-3">
+                        <div class="col-12 d-flex d-flex align-items-center justify-content-end">
+                            <div class = "mr-1">Show:</div>
+                            <div class = "d-flex align-items-center"><input type = "checkbox" id = "orientation_toggle" style = "width:20px; height:20px;"></div>
+                        </div>
+                    </div>
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-2"><h3>Orientation Title and Description</h3></div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h6>Title(En)</h6>
+                                <input class="form-control" id="title_en" type="text" value="<%= component.t_orientation_title.en %>" />
+                            </div>
+                            <div class="form-group">
+                                <h6>Description(En)</h6>
+                                <textarea class="form-control" id="desc_en" rows="6"><%- component.t_orientation_desc.en %></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h6>Title(Es)</h6>
+                                <input class="form-control" id="title_es" type="text" value="<%= component.t_orientation_title.es %> "/>
+                            </div>
+                            <div class="form-group">
+                                <h6>Description(Es)</h6>
+                                <textarea class="form-control" id="desc_es" rows="6"><%- component.t_orientation_desc.es %></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 text-right">
+                            <button class="btn btn-light-primary pull-right" onclick = "updateOrientationDesc();">Update</button>
+                        </div>
+                    </div>
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <div><h3>Orientation Documents</h3></div>
+                            <div class='doc_add btn btn-light-primary btn-icon'><i class='fa fa-plus'></i></div>
+                        </div>
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table" id="doc_tb">
+                                    <thead>
+                                        <th>Page</th>
+                                        <th>English</th>
+                                        <th>Español</th>
+                                        <th>English Doc</th>
+                                        <th>Español Doc</th>
+                                        <th style="width:150px;">Action</th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="doc_add_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add Document</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Title (English)</h6>
+                                    <input name = 'doc_en_title' id = 'doc_en_title' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Title (Español)</h6>
+                                    <input name = 'doc_es_title' id = 'doc_es_title' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Desc (English)</h6>
+                                    <textarea name = 'doc_en_desc' id = 'doc_en_desc' class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Desc (Español)</h6>
+                                    <textarea name = 'doc_es_desc' id = 'doc_es_desc' class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" onclick = "addDoc();">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="doc_edit_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit Document</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Title (English)</h6>
+                                    <input name = 'edoc_en_title' id = 'edoc_en_title' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Title (Español)</h6>
+                                    <input name = 'edoc_es_title' id = 'edoc_es_title' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Desc (English)</h6>
+                                    <textarea name = 'edoc_en_desc' id = 'edoc_en_desc' class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Desc (Español)</h6>
+                                    <textarea name = 'edoc_es_desc' id = 'edoc_es_desc' class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" onclick = "updateDoc();">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="doc_upload_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit Document</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>File (English)</h6>
+                                    <div class="custom-file form-group">
+                                        <input type="file" class="custom-file-input" id="edoc_en_file" name="edoc_en_file">
+                                        <label class="custom-file-label" for="edoc_en_file" id="edoc_en_file_label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>File (Español)</h6>
+                                    <div class="custom-file form-group">
+                                        <input type="file" class="custom-file-input" id="edoc_es_file" name="edoc_es_file">
+                                        <label class="custom-file-label" for="edoc_es_file" id="edoc_es_file_label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" onclick = "uploadDoc();">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function(){
+        const doctable = $('#doc_tb').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            "ajax": {
+                "url": "<%= site_url + prefix %>/orientations/read",
+                "type": "GET"
+            },
+            "columns": [
+                { data: 'id' },
+                { data: 'en_title' },
+                { data: 'es_title'},
+                { data: 'en_doc',
+                    render: function (data, type, row) {
+                        if(row.en_doc != null)
+                            return `<a href="<%= site_url %>/assets/documents/${row.en_doc}" target="_blank">${row.en_doc}</a>`
+                        else
+                            return ""
+                    }
+                },
+                { data: 'es_doc',
+                    render: function (data, type, row) {
+                        if(row.es_doc != null)
+                            return `<a href="<%= site_url %>/assets/documents/${row.es_doc}" target="_blank">${row.es_doc}</a>`
+                        else
+                            return ""
+                    }
+                },
+                { data: 'id',
+                    render: function (data, type, row) {
+                        return `
+                        <div idkey="${row.id}">
+                            <span class="btn btn-icon btn-sm btn-light-primary upload_document_btn"><i class="fa fa-file"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-warning doceditbtn"><i class="fas fa-edit"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-danger  docdeletebtn"><i class="fas fa-trash"></i></span>
+                        </div>
+                        `
+                    }
+                }
+            ]
+        });
+
+        $(document).on("click",".docdeletebtn",function() {
+            window.id = $(this).parent().attr("idkey")
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax ({
+                        url: '<%= site_url + prefix %>/orientations/delete',
+                        method: "POST",
+                        data: {id: window.id},
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.status == "success") {
+                                doctable.ajax.reload()
+                                toastr.success("Deleted Successfully!")
+                            } else {
+                                toastr.error("Failed in Delete")
+                            }
+                        },
+                        error: function () {
+                            toastr.error("An error was occurred on the server")
+                        }
+                    })
+                }
+            })
+        })
+
+        $(document).on("click",".upload_document_btn",function() {
+            window.id = $(this).parent().attr("idkey")
+            $("#edoc_es_file").val('')
+            $("#edoc_es_file").val('')
+            $("#edoc_en_file_label").html('')
+            $("#edoc_es_file_label").html('')
+            $("#doc_upload_modal").modal('show')
+        })
+
+        $(document).on("click",".doceditbtn",function() {
+            window.id = $(this).parent().attr("idkey")
+            $.ajax ({
+                url: '<%= site_url + prefix %>/orientations/choose',
+                method: "POST",
+                data: {id:window.id},
+                dataType: "json",
+                success: function (res) {
+                    const data = res.data
+                    $("#edoc_page").val(data['page']);
+                    $("#edoc_en_title").val(data['en_title'])
+                    $("#edoc_es_title").val(data['es_title'])
+                    $("#edoc_en_desc").val(data['en_desc'])
+                    $("#edoc_es_desc").val(data['es_desc'])
+                    $("#doc_edit_modal").modal('show')
+                }
+            })
+        })
+
+        $(".doc_add").click(function() {
+            $("#doc_add_modal").modal("show")
+        })
+
+        handleAreaToggleBox('#orientation_toggle', 'orientation_area')
+    })
+
+    function updateOrientationDesc() {
+        title_en = $("#title_en").val()
+        title_es = $("#title_es").val()
+
+        desc_en = $("#desc_en").val()
+        desc_es = $("#desc_es").val()
+        $.ajax({
+            url: '<%= site_url + prefix %>/orientations/updateOrientationDesc',
+            method: "POST",
+            data: {
+                title_en: title_en, 
+                title_es: title_es, 
+                desc_en: desc_en, 
+                desc_es: desc_es
+            },
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    handleResponse("ok")
+                } else {
+                    toastr.error("Failed in Update")
+                }
+            }, error : function () {
+                toastr.error("An error was occurred on the server")
+            }
+        })
+    }
+    
+    function uploadDoc() {
+        var fd = new FormData()
+        var enfile = $('#edoc_en_file')[0].files
+        var esfile = $('#edoc_es_file')[0].files
+        if(enfile.length > 0 ){
+            fd.append('enfile',enfile[0])
+        }
+        if(esfile.length > 0 ){
+            fd.append('esfile',esfile[0])
+        }
+        fd.append('id', window.id)
+        $.ajax({
+            url: '<%= site_url + prefix %>/orientations/uploadDocument',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    $("#doc_tb").DataTable().ajax.reload()
+                    mynotify('success','Update Success')
+                } else{
+                    mynotify('danger','Update Fail')
+                }
+            },
+            error: function () {
+                mynotify("danger", "An error was occurred on the server")
+            }
+        })
+    }
+
+    function updateDoc() {
+        const params = {
+            id: window.id,
+            title_en: $("#edoc_en_title").val(),
+            title_es: $("#edoc_es_title").val(),
+            desc_en: $("#edoc_en_desc").val(),
+            desc_es: $("#edoc_es_desc").val()
+        }
+        $.ajax({
+            url: '<%= site_url + prefix %>/orientations/update',
+            type: 'post',
+            data: params,
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    $("#doc_tb").DataTable().ajax.reload()
+                    mynotify('success','Update Success')
+                } else {
+                    mynotify('danger','Update Fail')
+                }
+            },
+            error: function () {
+                mynotify("danger", "An error was occurred on the server")
+            }
+        })
+    }
+
+    function addDoc() {
+        const params = {
+            id: window.id,
+            title_en: $("#doc_en_title").val(),
+            title_es: $("#doc_es_title").val(),
+            desc_en: $("#doc_en_desc").val(),
+            desc_es: $("#doc_es_desc").val()
+        }
+        $.ajax({
+            url: '<%= site_url + prefix %>/orientations/create',
+            type: 'post',
+            data: params,
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    $("#doc_tb").DataTable().ajax.reload()
+                    mynotify('success','Add Success')
+                } else {
+                    mynotify('danger','Add Fail')
+                }
+            },
+            error: function () {
+                mynotify("danger", "An error was occurred on the server")
+            }
+        })
+    }
+
+</script>
+
+</html>

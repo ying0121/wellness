@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../header') %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('../mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('../sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('../navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row">
+                        <div class="col-md-12 bg-primary p-2 mb-2 text-white">
+                            <div class="d-flex justify-content-around">
+                                <div class="d-flex align-items-center" style="font-size:20px; font-weight:bold;">Setting</div>
+                                <ul class="nav nav-tabs nav-pills" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white active" href="#home" data-toggle="tab">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#communication" data-toggle="tab">Communication</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#language" data-toggle="tab">Language Component</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#metrics" data-toggle="tab">Meta Language</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#api" data-toggle="tab">API</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#patientarea" data-toggle="tab">Patient Area</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#icons" data-toggle="tab">Icons</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#security" data-toggle="tab">Security</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#system" data-toggle="tab">System</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#payment" data-toggle="tab">Payment</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#newsletterimage" data-toggle="tab">Newsletter Image</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="home">
+                                    <%- include('home') %>
+                                </div>
+                                <div class="tab-pane" id="communication">
+                                    <%- include('communication') %>
+                                </div>
+                                <div class="tab-pane" id="language">
+                                    <%- include('language') %>
+                                </div>
+                                <div class="tab-pane" id="metrics">
+                                    <%- include('meta') %>
+                                </div>
+                                <div class="tab-pane" id="api">
+                                    <%- include('api') %>
+                                </div>
+                                <div class="tab-pane" id="patientarea">
+                                    <%- include('patient_area') %>
+                                </div>
+                                <div class="tab-pane" id="icons">
+                                    <%- include('icons') %>
+                                </div>
+                                <div class="tab-pane" id="security">
+                                    <%- include('security') %>
+                                </div>
+                                <div class="tab-pane" id="system">
+                                    <%- include('system_info') %>
+                                </div>
+                                <div class="tab-pane" id="payment">
+                                    <%- include('payment') %>
+                                </div>
+                                <div class="tab-pane" id="newsletterimage">
+                                    <%- include('newsletterimage') %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<div id="animated-3d-background-container">
+    <div class="container aos py-4" data-aos="fade-up">
+        <!-- Insurance -->
+        <div class="row video-content rounded-5 aos" data-aos="fade-up">
+            <!-- Insurance Title -->
+            <h1 class="text-white text-center"><%- component_text.t_ins_title %></h1>
+            <p class="text-white fs-5 mb-4 text-center"><%- component_text.t_ins_desc %> <a href="./contact" class="text-danger fst-italic" target="_blank"><%= component_text.menu_contact %></a></p>
+            <!-- /Insurance Title -->
+            <% for (let i = 0; i < insurances.length; i++) { %>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="video-blur rounded-4" style="background: white;">
+                        <div class="d-flex justify-content-center align-items-center" style="height: 110px;">
+                            <div class="doc-pro-img">
+                                <a href="javascript:;">
+                                    <div class="javascript:;">
+                                        <img src="./assets/images/insurance/<%= insurances[i].img %>" class="img-fluid" alt="<%= insurances[i].name %>">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="doc-content">
+                            <div class="doc-pro-info">
+                                <div class="doc-pro-name">
+                                    <a href="javascript:;" class="fs-6 text-black"><%= insurances[i].name %></a>
+                                </div>
+                            </div>
+                            <p class="m-0 p-0 fs-6 text-black"><i class="feather-map-pin"></i> <%= insurances[i].address %>, <%= insurances[i].city %>, <%= insurances[i].zip %></p>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <!-- /Insurance -->
+    </div>
+</div>

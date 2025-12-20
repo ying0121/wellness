@@ -1,0 +1,180 @@
+<script>
+    const id = "<%= letter.id %>"
+    $(document).ready(function() {
+        // request letter
+        $("#request_letter").click(function() {
+            const title = $(this).attr("data-title")
+            $.ajax({
+                url: '<%= site_url %>/letters/getCost',
+                method: 'POST',
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(res) {
+                    const cost = parseFloat(res.cost)
+                    if (cost > 0) { // payment modal
+                        $("#payment-modal-title").text(title + ` - $${cost}`)
+
+                        $("#show-letter-payment-modal-btn").click()
+
+                        // initialize payment form
+                        $("#payment-category").val("letter")
+                        $("#payment-category-id").val(id)
+                        
+                        payment_items = [{
+                            id: title,
+                            amount: cost * 100.0
+                        }]
+                        initialize()
+                    } else { // request modal
+                        // if login
+                        const isLogged = "<%= patient_id > 0 %>"
+                        if (isLogged == 1) {
+                            $("#letter-fname").val("<%= patient_info.fname %>")
+                            $("#letter-lname").val("<%= patient_info.lname %>")
+                            $("#letter-phone").val("<%= patient_info.phone %>")
+                            $("#letter-dob").val("<%= patient_info.dob %>")
+                            $("#letter-email").val("<%= patient_info.email %>")
+                        } else {
+                            $("#letter-fname").val("")
+                            $("#letter-lname").val("")
+                            $("#letter-dob").val("")
+                            $("#letter-email").val("")
+                            $("#letter-phone").val("")
+                        }
+                        $("#letter-message").val("")
+                        $("#letter-captcha").val("")
+
+                        $("#letter").val(title)
+                        $("#letter_title").text(`<%= component_text.t_request_letter %> - ${title}`)
+
+                        $("#show-letter-modal-btn").click()
+                    }
+                }
+            })
+        })
+
+        $("#letter_request_modal_send").click(function() {
+            const entry = {
+                fname: $("#letter-fname").val(),
+                lname: $("#letter-lname").val(),
+                dob: $("#letter-dob").val(),
+                email: $("#letter-email").val(),
+                phone: $("#letter-phone").val(),
+                subject: "Letter Category",
+                contact_reason: $("#letter").val(),
+                message: $("#letter-message").val(),
+                captcha: $("#letter-captcha").val(),
+                opt_status: $('input[name="letter-opt_status"]:checked').val()
+            }
+
+            var errors = ""
+            if (entry.fname == "" || entry.lname == "") {
+                errors += '<%= component_text.m_invalid_name %>'
+            } else if (entry.dob == "") {
+                errors += '<%= component_text.m_invalid_dob %>'
+            } else if (entry.email == "") {
+                errors += '<%= component_text.m_invalid_email %>'
+            } else if (entry.phone == "") {
+                errors += '<%= component_text.m_invalid_phone %>'
+            } else if (entry.subject == "") {
+                errors += '<%= component_text.m_invalid_subject %>'
+            } else if (entry.message == "") {
+                errors += '<%= component_text.m_invalid_message %>'
+            } else if (entry.captcha == "") {
+                errors += '<%= component_text.m_invalid_captcha %>'
+            }
+            if (errors) {
+                Swal.fire({
+                    title: '<%= component_text.t_invalid_info %>',
+                    text: errors,
+                    icon: 'warning',
+                    confirmButtonText: 'Cool'
+                })
+                return false;
+            } else {
+                const encrypt = new JSEncrypt();
+                encrypt.setPublicKey(`<%= public_key %>`);
+
+                $.post({
+                    method: "POST",
+                    url: '<%= site_url %>/letters/submitForLetter',
+                    data: {
+                        contact_name: entry.fname + " " + entry.lname,
+                        contact_email: entry.email,
+                        contact_cel: entry.phone,
+                        contact_dob: entry.dob,
+                        contact_captcha: entry.captcha,
+                        contact_lang: `<%= language %>`,
+                        contact_subject: entry.subject,
+                        contact_message: entry.message,
+                        contact_time: "Anytime",
+                        opt_status: entry.opt_status,
+                        contactpttype: "",
+                        contactusertype: "Patient",
+                        contactreason: entry.contact_reason
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            Swal.fire({
+                                title: '<%= component_text.c_case %>' + '#: ' + data.id + '<%= acronym %>',
+                                text: '<%= component_text.t_contact_result_success %>',
+                                icon: 'success',
+                            });
+
+                            $("#letter_request_modal_close").click()
+                        } else if (data.status == "error" && data.message == "captcha") {
+                            Swal.fire({
+                                title: '<%= component_text.c_alert_incorrect_captcha %>',
+                                text: data.status,
+                                icon: 'error',
+                            });
+                            $('#letter_captcha_image').html(data.captcha)
+                        } else if (data.status == "error" && data.message == "mail") {
+                            Swal.fire({
+                                title: '<%= component_text.c_failed_mail %>',
+                                text: data.status,
+                                icon: 'error',
+                            });
+                            $('#letter_captcha_image').html(data.captcha)
+                        } else {
+                            Swal.fire({
+                                title: '<%= component_text.c_error %>',
+                                text: data.status,
+                                icon: 'error',
+                            });
+                            $('#letter_captcha_image').html(data.captcha)
+                        }
+                    }
+                })
+            }
+        })
+
+        $("letter_captcha_change").click(function() {
+            $.post({
+                url: '<%= site_url %>/changeCaptchaImage',
+                method: 'POST',
+                data: {
+                    type: "letter"
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#letter_captcha_image').html(res.image)
+                }
+            })
+        })
+
+        $('letter_opt_more_info_btn').click(function(e) {
+            e.preventDefault()
+            if ($('#letter_opt_moreinfo').hasClass('d-none')) {
+                $('#letter_opt_moreinfo').removeClass('d-none')
+                $('#letter_opt_more_info_btn').text("<< " + "<%= component_text.t_opt_less_info %>")
+            } else {
+                $('#letter_opt_moreinfo').addClass('d-none')
+                $('#letter_opt_more_info_btn').text("<%= component_text.t_opt_more_info %>" + " >>")
+            }
+        })
+    })
+</script>

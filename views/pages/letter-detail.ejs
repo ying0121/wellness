@@ -1,0 +1,30 @@
+<div class="container">
+    <!-- Letter Detail title -->
+    <div class="container my-5">
+        <p class="h1"><%= letter.title %></p>
+    </div>
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="d-flex justify-content-center justify-content-md-end my-md-3 mb-4 mb-md-0">
+                    <i class="fa fa-<%= letter.icon %>" style="font-size: 240px;"></i>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="w-100 d-flex justify-content-center justify-content-md-start align-items-center flex-wrap gap-4 mb-3">
+                    <button data-bs-toggle="modal" data-bs-target="#payment-modal" class="d-none" id="show-letter-payment-modal-btn"></button>
+                    <button data-bs-toggle="modal" data-bs-target="#letter_request_modal" class="d-none" id="show-letter-modal-btn"></button>
+                    <button id="request_letter" type="button" class="btn btn-lg btn-danger" data-title="<%= letter.title %>"><%= component_text.t_request %></button>
+                </div>
+                <div class="d-flex justify-content-center justify-content-md-start align-items-center flex-wrap">
+                    <img src="<%= qrcode %>" style="margin-left: -5px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Letter Details -->
+    <div class="container mb-5">
+        <div class="mb-3 text-black"><%- letter.short_desc %></div>
+        <div class="mb-3 text-black"><%- letter.long_desc %></div>
+    </div>
+</div>

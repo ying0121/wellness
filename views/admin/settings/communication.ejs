@@ -1,0 +1,725 @@
+
+<style>
+    .fs-3 {
+        font-size: 1.5rem;
+    }
+
+    .fs-4 {
+        font-size: 1.25rem;
+    }
+</style>
+
+<div class="row my-3 p-10 bg-white border rounded">
+    <div class="col-12 my-3">
+        <h3>Communication Setting</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12 bg-primary p-2 mb-2 text-white">
+            <ul class="nav nav-tabs nav-pills" data-tabs="tabs">
+                <li class="nav-item">
+                    <a class="nav-link text-white active" href="#contact_email" data-toggle="tab">Contact Emails</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#contact_reason" data-toggle="tab">Contact Reason</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#optin_out" data-toggle="tab">Opt In & Out</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#send_to_friend" data-toggle="tab">Send To Friend</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div class="tab-pane active" id="contact_email">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                <h3>Contact Email</h3>
+                                <div><span id="setting_contact_email_add" class='btn btn-light-primary btn-icon'><i class='fa fa-plus'></i></span></div>
+                            </div>
+                            <input type="hidden" id="contact_email_chosen_id" />
+                        </div>
+                        <div class="col-12">
+                            <table class="table" id="setting_contact_email_table">
+                                <thead>
+                                    <th>Contact Name</th>
+                                    <th>Email</th>
+                                    <th>Account Request</th>
+                                    <th>General Online</th>
+                                    <th>Specific Online</th>
+                                    <th>Payment Email</th>
+                                    <th style="min-width:150px;">Action</th>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="contact_reason">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class = "col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <div class = "col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                <h3>Contact Reason</h3>
+                                <div><span id="setting_contact_reason_add" class = 'btn btn-light-primary btn-icon' ><i class = 'fa fa-plus'></i></span></div>
+                            </div>
+                            <input type="hidden" id="contact_reason_chosen_id" />
+                        </div>
+                        <div class="col-12">
+                            <table class="table" id="setting_contact_reason_table">
+                                <thead>
+                                    <th>English</th>
+                                    <th>Spanish</th>
+                                    <th style="min-width:150px;">Action</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="optin_out">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <div><h3>Contact Opt in & out</h3></div>
+                            <input type="hidden" id="chosen_id" />
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input class="form-check-input" type="radio" name="contact_optin_out" id="contact_optinout_email" checked>
+                            <label class="form-check-label" for="contact_optinout_email">Email</label>
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input class="form-check-input" type="radio" name="contact_optin_out" id="contact_optinout_sms">
+                            <label class="form-check-label" for="contact_optinout_sms">SMS</label>
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input class="form-check-input" type="radio" name="contact_optin_out" id="contact_optinout_whatsapp">
+                            <label class="form-check-label" for="contact_optinout_whatsapp">Whatsapp</label>
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input class="form-check-input" type="radio" name="contact_optin_out" id="contact_optinout_social">
+                            <label class="form-check-label" for="contact_optinout_social">Social Media</label>
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input class="form-check-input" type="radio" name="contact_optin_out" id="contact_optinout_all">
+                            <label class="form-check-label" for="contact_optinout_all">All</label>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Header Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Header Text</h3>
+                                <div id="opt_header_en" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Texto del encabezado</h3>
+                                <div id="opt_header_sp" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Opt In -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Opt In</h3>
+                                <div id="opt_in_en" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Optar por participar</h3>
+                                <div id="opt_in_sp" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Opt Out -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Opt Out</h3>
+                                <div id="opt_out_en" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Optar por no participar</h3>
+                                <div id="opt_out_sp" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Footer Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Footer Text</h3>
+                                <div id="opt_footer_en" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Texto de pie de página</h3>
+                                <div id="opt_footer_sp" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- More Info -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">More Info</h3>
+                                <div id="opt_more_en" class="opt_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Más informacióna</h3>
+                                <div id="opt_more_sp" class="opt_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="opt_in_out_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="send_to_friend">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <h3>Send To Friend</h3>
+                        </div>
+                        <!-- Subject -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Subject</h3>
+                                <div id="sf_subject_en" class="sf_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Sujeto</h3>
+                                <div id="sf_subject_es" class="sf_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Updated Text -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Updated Text</h3>
+                                <div id="sf_updated_text_en" class="sf_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Texto actualizado</h3>
+                                <div id="sf_updated_text_es" class="sf_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="sf_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contactemail_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <input type="hidden" id="contactemail_type" />
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title ">Contact Emails</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class='col-md-12'>
+                        <div class="form-group">
+                            <h6>Contact Name</h6>
+                            <input class="form-control" id="contact_name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <h6>Contact Email</h6>
+                            <input class="form-control" id="email" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex d-flex align-items-center mb-5">
+                        <input type="checkbox" name="type" id="account_request" style="width:21px; height:21px;">
+                        <label class="m-0 mx-3 fs-4" for="account_request">Account Request</label>
+                    </div>
+                    <div class="col-md-6 d-flex d-flex align-items-center mb-5">
+                        <input type="checkbox" name="type" id="general_online" style="width:21px; height:21px;">
+                        <label class="m-0 mx-3 fs-4" for="general_online">General Online</label>
+                    </div>
+                    <div class="col-md-6 d-flex d-flex align-items-center mb-5">
+                        <input type="checkbox" name="type" id="specific_online" style="width:21px; height:21px;">
+                        <label class="m-0 mx-3 fs-4" for="specific_online">Specific Online</label>
+                    </div>
+                    <div class="col-md-6 d-flex d-flex align-items-center mb-5">
+                        <input type="checkbox" name="type" id="payment_email" style="width:21px; height:21px;">
+                        <label class="m-0 mx-3 fs-4" for="payment_email">Payment Email</label>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" id="contactemail_modal_save" class="btn btn-light-primary" data-dismiss="modal">Done</button>
+                <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contactreason_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <input type="hidden" id="contactreason_type" />
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title ">Contact Reason</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class = "row">
+                    <div class = 'col-md-12'>
+                        <div class="form-group">
+                            <h6>English</h6>
+                            <input class="form-control" id="contact_en_name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <h6>Spanish</h6>
+                            <input class="form-control" id="contact_sp_name" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" id="contactreason_modal_save" class="btn btn-light-primary" data-dismiss="modal">Done</button>
+                <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        const setting_contact_email_table = $('#setting_contact_email_table').DataTable({
+            "pagingType": "full_numbers",
+            "order": [
+                [0, 'desc']
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            "ajax": {
+                "url": '<%= site_url + prefix %>/settings/contact-email/read',
+                "type": "POST",
+                "data": function(data) {}
+            },
+            "columns": [{
+                    data: 'contact_name'
+                },
+                {
+                    data: 'email'
+                },
+                {
+                    data: 'account_request',
+                    render: function(data, type, row) {
+                        if (data == 1) {
+                            return `<span class="btn btn-light-primary">True</span>`
+                        } else {
+                            return `<span class="btn btn-light-danger">False</span>`
+                        }
+                    }
+                },
+                {
+                    data: 'general_online',
+                    render: function(data, type, row) {
+                        if (data == 1) {
+                            return `<span class="btn btn-light-primary">True</span>`
+                        } else {
+                            return `<span class="btn btn-light-danger">False</span>`
+                        }
+                    }
+                },
+                {
+                    data: 'specific_online',
+                    render: function(data, type, row) {
+                        if (data == 1) {
+                            return `<span class="btn btn-light-primary">True</span>`
+                        } else {
+                            return `<span class="btn btn-light-danger">False</span>`
+                        }
+                    }
+                },
+                {
+                    data: 'payment_email',
+                    render: function(data, type, row) {
+                        if (data == 1) {
+                            return `<span class="btn btn-light-primary">True</span>`
+                        } else {
+                            return `<span class="btn btn-light-danger">False</span>`
+                        }
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        return `
+                        <div idkey="` + row.id + `">
+                            <span class='btn btn-icon mx-1 btn-sm btn-light-warning contact_email_edit_btn'><i class='fas fa-edit'></i></span>
+                            <span class='btn btn-icon mx-1 btn-sm btn-light-danger contact_email_delete_btn'><i class='fa fa-trash'></i></span>
+                        </div>
+                        `
+                    }
+                }
+            ]
+        });
+
+        $('#setting_contact_email_add').click(function() {
+            $('#contactemail_type').val('0');
+
+            $('#contact_name').val('')
+            $('#email').val('')
+
+            $('#contactemail_modal').modal('show');
+        });
+
+        $(document).on('click', '.contact_email_delete_btn', function() {
+            var id = $(this).parent().attr('idkey');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '<%= site_url + prefix %>/settings/contact-email/delete',
+                        method: "POST",
+                        data: {
+                            id: id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            if (res.status == "success") {
+                                toastr.success('Deleted Successfully!');
+                                setting_contact_email_table.ajax.reload();
+                            } else {
+                                toastr.error('Action Failed!');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).on('click', '.contact_email_edit_btn', function() {
+            var contact_name = '', email = '';
+
+            var id = $(this).parent().attr('idkey');
+            $('#contactemail_type').val('1');
+            $('#contact_email_chosen_id').val(id);
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/contact-email/choose',
+                method: "POST",
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(result) {
+                    if (result) {
+                        $('#contact_name').val(result.contact_name);
+                        $('#email').val(result.email);
+                        $("#account_request").prop("checked", result.account_request == 1 ? true : false);
+                        $("#general_online").prop("checked", result.general_online == 1 ? true : false);
+                        $("#specific_online").prop("checked", result.specific_online == 1 ? true : false);
+                        $("#payment_email").prop("checked", result.payment_email == 1 ? true : false);
+                    }
+                }
+            }).then(() => {
+                $("#contactemail_modal").modal('show');
+            });
+        });
+
+        $('#contactemail_modal_save').click(function() {
+            const id = $('#contact_email_chosen_id').val();
+            const type = $('#contactemail_type').val();
+
+            const contact_name = $('#contact_name').val();
+            const email = $('#email').val();
+            const account_request = $("#account_request").prop("checked") === true ? 1 : 0
+            const general_online = $("#general_online").prop("checked") === true ? 1 : 0
+            const specific_online = $("#specific_online").prop("checked") === true ? 1 : 0
+            const payment_email = $("#payment_email").prop("checked") === true ? 1 : 0
+
+            if (!contact_name) {
+                toastr.info('Please enter contact name!');
+                return;
+            }
+            if (!email) {
+                toastr.info('Please enter contact email!');
+                return;
+            }
+
+            $.ajax({
+                url: type == 1 ? '<%= site_url + prefix %>/settings/contact-email/update' : '<%= site_url + prefix %>/settings/contact-email/add',
+                method: 'POST',
+                data: {
+                    id: id,
+                    contact_name: contact_name,
+                    email: email,
+                    account_request: account_request,
+                    general_online: general_online,
+                    specific_online: specific_online,
+                    payment_email: payment_email
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if (res.status == 'success') {
+                        toastr.success('Saved successfully!');
+                        setting_contact_email_table.ajax.reload();
+                    } else if (res.status == 'existed') {
+                        toastr.warning('The email is already existed');
+                    } else {
+                        toastr.error('Action Failed!');
+                    }
+                }
+            })
+        })
+
+
+        const setting_contact_reason_table = $('#setting_contact_reason_table').DataTable({
+            "pagingType": "full_numbers",
+            "order": [[ 0, 'desc' ]],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            "ajax": {
+                "url": '<%= site_url + prefix %>/settings/contact-reason/read',
+                "type": "POST",
+                "data": function(data) {
+                }
+            },
+            "columns": [
+                { data: 'en_name' },
+                { data: 'sp_name' },
+                { data: 'id',
+                    render: function (data, type, row) {
+                        return `
+                        <div idkey="`+row.id+`">
+                            <span class='btn btn-icon mx-1 btn-sm btn-light-warning contact_reason_edit_btn'><i class='fas fa-edit'></i></span>
+                            <span class='btn btn-icon mx-1 btn-sm btn-light-danger contact_reason_delete_btn'><i class='fa fa-trash'></i></span>
+                        </div>
+                        `
+                    } 
+                }
+            ]
+        });
+        
+        $(document).on('click', '.contact_reason_edit_btn', function() {
+            var en_name = '', sp_name = '';
+
+            var id = $(this).parent().attr('idkey');
+            $('#contact_reason_chosen_id').val(id);
+            $('#contactreason_type').val('1');
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/contact-reason/choose',
+                method: "POST",
+                data: {id: id},
+                dataType: "json",
+                success: function (res) {
+                    if (res) {
+                        $('#contact_en_name').val(res.en_name);
+                        $('#contact_sp_name').val(res.sp_name);
+                    }
+                }
+            }).then(() => {
+                $("#contactreason_modal").modal('show');
+            });
+        });
+
+        $('#contactreason_modal_save').click(function () {
+            var id = $('#contact_reason_chosen_id').val();
+            var type = $('#contactreason_type').val();
+
+            var en_name = $('#contact_en_name').val();
+            var sp_name = $('#contact_sp_name').val();
+
+            if (!en_name) {
+                toastr.info('Please enter english reason!');
+                return;
+            }
+            if (!sp_name) {
+                toastr.info('Please enter spanish reason!');
+                return;
+            }
+
+            $.ajax({
+                url: type == 1 ? '<%= site_url + prefix %>/settings/contact-reason/update' : '<%= site_url + prefix %>/settings/contact-reason/add',
+                method: 'POST',
+                data: {
+                    id: id,
+                    en_name: en_name,
+                    sp_name: sp_name
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Saved Successfully!');
+                        setting_contact_reason_table.ajax.reload();
+                    } else if (res.status == 'existed') {
+                        toastr.warning('This reason is already existed');
+                    } else {
+                        toastr.error('Action Failed!');
+                    }
+                }
+            })
+        });
+
+        $('#setting_contact_reason_add').click(function() {
+            $('#contactreason_type').val('0');
+            $('#contactreason_modal').modal('show');
+        });
+
+        $(document).on('click', '.contact_reason_delete_btn', function () {
+            var id = $(this).parent().attr('idkey');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax ({
+                        url: '<%= site_url + prefix %>/settings/contact-reason/delete',
+                        method: "POST",
+                        data: {id: id},
+                        dataType: "json",
+                        success: function (res) {
+                            if(res.status == "success") {
+                                toastr.success('Deleted Successfully!');
+                                setting_contact_reason_table.ajax.reload();
+                            } else {
+                                toastr.error('Action Failed!');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    
+
+        $('.opt_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        });
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/opt/read',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#opt_header_en').summernote('code', result.t_opt_in_out_header.en);
+                    $('#opt_header_sp').summernote('code', result.t_opt_in_out_header.es);
+                    $('#opt_in_en').summernote('code', result.t_opt_in_out_in.en);
+                    $('#opt_in_sp').summernote('code', result.t_opt_in_out_in.es);
+                    $('#opt_out_en').summernote('code', result.t_opt_in_out_out.en);
+                    $('#opt_out_sp').summernote('code', result.t_opt_in_out_out.es);
+                    $('#opt_footer_en').summernote('code', result.t_opt_in_out_footer.en);
+                    $('#opt_footer_sp').summernote('code', result.t_opt_in_out_footer.es);
+                    $('#opt_more_en').summernote('code', result.t_opt_in_out_more.en);
+                    $('#opt_more_sp').summernote('code', result.t_opt_in_out_more.es);
+                }
+            }
+        });
+
+        $('#opt_in_out_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/opt/update',
+                method: "POST",
+                data: {
+                    opt_header_en: $('#opt_header_en').summernote('code'), 
+                    opt_header_sp: $('#opt_header_sp').summernote('code'),
+                    opt_in_en: $('#opt_in_en').summernote('code'), 
+                    opt_in_sp: $('#opt_in_sp').summernote('code'),
+                    opt_out_en: $('#opt_out_en').summernote('code'), 
+                    opt_out_sp: $('#opt_out_sp').summernote('code'),
+                    opt_footer_en: $('#opt_footer_en').summernote('code'), 
+                    opt_footer_sp: $('#opt_footer_sp').summernote('code'),
+                    opt_more_en: $('#opt_more_en').summernote('code'), 
+                    opt_more_sp: $('#opt_more_sp').summernote('code'),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Action Success!');
+                    } else {
+                        toastr.error('Action Failed!');
+                    }
+                }
+            });
+        })
+
+
+        $('.sf_summernote').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/sf/read',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#sf_subject_en').summernote('code', result.t_sf_subject.en);
+                    $('#sf_subject_es').summernote('code', result.t_sf_subject.es);
+                    $('#sf_updated_text_en').summernote('code', result.t_sf_updated_text.en);
+                    $('#sf_updated_text_es').summernote('code', result.t_sf_updated_text.es);
+                }
+            }
+        });
+
+        $('#sf_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/sf/update',
+                method: "POST",
+                data: {
+                    sf_subject_en: $('#sf_subject_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    sf_subject_es: $('#sf_subject_es').summernote('code').replace(/<[^>]*>/g, ''),
+                    sf_updated_text_en: $('#sf_updated_text_en').summernote('code'),
+                    sf_updated_text_es: $('#sf_updated_text_es').summernote('code'),
+                },
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == 'success') {
+                        toastr.success('Action Success!');
+                    } else {
+                        toastr.error('Action Failed!');
+                    }
+                }
+            });
+        });
+    })
+</script>

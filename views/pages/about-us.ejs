@@ -1,0 +1,105 @@
+<div id="animated-3d-background-container">
+    <section class="about-section aos">
+        <div class="container">
+            <div class="row align-items-center" data-aos="fade-up">
+                <div class="col-lg-6 col-md-12 aos" data-aos="fade-right">
+                    <div class="about-img-info">
+                        <div class="about-inner-img">
+                            <div class="about-img col-md-6">
+                                <% let randomIndex = Math.floor(Math.random() * CENTRAL.length); %>
+                                <img src="assets/images/pageimgs/<%= CENTRAL[randomIndex].img %>" class="img-fluid" alt="about-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 aos" data-aos="fade-left">
+                    <div class="section-inner-header about-inner-header">
+                        <h2><p class="h1"><%- component_text.menu_about_us %></p></h2>
+                    </div>
+                    <div class="about-content">
+                        <div class="about-content-details">
+                            <p class="text-white"><%- component_text.t_about_clinic_desc %></p>
+                            <p class="text-white"><%- component_text.t_about_clinic_fdesc %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Hero Parallax Video -->
+</div>
+<!-- Quality Matrix -->
+<section style="background-color: #fafafa !important;" class="doctors-section" id="staff-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-12 aos" data-aos="fade-up">
+                <div class="section-inner-header about-inner-header align-items-center">
+                    <h2 class="text-center"><%= component_text.t_quality_metrics_title %></h2>
+                </div>
+                <div class="about-content">
+                    <div class="about-content-details">
+                        <p><%= component_text.t_quality_metrics_desc %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Tabs navs -->
+            <nav class="user-tabs mb-1">
+                <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                    <% let first = true; %>
+                    <% for (let i = 0; i < qualities.length; i++) { %>
+                        <% if (!qualities[i + 1] || qualities[i + 1].id !== qualities[i].id) { %>
+                            <li class="nav-item" role="presentation">
+                                <a data-mdb-tab-init class="nav-link <%= first ? 'active' : '' %>" id="ex3-tab-<%= i + 1 %>" href="#ex3-tabs-<%= i + 1 %>" data-bs-toggle="tab">
+                                    <%= qualities[i].quality_cat.catname %>
+                                </a>
+                            </li>
+                            <% first = false; %>
+                        <% } %>
+                    <% } %>
+                </ul>
+            </nav>
+            <!-- Tabs navs -->
+            <!-- Tabs content -->
+            <div class="tab-content" id="ex2-content">
+                <% first = true; %>
+                <% for (let i = 0; i < qualities.length; i++) { %>
+                    <% if (!qualities[i + 1] || qualities[i + 1].id !== qualities[i].id) { %>
+                        <div class="tab-pane fade <%= first ? 'show active' : '' %>" id="ex3-tabs-<%= i + 1 %>" role="tabpanel" aria-labelledby="ex3-tab-<%= i + 1 %>">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="h1 my-4 ms-4"><%= qualities[i].measurename %></p>
+                                    <p class="lead mb-3 ms-2"><%- qualities[i].mdesc %></p>
+                                    <div class="w-100 px-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="d-none d-md-block text-primary mb-2"><%= `${qualities[i].sdate} ~ ${qualities[i].edate}` %></p>
+                                            <p class="d-none d-md-block text-primary mb-2"><%= `Denominator: ${qualities[i].denominator}` %></p>
+                                            <p class="d-none d-md-block text-primary mb-2"><%= `Numerator: ${qualities[i].numerator}` %></p>
+                                            <p class="text-primary mb-2"><%= `${Math.round(qualities[i].numerator / qualities[i].denominator * 100)}%` %></p>
+                                        </div>
+                                        <div class="progress rounded rounded-pill" style="height: 15px;">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated rounded rounded-pill bg-success"
+                                                role="progressbar"
+                                                aria-valuenow="<%- Math.round(qualities[i].numerator / qualities[i].denominator * 100) %>"
+                                                aria-valuemin="0"
+                                                aria-valuemax="100"
+                                                style="width: <%= Math.round(qualities[i].numerator / qualities[i].denominator * 100) %>%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="lead">
+                                        <%- qualities[i].mfdesc %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <% first = false; %>
+                    <% } %>
+                <% } %>
+            </div>
+            <!-- Tabs content -->
+        </div>
+    </div>
+</section>
+<!-- /Quality Matrix -->

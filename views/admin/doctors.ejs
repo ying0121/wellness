@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('header') %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row mb-3">
+                        <div class = "col-12 d-flex d-flex align-items-center justify-content-end">
+                            <div class = "mr-1">Show:</div>
+                            <div class = "d-flex align-items-center"><input type = "checkbox" id = "doctor_toggle" style = "width:20px; height:20px;"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-2"><h3>Doctor Title and Description</h3></div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h6>Job(En)</h6>
+                                <input class="form-control" id="title_en" type="text" value="<%= component.t_doctor_title.en %>" />
+                            </div>
+                            <div class="form-group">
+                                <h6>Description(En)</h6>
+                                <textarea class="form-control" id="desc_en" rows="4"><%= component.t_doctor_desc.en %></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h6>Job(Es)</h6>
+                                <input class="form-control" id="title_es" type="text" value="<%= component.t_doctor_title.es %>" />
+                            </div>
+                            <div class="form-group">
+                                <h6>Description(Es)</h6>
+                                <textarea class="form-control" id="desc_es" rows="4"><%= component.t_doctor_desc.es %></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 text-right">
+                            <button class="btn btn-light-primary" onclick = "updateDoctorDesc();">Update</button>
+                        </div>
+                    </div>
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class = "col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <div><h3>Doctors</h3></div>
+                            <div><span class = 'add_doctor_btn btn btn-light-primary btn-icon' ><i class = 'fa fa-plus'></i></span></div>
+                            <input type="hidden" id="chosen_person_id" />
+                        </div>
+                        <div class = "col-12">
+                            <div class="table-responsive">
+                                <table class="table" id="doctor_tb">
+                                    <thead>
+                                        <th>Photo</th>
+                                        <th>Full Name</th>
+                                        <th>Job</th>
+                                        <th>Display</th>
+                                        <th>Action</th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_doctor_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add Doctor</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id = "adduserfrom" action="" method="post" enctype="multipart/form-data">
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Name (EN)</h6>
+                                    <input name = 'en_name' id = 'en_name' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Name (ES)</h6>
+                                    <input name = 'es_name' id = 'es_name' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Job (EN)</h6>
+                                    <input name = 'en_job' id = 'en_job' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Job (ES)</h6>
+                                    <input name = 'es_job' id = 'es_job' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Description (EN)</h6>
+                                    <div name = 'en_desc' id = 'en_desc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Full Description (EN)</h6>
+                                    <div name = 'en_fdesc' id = 'en_fdesc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Description (ES)</h6>
+                                    <div name = 'es_desc' id = 'es_desc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Full Description (ES)</h6>
+                                    <div name = 'es_fdesc' id = 'es_fdesc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Status</h6>
+                                    <select class="form-control" name="status" id="status" style="height:36px;">
+                                        <option value="1">Visible</option>
+                                        <option value="0">Invisible</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary add_doctor_confirm" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_doctor_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit Doctor</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id = "edituserfrom" action="" method="post" enctype="multipart/form-data">
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Name (EN)</h6>
+                                    <input name = 'een_name' id = 'een_name' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Name (ES)</h6>
+                                    <input name = 'ees_name' id = 'ees_name' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-3">
+                                <div class="form-group">
+                                    <h6>Email</h6>
+                                    <input name = 'email' id = 'email' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-3">
+                                <div class="form-group">
+                                    <h6>Tel</h6>
+                                    <input name = 'tel' id = 'tel' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-3">
+                                <div class="form-group">
+                                    <h6>Ext</h6>
+                                    <input name = 'ext' id = 'ext' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-3 d-flex d-flex align-items-center">
+                                <div class = "mr-1">Email/Tel/Ext Show:</div>
+                                <div class = "d-flex align-items-center"><input type = "checkbox" id = "email_tel_ext_toggle" style = "width:20px; height:20px;"></div>
+                            </div>
+
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>NPI</h6>
+                                    <input id = 'npi' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Specialty</h6>
+                                    <input id = 'specialty' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = "col-md-3">
+                                <div class="form-group">
+                                    <h6>License</h6>
+                                    <input id = 'license' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = "col-md-3">
+                                <div class="form-group">
+                                    <h6>License State</h6>
+                                    <input id = 'license_state' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = 'col-md-3 d-flex align-items-end'>
+                                <div class="form-group">
+                                    <label class="bmd-label-static">License Start Date</label>
+                                    <input type="date" id = 'license_start' class="form-control">
+                                </div>
+                            </div>
+                            <div class = 'col-md-3 d-flex align-items-end'>
+                                <div class="form-group">
+                                    <label class="bmd-label-static">License End Date</label>
+                                    <input type="date" id = 'license_end' class="form-control">
+                                </div>
+                            </div>
+
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>DEA</h6>
+                                    <input id = 'dea' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class = 'col-md-3 d-flex align-items-end'>
+                                <div class="form-group">
+                                    <label class="bmd-label-static">DEA Start Date</label>
+                                    <input type="date" id = 'dea_start' class="form-control">
+                                </div>
+                            </div>
+                            <div class = 'col-md-3 d-flex align-items-end'>
+                                <div class="form-group">
+                                    <label class="bmd-label-static">DEA End Date</label>
+                                    <input type="date" id = 'dea_end' class="form-control">
+                                </div>
+                            </div>
+
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Job (EN)</h6>
+                                    <input name = 'een_job' id = 'een_job' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Job (ES)</h6>
+                                    <input name = 'ees_job' id = 'ees_job' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Description (EN)</h6>
+                                    <div name = 'een_desc' id = 'een_desc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Full Description (EN)</h6>
+                                    <div name = 'een_fdesc' id = 'een_fdesc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Description (ES)</h6>
+                                    <div name = 'ees_desc' id = 'ees_desc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-12">
+                                <div class="form-group">
+                                    <h6>Full Description (ES)</h6>
+                                    <div name = 'ees_fdesc' id = 'ees_fdesc'></div>
+                                </div>
+                            </div>
+                            <div class = "col-md-6 d-flex d-flex align-items-center">
+                                <div class = "mr-1">Send Message Button Show:</div>
+                                <div class = "d-flex align-items-center"><input type = "checkbox" id = "send_message_toggle" style = "width:20px; height:20px;"></div>
+                            </div>
+                            <div class = "col-md-6">
+                                <div class="form-group">
+                                    <h6>Status</h6>
+                                    <select class="form-control" name="estatus" id="estatus" style="height:36px;">
+                                        <option value="1">Visible</option>
+                                        <option value="0">Invisible</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary edit_doctor_confirm" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="upload_photo_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Upload Photo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class = "row">
+                        <div class = 'col-md-12'>
+                            <h6>Photo(500&times;500)</h6>
+                            <div class="custom-file form-group">
+                                <input type="file" class="custom-file-input" id="upload_image_img">
+                                <label class="custom-file-label" for="upload_image_img">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary upload_photo_confirm" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function() {
+        const doctor_table = $('#doctor_tb').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+            ],
+            responsive: false,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            "ajax": {
+                "url": "<%= site_url + prefix %>/doctors/read",
+                "type": "GET"
+            },
+            "columns": [
+                { data: 'img',
+                    render: function (data, type, row) {
+                        return `<img src="${"<%= site_url %>/assets/images/doctors/"+row.img}" width="100" />`;
+                    } 
+                },
+                { data: 'en_name' },
+                { data: 'en_job' },
+                { data: 'status', render: function(data, type, row){
+                        if(row.status == 1)
+                            return `<div class="text-success">Visible</div>`;
+                        else
+                            return `<div class="text-danger">Invisible</div>`;
+                    }
+                },
+                { data: 'id',
+                    render: function (data, type, row) {
+                        return `
+                        <div idkey="`+row.id+`">
+                            <span class="btn btn-icon btn-sm btn-light-primary upload_photo_btn"><i class="fas fa-image"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-warning edit_doctor_btn"><i class="fas fa-edit"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-danger  delete_doctor_btn"><i class="fas fa-trash"></i></span>
+                        </div>
+                        `
+                    } 
+                }
+            ]
+        });
+
+        $(document).on("click",".delete_doctor_btn",function() {
+            $("#chosen_person_id").val($(this).parent().attr("idkey"));
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax ({
+                        url: '<%= site_url + prefix %>/doctors/delete',
+                        method: "POST",
+                        data: {id:$("#chosen_person_id").val()},
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.status == "success") {
+                                doctor_table.ajax.reload()
+                                toastr.success("Deleted Successfully")
+                            }
+                        },
+                        error: function() {
+                            toastr.error("An error was occurred on the server")
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#en_desc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+        $('#es_desc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+        $('#en_fdesc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+        $('#es_fdesc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+        $('#een_desc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+        $('#ees_desc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+        $('#een_fdesc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+        $('#ees_fdesc').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+
+        $(".add_doctor_btn").click(function() {
+            $("#add_doctor_modal").modal('show');
+        });
+
+        $(".add_doctor_confirm").click(function() {
+            const params = {
+                en_name: $("#en_name").val(),
+                es_name: $("#es_name").val(),
+                en_job: $("#en_job").val(),
+                es_job: $("#es_job").val(),
+                en_desc: $("#en_desc").summernote("code"),
+                es_desc: $("#es_desc").summernote("code"),
+                en_fdesc: $("#en_fdesc").summernote("code"),
+                es_fdesc: $("#es_fdesc").summernote("code"),
+                status: $("#status").val()
+            }
+            $.ajax({
+                url: '<%= site_url + prefix %>/doctors/create',
+                type: 'POST',
+                data: params,
+                dataType: "json",
+                success: function (res) {
+                    if(res.status == "success"){
+                        doctor_table.ajax.reload()
+                        mynotify('success','Add Success');
+                    }
+                    else{
+                        mynotify('danger','Add Fail');
+
+                    }
+                }
+            });
+        })
+
+        $(document).on("click",".edit_doctor_btn",function() {
+            $("#chosen_person_id").val($(this).parent().attr("idkey"));
+            $.ajax ({
+                url: '<%= site_url + prefix %>/doctors/choose',
+                method: "POST",
+                data: {id:$("#chosen_person_id").val()},
+                dataType: "json",
+                success: function (data) {
+                    $("#een_name").val(data['en_name']);
+                    $("#ees_name").val(data['es_name']);
+                    $("#een_job").val(data['en_job']);
+                    $("#ees_job").val(data['es_job']);
+                    $("#een_desc").summernote("code",data['en_desc']);
+                    $("#ees_desc").summernote("code",data['es_desc']);
+                    $("#een_fdesc").summernote("code",data['en_fdesc']);
+                    $("#ees_fdesc").summernote("code",data['es_fdesc']);
+                    $("#estatus").val(data['status']);
+                    $("#email").val(data['email']);
+                    $("#tel").val(data['tel']);
+                    $("#ext").val(data['ext']);
+                    $('#email_tel_ext_toggle').prop('checked', data['email_tel_ext_toggle'] == 1);
+                    $('#send_message_toggle').prop('checked', data['send_message_toggle'] == 1);
+
+                    $("#npi").val(data['npi']);
+                    $("#specialty").val(data['specialty']);
+                    $("#license").val(data['license']);
+                    $("#license_state").val(data['license_state']);
+                    $("#license_start").val(data['license_start']);
+                    $("#license_end").val(data['license_end']);
+                    $("#dea").val(data['dea']);
+                    $("#dea_start").val(data['dea_start']);
+                    $("#dea_end").val(data['dea_end']);
+
+                    $("#edit_doctor_modal").modal('show');
+                }
+            });
+        });
+
+        $(".edit_doctor_confirm").click(function() {
+            const params = {
+                id: $("#chosen_person_id").val(),
+                en_name: $("#een_name").val(),
+                es_name: $("#ees_name").val(),
+                en_job: $("#een_job").val(),
+                es_job: $("#ees_job").val(),
+                en_desc: $("#een_desc").summernote("code"),
+                es_desc: $("#ees_desc").summernote("code"),
+                en_fdesc: $("#een_fdesc").summernote("code"),
+                es_fdesc: $("#ees_fdesc").summernote("code"),
+                status: $("#estatus").val(),
+                email: $("#email").val(),
+                tel: $("#tel").val(),
+                ext: $("#ext").val(),
+                email_tel_ext_toggle: $("#email_tel_ext_toggle").prop("checked") === true ? 1 : 0,
+                send_message_toggle: $("#send_message_toggle").prop("checked") === true ? 1 : 0,
+                npi: $("#npi").val(),
+                specialty: $("#specialty").val(),
+                license: $("#license").val(),
+                license_state: $("#license_state").val(),
+                license_start: $("#license_start").val(),
+                license_end: $("#license_end").val(),
+                dea: $("#dea").val(),
+                dea_start: $("#dea_start").val(),
+                dea_end: $("#dea_end").val(),
+                status: $("#estatus").val()
+            }
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/doctors/update',
+                type: 'POST',
+                data: params,
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == "success") {
+                        doctor_table.ajax.reload()
+                        toastr.success("Saved Successfully")
+                    }
+                }
+            });
+        });
+
+        $(document).on("click",".upload_photo_btn",function() {
+            window.id = $(this).parent().attr("idkey");
+            $("#upload_photo_modal").modal('show');
+        });
+
+        $(".upload_photo_confirm").click(function() {
+            var fd = new FormData();
+            var img = $('#upload_image_img')[0].files;
+            var id = window.id;
+            if(img.length > 0 ){
+                fd.append('id', id);
+                fd.append('img',img[0]);
+            }
+            $.ajax({
+                url: '<%= site_url + prefix %>/doctors/uploadImg',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (res) {
+                    if(res.status == "success"){
+                        setTimeout( function () {
+                            $("#doctor_tb").DataTable().ajax.reload();
+                        }, 1000 );
+                        mynotify('success','Upload Success');
+                    }
+                    else{
+                        mynotify('danger','Upload Fail');
+                    }
+                }
+            });
+        });
+
+    })
+
+    function updateDoctorDesc() {
+        title_en = $("#title_en").val();
+        title_es = $("#title_es").val();
+        desc_en = $("#desc_en").val();
+        desc_es = $("#desc_es").val();
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/doctors/updateDoctorDesc',
+            method: "POST",
+            data: {title_en: title_en, title_es: title_es, desc_en: desc_en, desc_es: desc_es},
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    handleResponse("ok")
+                }
+            }
+        });
+    }
+    
+    handleAreaToggleBox('#doctor_toggle', 'doctor_area');
+</script>
+
+</html>

@@ -1,0 +1,54 @@
+<script>
+    // This is your test publishable API key.
+    const stripe = Stripe("<%= stripe_key %>")
+    // The items the customer wants to buy
+    let payment_items = [{ id: "", amount: 0 }]
+    let elements = null
+    // Fetches a payment intent and captures the client secret
+    async function initialize() {
+        const { clientSecret } = await fetch("./payment/createPaymentIntent", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                items: payment_items
+            }),
+        }).then((r) => r.json())
+        elements = stripe.elements({
+            clientSecret
+        })
+        const paymentElementOptions = {
+            layout: "accordion"
+        }
+        const paymentElement = elements.create("payment", paymentElementOptions)
+        paymentElement.mount("#payment-element")
+    }
+    // ------- UI helpers -------
+    function showMessage(messageText) {
+        const messageContainer = document.querySelector("#payment-message")
+
+        messageContainer.classList.remove("hidden")
+        messageContainer.textContent = messageText
+
+        setTimeout(function() {
+            messageContainer.classList.add("hidden")
+            messageContainer.textContent = ""
+        }, 4000)
+    }
+
+    // Show a spinner on payment submission
+    function setLoading(isLoading) {
+        if (isLoading) {
+            // Disable the button and show a spinner
+            document.querySelector("#payment-submit").disabled = true
+            document.querySelector("#payment-pay-submit-spinner").classList.remove("hidden")
+            document.querySelector("#payment-pay-text").classList.add("hidden")
+        } else {
+            document.querySelector("#payment-submit").disabled = false
+            document.querySelector("#payment-pay-submit-spinner").classList.add("hidden")
+            document.querySelector("#payment-pay-text").classList.remove("hidden")
+        }
+    }
+    
+</script>

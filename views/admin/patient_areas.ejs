@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('header') %>
+
+<style>
+    .static-body {
+        border-radius: 6px;
+        box-shadow: 2px 2px 4px #00000020;
+        transition: all 200ms ease-out;
+    }
+
+    .static-body:hover {
+        box-shadow: 4px 4px 8px #00000040;
+        transition: all 200ms ease-out;
+        background-color: #FFFFFF90 !important;
+    }
+
+    .static-mark {
+        border-radius: 5px;
+        box-shadow: 2px 2px 7px #00000020;
+        transition: all 200ms ease-out;
+    }
+
+    .p-1px {
+        padding: 1px !important;
+    }
+
+    .p-2px {
+        padding: 2px !important;
+    }
+
+    .p-5px {
+        padding: 5px !important;
+    }
+
+    .p-10px {
+        padding: 10px !important;
+    }
+
+    .p-15px {
+        padding: 15px !important;
+    }
+
+    .p-20px {
+        padding: 20px !important;
+    }
+
+    .p-50px {
+        padding: 50px !important;
+    }
+
+    .px-20px {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .py-20px {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+
+    .fs-1 {
+        font-size: 36px !important;
+    }
+
+    .fs-2 {
+        font-size: 32px !important;
+    }
+
+    .fs-3 {
+        font-size: 28px !important;
+    }
+
+    .fs-4 {
+        font-size: 24px !important;
+    }
+
+    .fs-5 {
+        font-size: 20px !important;
+    }
+
+    .fs-6 {
+        font-size: 16px !important;
+    }
+
+    .fs-7 {
+        font-size: 12px !important;
+    }
+
+    .round-5px {
+        border: 1px solid #00000000;
+        border-radius: 5px;
+    }
+
+    .split-line {
+        height: 1px;
+        background-color: gray;
+    }
+
+    .m-0 {
+        margin: 0px;
+    }
+
+    .control-label {
+        width: auto;
+        min-width: 120px;
+        margin: 0px;
+        display: flex;
+        justify-content: end;
+        padding-right: 5px;
+    }
+
+    .control-date {
+        max-width: 150px;
+    }
+
+    #contact_history_modal .modal-body {
+        max-height: 500px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    .w-18 {
+        width: 18% !important;
+    }
+
+    .col-gap-0 {
+        column-gap: 0 !important;
+    }
+
+    .col-gap-1 {
+        column-gap: 0.25rem !important;
+    }
+
+    .col-gap-2 {
+        column-gap: 0.5rem !important;
+    }
+
+    .col-gap-3 {
+        column-gap: 0.75rem !important;
+    }
+
+    .col-gap-4 {
+        column-gap: 1.0rem !important;
+    }
+
+    .col-gap-5 {
+        column-gap: 1.25rem !important;
+    }
+
+    .col-gap-6 {
+        column-gap: 1.5rem !important;
+    }
+
+    .col-gap-7 {
+        column-gap: 1.75rem !important;
+    }
+
+    .col-gap-8 {
+        column-gap: 2.0rem !important;
+    }
+
+    .col-gap-9 {
+        column-gap: 2.25rem !important;
+    }
+
+    .col-gap-10 {
+        column-gap: 2.5rem !important;
+    }
+</style>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row">
+                        <div class="col-md-12 bg-primary p-2 mb-2 text-white">
+                            <div class="d-flex justify-content-around">
+                                <div class="d-flex align-items-center" style="font-size:20px; font-weight:bold;">
+                                    <% if (sideItem === "home") { %>
+                                        Home
+                                    <% } else { %>
+                                        Patient Area
+                                    <% } %>
+                                </div>
+                                <ul class="nav nav-tabs nav-pills" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#invoice" data-toggle="tab">Invoice</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#payment" data-toggle="tab">Paid Request</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white active" href="#contact" data-toggle="tab">Online Requests</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#report" data-toggle="tab">Request Reports</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#patient" data-toggle="tab">Patients</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#vault_document" id="vault_document_nav" data-toggle="tab">Vault Documents</a>
+                                    </li>
+                                    <% if (sideItem != "home") { %>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-white" href="#vault_description" data-toggle="tab">Descriptions</a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="tab-content">
+                                <div class="tab-pane" id="invoice">
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <div>
+                                                <h3>Invoice</h3>
+                                            </div>
+                                            <div><span class='add_invoice_btn btn btn-light-primary btn-icon'><i class='fa fa-plus'></i></span></div>
+                                        </div>
+                                        <div class="col-12">
+                                            <table class="table" id="invoice_tb">
+                                                <thead></thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="payment">
+                                    <div class="row my-5 d-flex justify-content-around align-items-center">
+                                        <div data="0" class="w-18 h-120px bg-white static-body cursor-pointer">
+                                            <div class="p-20px w-100 d-flex justify-content-between">
+                                                <span class="d-inline-block round-5px">
+                                                    <i class="p-15px fs-3 fa fa-list-ul text-primary bg-light-primary static-mark"></i>
+                                                </span>
+                                                <span class="d-inline-block p-2px">
+                                                    <h4 class="d-flex justify-content-end text-black">Pay Request</h4>
+                                                    <span id="stt-total-message" class="d-flex justify-content-end text-primary fs-5 cursor-pointer stt-number">109</span>
+                                                </span>
+                                            </div>
+                                            <div class="px-20px">
+                                                <hr class="m-0">
+                                            </div>
+                                        </div>
+                                        <div data="1" class="w-18 h-120px bg-white static-body">
+                                            <div class="p-20px w-100 d-flex justify-content-between cursor-pointer">
+                                                <span class="d-inline-block round-5px">
+                                                    <i class="p-15px fs-3 fa fa-list-ul text-danger bg-light-danger static-mark"></i>
+                                                </span>
+                                                <span class="d-inline-block p-2px">
+                                                    <h4 class="d-flex justify-content-end text-black">Open</h4>
+                                                    <span id="stt-total-message" class="d-flex justify-content-end text-danger fs-5 cursor-pointer stt-number">65</span>
+                                                </span>
+                                            </div>
+                                            <div class="px-20px">
+                                                <hr class="m-0">
+                                            </div>
+                                        </div>
+                                        <div data="2" class="w-18 h-120px bg-white static-body">
+                                            <div class="p-20px w-100 d-flex justify-content-between cursor-pointer">
+                                                <span class="d-inline-block round-5px">
+                                                    <i class="p-15px fs-3 fa fa-list-ul text-success bg-light-success static-mark"></i>
+                                                </span>
+                                                <span class="d-inline-block p-2px">
+                                                    <h4 class="d-flex justify-content-end text-black">In Progress</h4>
+                                                    <span id="stt-total-message" class="d-flex justify-content-end text-success fs-5 cursor-pointer stt-number">23</span>
+                                                </span>
+                                            </div>
+                                            <div class="px-20px">
+                                                <hr class="m-0">
+                                            </div>
+                                        </div>
+                                        <div data="3" class="w-18 h-120px bg-white static-body">
+                                            <div class="p-20px w-100 d-flex justify-content-between cursor-pointer">
+                                                <span class="d-inline-block round-2px">
+                                                    <i class="p-15px fs-3 fa fa-list-ul text-primary bg-light-primary static-mark"></i>
+                                                </span>
+                                                <span class="d-inline-block p-2px">
+                                                    <h4 class="d-flex justify-content-end text-black">Closed</h4>
+                                                    <span id="stt-total-message" class="d-flex justify-content-end text-primary fs-5 cursor-pointer stt-number">1
+                                            </div>
+                                            <div class="px-20px">
+                                                <hr class="m-0">
+                                            </div>
+                                        </div>
+                                        <div data="4" class="w-18 h-120px bg-white static-body">
+                                            <div class="p-20px w-100 d-flex justify-content-between cursor-pointer">
+                                                <span class="d-inline-block round-2px">
+                                                    <i class="p-15px fs-3 fa fa-list-ul text-info bg-light-info static-mark"></i>
+                                                </span>
+                                                <span class="d-inline-block p-2px">
+                                                    <h4 class="d-flex justify-content-end text-black">Paid</h4>
+                                                    <span id="stt-total-message" class="d-flex justify-content-end text-info fs-5 cursor-pointer stt-number">20
+                                            </div>
+                                            <div class="px-20px">
+                                                <hr class="m-0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <div>
+                                                <h3>Payment Contact Records</h3>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-10">
+                                            <div class="col-md-3">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="control-label">Assigned : </h5>
+                                                    <select id="contact_assigned" class="form-control contact_assigned">
+                                                        <option value="all">All</option>
+                                                        <option value="0">Nobody</option>
+                                                        <% for (let i = 0; i < staffs.length; i ++) { %>
+                                                            <option value="<%= staffs[i].id %>"><%= staffs[i].en_name %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="control-label">Reason : </h5>
+                                                    <select id="contact_reason" class="form-control contact_reason">
+                                                        <option value="All Reason">All Reason</option>
+                                                        <option value="Appointment Request">Appointment Request</option>
+                                                        <option value="Letter Request">Letter Request</option>
+                                                        <option value="Prescription Refill Request">Prescription Refill Request</option>
+                                                        <option value="Referral Request">Referral Request</option>
+                                                        <option value="Test Results Request">Test Results Request</option>
+                                                        <option value="General Message">General Message</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex justify-content-start align-items-center">
+                                                    <h5 class="control-label">Date Range : </h5>
+                                                    <input type="date" id="payment_start_date" class="form-control control-date" value="" />
+                                                    <h5 class="">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</h5>
+                                                    <input type="date" id="payment_end_date" class="form-control control-date" value="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="payment_chosen_id" />
+                                        <div class="col-12">
+                                            <table class="table w-100" id="payment_track_tb">
+                                                <thead>
+                                                    <th>Case</th>
+                                                    <th>Assigned To</th>
+                                                    <th>Updated Time</th>
+                                                    <th>Service Type</th>
+                                                    <th>From</th>
+                                                    <th>Amount</th>
+                                                    <th>Status</th>
+                                                    <th>Payment</th>
+                                                    <th>Action</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane active" id="contact">
+                                    <div class="row my-5">
+                                        <div class="col-3">
+                                            <div data="0" class="w-100 h-120px bg-white static-body cursor-pointer">
+                                                <div class="p-20px w-100 d-flex justify-content-between">
+                                                    <span class="d-inline-block round-5px">
+                                                        <i class="p-15px fs-3 fa fa-list-ul text-primary bg-light-primary static-mark"></i>
+                                                    </span>
+                                                    <span class="d-inline-block p-2px">
+                                                        <h4 class="d-flex justify-content-end text-black">Total Messages</h4>
+                                                        <span id="stt-total-message" class="d-flex justify-content-end text-primary fs-5 cursor-pointer stt-number"><%= statistic.total %></span>
+                                                    </span>
+                                                </div>
+                                                <div class="px-20px">
+                                                    <hr class="m-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div data="1" class="w-100 h-120px bg-white static-body">
+                                                <div class="p-20px w-100 d-flex justify-content-between cursor-pointer">
+                                                    <span class="d-inline-block round-5px">
+                                                        <i class="p-15px fs-3 fa fa-list-ul text-danger bg-light-danger static-mark"></i>
+                                                    </span>
+                                                    <span class="d-inline-block p-2px">
+                                                        <h4 class="d-flex justify-content-end text-black">Open</h4>
+                                                        <span id="stt-total-message" class="d-flex justify-content-end text-danger fs-5 cursor-pointer stt-number"><%= statistic.open %></span>
+                                                    </span>
+                                                </div>
+                                                <div class="px-20px">
+                                                    <hr class="m-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div data="2" class="w-100 h-120px bg-white static-body">
+                                                <div class="p-20px w-100 d-flex justify-content-between cursor-pointer">
+                                                    <span class="d-inline-block round-5px">
+                                                        <i class="p-15px fs-3 fa fa-list-ul text-success bg-light-success static-mark"></i>
+                                                    </span>
+                                                    <span class="d-inline-block p-2px">
+                                                        <h4 class="d-flex justify-content-end text-black">In Progress</h4>
+                                                        <span id="stt-total-message" class="d-flex justify-content-end text-success fs-5 cursor-pointer stt-number"><%= statistic.inprogress %></span>
+                                                    </span>
+                                                </div>
+                                                <div class="px-20px">
+                                                    <hr class="m-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div data="3" class="w-100 h-120px bg-white static-body">
+                                                <div class="p-20px w-100 d-flex justify-content-between cursor-pointer">
+                                                    <span class="d-inline-block round-2px">
+                                                        <i class="p-15px fs-3 fa fa-list-ul text-primary bg-light-primary static-mark"></i>
+                                                    </span>
+                                                    <span class="d-inline-block p-2px">
+                                                        <h4 class="d-flex justify-content-end text-black">Closed</h4>
+                                                        <span id="stt-total-message" class="d-flex justify-content-end text-primary fs-5 cursor-pointer stt-number"><%= statistic.close %></span>
+                                                    </span>
+                                                </div>
+                                                <div class="px-20px">
+                                                    <hr class="m-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <div>
+                                                <h3>Contact Records</h3>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-10">
+                                            <div class="col-md-3">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="control-label">Assigned : </h5>
+                                                    <select id="contact_assigned" class="form-control contact_assigned">
+                                                        <option value="all">All</option>
+                                                        <option value="0">Nobody</option>
+                                                        <% for (let i = 0; i < staffs.length; i ++) { %>
+                                                            <option value="<%= staffs[i].id %>"><%= staffs[i].en_name %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="control-label">Reason : </h5>
+                                                    <select id="contact_reason" class="form-control contact_reason">
+                                                        <option value="All Reason">All Reason</option>
+                                                        <option value="Appointment Request">Appointment Request</option>
+                                                        <option value="Letter Request">Letter Request</option>
+                                                        <option value="Prescription Refill Request">Prescription Refill Request</option>
+                                                        <option value="Referral Request">Referral Request</option>
+                                                        <option value="Test Results Request">Test Results Request</option>
+                                                        <option value="General Message">General Message</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex justify-content-start align-items-center">
+                                                    <h5 class="control-label">Date Range : </h5>
+                                                    <input type="date" id="contact_start_date" class="form-control control-date" value="" />
+                                                    <h5 class="">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</h5>
+                                                    <input type="date" id="contact_end_date" class="form-control control-date" value="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="chosen_id" />
+                                        <div class="col-12">
+                                            <table class="table w-100" id="contact_track_tb">
+                                                <thead>
+                                                    <th>Case</th>
+                                                    <th>Assigned To</th>
+                                                    <th>Updated Time</th>
+                                                    <th>Reason</th>
+                                                    <th>From</th>
+                                                    <th>Contact</th>
+                                                    <th>Subject</th>
+                                                    <th>Turn Around</th>
+                                                    <th>Priority</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="report">
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <div>
+                                                <h3>Request Reports</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row mb-10">
+                                                <div class="col-md-3 d-none">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h5 class="control-label">Assigned : </h5>
+                                                        <select id="request_assigned" class="form-control">
+                                                            <option value="0">Nobody</option>
+                                                            <% for (let i = 0; i < staffs.length; i ++) { %>
+                                                                <option value="<%= staffs[i].id %>"><%= staffs[i].en_name %></option>
+                                                            <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 d-none">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h5 class="control-label">Reason : </h5>
+                                                        <select id="request_reason" class="form-control">
+                                                            <option value="All Reason">All Reason</option>
+                                                            <option value="Appointment Request">Appointment Request</option>
+                                                            <option value="Letter Request">Letter Request</option>
+                                                            <option value="Prescription Refill Request">Prescription Refill Request</option>
+                                                            <option value="Referral Request">Referral Request</option>
+                                                            <option value="Test Results Request">Test Results Request</option>
+                                                            <option value="General Message">General Message</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="w-100 h-100 d-flex justify-content-center align-items-center col-gap-8">
+                                                        <div class=" d-flex d-flex align-items-center justify-content-end">
+                                                            <div class="d-flex align-items-center"><input type="radio" value="1" checked name="request_filter_day" id="request_filter_monthly" style="width:20px; height:20px;"></div>
+                                                            <div class="ml-1"> Monthly</div>
+                                                        </div>
+                                                        <div class="d-flex d-flex align-items-center justify-content-end">
+                                                            <div class="d-flex align-items-center"><input type="radio" value="2" name="request_filter_day" id="request_filter_bi-weekly" style="width:20px; height:20px;"></div>
+                                                            <div class="ml-1"> Bi-Weekly</div>
+                                                        </div>
+                                                        <div class="d-flex d-flex align-items-center justify-content-end">
+                                                            <div class="d-flex align-items-center"><input type="radio" value="3" name="request_filter_day" id="request_filter_weekly" style="width:20px; height:20px;"></div>
+                                                            <div class="ml-1"> Weekly</div>
+                                                        </div>
+                                                        <div class="d-flex d-flex align-items-center justify-content-end">
+                                                            <div class="d-flex align-items-center"><input type="radio" value="4" name="request_filter_day" id="request_filter_daily" style="width:20px; height:20px;"></div>
+                                                            <div class="ml-1"> Daily</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row mb-10">
+                                                <div id="request_year_container" class="col-md-2">
+                                                    <select id="request_year_select" class="form-control">
+                                                    </select>
+                                                </div>
+                                                <div id="request_monthly_container" class="col-md-2">
+                                                    <select id="request_monthly_select" class="form-control">
+                                                        <option value="0">January</option>
+                                                        <option value="1">February</option>
+                                                        <option value="2">March</option>
+                                                        <option value="3">April</option>
+                                                        <option value="4">May</option>
+                                                        <option value="5">June</option>
+                                                        <option value="6">July</option>
+                                                        <option value="7">August</option>
+                                                        <option value="8">September</option>
+                                                        <option value="9">October</option>
+                                                        <option value="10">November</option>
+                                                        <option value="11">December</option>
+                                                    </select>
+                                                </div>
+                                                <div id="request_biweekly_container" class="col-md-2 d-none">
+                                                    <select id="request_biweekly_select" class="form-control">
+                                                        <option value="0">First Bi-Week</option>
+                                                        <option value="1">Second Bi-Week</option>
+                                                    </select>
+                                                </div>
+                                                <div id="request_weekly_container" class="col-md-2 d-none">
+                                                    <select id="request_weekly_select" class="form-control">
+                                                        <option value="0">First Week</option>
+                                                        <option value="1">Second Week</option>
+                                                        <option value="2">Third Week</option>
+                                                        <option value="3">Fourth Week</option>
+                                                        <option id="request_fifth-week" value="4">Fifth Week</option>
+                                                    </select>
+                                                </div>
+                                                <div id="request_daily_container" class="col-md-2 d-none">
+                                                    <input type="date" id="request_daily_date" class="form-control control-date" value="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row" id="request-report-charts">
+                                                <div class="col-md-6 d-flex justify-content-center align-items-center mb-10">
+                                                    <canvas id="request_canvas_all" data-id="all" data-name="Total" style="width: 100%"></canvas>
+                                                </div>
+                                                <div class="col-md-6 d-flex justify-content-center align-items-center mb-10">
+                                                    <canvas id="request_canvas_0" data-id="0" data-name="Nobody" style="width: 100%"></canvas>
+                                                </div>
+                                                <% for (let i = 0; i < staffs.length; i ++) { %>
+                                                    <div class="col-md-6 d-flex justify-content-center align-items-center mb-10">
+                                                        <canvas id="request_canvas_<%= staffs[i].id %>" data-id="<%= staffs[i].id %>" data-name="<%= staffs[i].en_name %>" style="width: 100%"></canvas>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="patient">
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="d-flex justify-content-end">
+                                            <% if (userType === 1) { %>
+                                                <div class="mx-2"><button id="btn-patient-upload" class="btn btn-primary">Upload Excel</button></div>
+                                                <div class="mx-2"><button id="btn-patient-gather" class="btn btn-primary">From Conector</button></div>
+                                            <% } %>
+                                        </div>
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <div>
+                                                <h3>Patients</h3>
+                                            </div>
+                                            <div class='person_add btn btn-light-primary btn-icon'><i class='fa fa-plus'></i></div>
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="hidden" id="chosen_patient_id" />
+                                            <table class="table" id="patient_tb">
+                                                <thead>
+                                                    <th>Patient ID</th>
+                                                    <th>Name</th>
+                                                    <th>Phone</th>
+                                                    <th>Email</th>
+                                                    <th>Address</th>
+                                                    <th>Gender</th>
+                                                    <th>DOB</th>
+                                                    <th style="min-width: 120px;">Action</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="vault_document">
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <div>
+                                                <h3>Vault Documents</h3>
+                                            </div>
+                                            <div><span class='add_vault_btn btn btn-light-primary btn-icon'><i class='fa fa-plus'></i></span></div>
+                                        </div>
+                                        <div class="col-12">
+                                            <table class="table" id="vault_tb">
+                                                <thead>
+                                                    <th>Patient ID</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Title</th>
+                                                    <th>Desc</th>
+                                                    <th>Document</th>
+                                                    <th>Submit Date</th>
+                                                    <th>Action</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="vault_description">
+                                    <div class="row m-3">
+                                        <div class = "col-12 d-flex d-flex align-items-center justify-content-end">
+                                            <div class = "mr-1">Show:</div>
+                                            <div class = "d-flex align-items-center"><input type = "checkbox" id = "vault_toggle" style = "width:20px; height:20px;"></div>
+                                        </div>
+                                    </div>
+                                    <div class = "row my-3 p-10 bg-white border rounded">
+                                        <div class = "col-12 mb-2"><h3>Login Area</h3></div>
+                                        <div class = "col-6">
+                                            <div class = "form-group">
+                                                <h6>Welcome(En)</h6>
+                                                <input class="form-control" id="vault_title_en" type="text" value = "<%= component.t_vault_title.en %>" />
+                                            </div>
+                                            <div class = "form-group">
+                                                <h6>Description(En)</h6>
+                                                <textarea class="form-control" id="vault_desc_en" rows = "5"><%= component.t_vault_desc.en %></textarea>
+                                            </div>
+                                        </div>
+                                        <div class = "col-6">
+                                            <div class = "form-group">
+                                                <h6>Welcome(Es)</h6>
+                                                <input class="form-control" id="vault_title_es" type="text" value = "<%= component.t_vault_title.es %>" />
+                                            </div>
+                                            <div class = "form-group">
+                                                <h6>Description(Es)</h6>
+                                                <textarea class="form-control" id = "vault_desc_es" rows = "5"><%= component.t_vault_desc.es %></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 text-right">
+                                            <button class="btn btn-light-primary pull-right" onclick = "updateVaultDesc();">Update</button>
+                                        </div>
+                                    </div>
+                                    <div class = "row my-3 p-10 bg-white border rounded">
+                                        <div class = "col-12 mb-2"><h3>Patient Area</h3></div>
+                                        <div class = "col-6">
+                                            <div class = "form-group">
+                                                <h6>Title(En)</h6>
+                                                <input class="form-control" id="login_title_en" type="text" value = "<%= component.t_vault_login_title.en %>" />
+                                            </div>
+                                            <div class = "form-group">
+                                                <h6>Description(En)</h6>
+                                                <textarea class="form-control" id="login_desc_en" rows = "5"><%= component.t_vault_login_desc.en %></textarea>
+                                            </div>
+                                            <div class = "form-group">
+                                                <h6>Footer(En)</h6>
+                                                <textarea class="form-control" id="login_footer_en" rows = "5"><%= component.t_vault_login_footer.en %></textarea>
+                                            </div>
+                                        </div>
+                                        <div class = "col-6">
+                                            <div class = "form-group">
+                                                <h6>Title(Es)</h6>
+                                                <input class="form-control" id="login_title_es" type="text" value = "<%= component.t_vault_login_title.es %>" />
+                                            </div>
+                                            <div class = "form-group">
+                                                <h6>Description(Es)</h6>
+                                                <textarea class="form-control" id = "login_desc_es" rows = "5"><%= component.t_vault_login_desc.es %></textarea>
+                                            </div>
+                                            <div class = "form-group">
+                                                <h6>Footer(Es)</h6>
+                                                <textarea class="form-control" id="login_footer_es" rows = "5"><%= component.t_vault_login_footer.es %></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 text-right">
+                                            <button class="btn btn-light-primary pull-right" onclick = "updateLoginDesc();">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cview_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title " style="font-weight:500;">View Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <input type="hidden" id="view_patient_id" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="d-flex mb-2">
+                                <h6>Case :&nbsp;</h6><span id="view_case"></span> <%= acronym %>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <h6>Date :&nbsp;</h6><span id="view_date"></span>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <h6>Reason :&nbsp;</h6><span id="view_reason"></span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2 mr-15">
+                                <div class="d-flex">
+                                    <h6>From :&nbsp;</h6><span id="view_name"></span>
+                                </div>
+                                <div class="d-flex">
+                                    <h6>DOB :&nbsp;</h6><span id="view_dob"></span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2 mr-15">
+                                <div class="d-flex">
+                                    <h6>Email :&nbsp;</h6><span id="view_email"></span>
+                                </div>
+                                <div class="d-flex">
+                                    <h6>Phone :&nbsp;</h6><span id="view_cel"></span>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <h6>Language :&nbsp;</h6><span id="view_lang"></span>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <h6>Subject :&nbsp;</h6><span id="view_subject"></span>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <h6>Message :&nbsp;</h6><span id="view_message"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Assigned To <small>(required)</small></label>
+                                <select name="assigneduser" id="view_assigned_to" class="form-control" required>
+                                    <option value="0">Nobody</option>
+                                    <% for (let i = 0; i < staffs.length; i ++) { %>
+                                        <option value="<%= staffs[i].id %>"><%= staffs[i].en_name %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group label-floating">
+                                <label class="control-label">Priority <small>(required)</small></label>
+                                <select name="priority" id="view_priority" class="form-control">
+                                    <option value="1"> Routine </option>
+                                    <option value="2"> Medium </option>
+                                    <option value="3"> Low </option>
+                                </select>
+                            </div>
+                            <div class="form-group label-floating">
+                                <label class="control-label">Status <small>(required)</small></label>
+                                <input type="hidden" id="view_old_status" />
+                                <select name="status" id="view_status" class="form-control">
+                                    <option value="1"> Open </option>
+                                    <option value="2"> In progress </option>
+                                    <option value="3"> Closed </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group label-floating">
+                                <label class="control-label"> Leave Comment</label>
+                                <textarea class="form-control" rows="5" name='comment' id="comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary update_track_btn" data-dismiss="modal">Update</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="survey_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title " style="font-weight:500;">Send Survey</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>CASE : #<span id="sview_case"></span></h6>
+                            <h6>Date : <span id="sview_date"></span></h6>
+                            <h6>Reason : <span id="sview_reason"></span></h6>
+                            <h6>From : <span id="sview_name"></span></h6>
+                            <h6>DOB : <span id="sview_dob"></span></h6>
+                            <h6>Email : <span id="sview_email"></span></h6>
+                            <h6>Cel : <span id="sview_cel"></span></h6>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Please select survey</label>
+                                <select name="survey_list" id="survey_list" class="form-control">
+                                    <% for (let i = 0; i < survey.length; i ++) { %>
+                                        <option value="<%= survey[i].id %>"><%= survey[i].en_sub %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input surveyemail" type="checkbox" checked value="1"> Email
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input surveysms" type="checkbox" checked value="1"> SMS
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-check-radio form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input langsurvey" checked name="group1" type="radio" value="1"> ENG
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-radio form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input langsurvey" name="group1" type="radio" value="2"> SPA
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" id="chosen_email" />
+                        <input type="hidden" id="chosen_phone" />
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary sendsurveybtn" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="survey_multi_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title " style="font-weight:500;">Multi Send Survey</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Count : <span id="survey_multi_modal_count"></span></h6>
+                            <h6>Status : <span id="survey_multi_modal_status">Closed</span></h6>
+                        </div>
+                    </div>
+                    <div class='row justify-content-center mb-5'>
+                        <div class='col-md-5'>
+                            <div class="form-group">
+                                <input class="survey_multi_modal_check_daterange" type="checkbox" value="1"> Date Range:
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class="form-group bmd-form-group">
+                                <label class="">Start Date</label>
+                                <input type="date" name='start_date' id='survey_multi_modal_start_date' class="form-control" required>
+                            </div>
+                        </div>
+                        <div class='col-md-3'>
+                            <div class="form-group bmd-form-group">
+                                <label class="">End Date</label>
+                                <input type="date" name='end_date' id='survey_multi_modal_end_date' class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Please select survey</label>
+                                <select name="survey_list" id="survey_multi_modal_survey_list" class="form-control">
+                                    <% for (let i = 0; i < survey.length; i ++) { %>
+                                        <option value="<%= survey[i].id %>"><%= survey[i].en_sub %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input survey_multi_modal_surveyemail" type="checkbox" checked value="1"> Email
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input survey_multi_modal_surveysms" type="checkbox" checked value="1"> SMS
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-check-radio form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input survey_multi_modal_langsurvey" checked name="langsurvey" type="radio" value="1"> ENG
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-radio form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input survey_multi_modal_langsurvey" name="langsurvey" type="radio" value="2"> SPA
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary survey_multi_modal_sendsurveybtn" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="contact_history_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <input type="hidden" id="reply-contact_id" />
+                <input type="hidden" id="reply-assigned" />
+                <input type="hidden" id="reply-case_number" />
+                <input type="hidden" id="reply-patient_id" />
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <div class="">
+                        <h4 id="modal_history_title" class="modal-title mb-2" style="font-weight:500;">Contact History</h4>
+                        <h6 id="modal_history_title_patient" style="font-size:50;"></h6>
+                        <h6 id="modal_history_title_status" style="font-size:36;"></h6>
+                    </div>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div id="contact_history_panel" class="w-100">
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <textarea class="form-control mb-3 w-100" id="message-modal-input" name="message-modal-input" rows="3" placeholder="Enter your message"></textarea>
+                    <button type="button" class="btn btn-light-primary" id="message_modal_reply">Send Message</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="person_add_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add Patient</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="adduserfrom" action="" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h6>Patient ID</h6>
+                                    <input id='patient_id' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h6>First Name</h6>
+                                    <input id='fname' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h6>Last Name</h6>
+                                    <input id='lname' class="form-control" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary personaddbtn" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="person_edit_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit Patient</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="edituserfrom" action="" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <h6>Patient ID</h6>
+                                    <input id='epatient_id' class="form-control" type="text" required />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <h6>First Name</h6>
+                                    <input id='efname' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <h6>Middle Name</h6>
+                                    <input id='emname' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <h6>Last Name</h6>
+                                    <input id='elname' class="form-control" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h6>Phone</h6>
+                                    <input id='ephone' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h6>Mobile</h6>
+                                    <input id='emobile' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h6>Email</h6>
+                                    <input id='eemail' class="form-control" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h6>Address</h6>
+                                    <input id='eaddress' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6>City</h6>
+                                    <input id='ecity' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6>State</h6>
+                                    <input id='estate' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6>Zip</h6>
+                                    <input id='ezip' class="form-control" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6>Gender</h6>
+                                    <select id='egender' class="form-control" type="text">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h6>DOB</h6>
+                                    <input type="date" id='edob' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6>Language</h6>
+                                    <select id="elanguage" class="form-control">
+                                        <% for (let i = 0; i < languages.length; i ++) { %>
+                                            <option value="<%= languages[i].code %>"><%= languages[i].English %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6>Ethnicity</h6>
+                                    <input id='eethnicity' class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <h6>Race</h6>
+                                    <input id='erace' class="form-control" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                </form>
+                <div class="modal-footer">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center"><input type="checkbox" id="patient_active" style="width:24px; height:24px;"></div>
+                            <div class="mr-1">&nbsp;&nbsp;Active</div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-light-primary personeditsubmitbtn" data-dismiss="modal">Done</button>
+                            <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pwd_reset_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Reset Password</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Password</h6>
+                                <input name='pwd' id='pwd' class="form-control" type="password" required autocomplete="new-password" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Confirm Password</h6>
+                                <input name='cpwd' id='cpwd' class="form-control" type="password" required autocomplete="new-password" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary resetpwdbtn" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="vault_add_modal_1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add vault</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Patient ID</h6>
+                                <input type="text" class="form-control" id="add_patient_id_1">
+                            </div>
+                            <div class="form-group">
+                                <h6>Title</h6>
+                                <input type="text" class="form-control" id="add_title_1">
+                            </div>
+                            <div class="form-group">
+                                <h6>Desc</h6>
+                                <input type="text" class="form-control" id="add_desc_1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" onclick="addVault_1();">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="question_add_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add Security</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Select a Question</h6>
+                                <select id='question_list' class="form-control" type="text">
+                                </select>
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Answer</h6>
+                                <input type="text" class="form-control" id="question_answer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" id="question_save">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="vault_add_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add vault</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Search for Patient</h6>
+                                <input type="text" class="form-control mb-3" id="add_search_value" placeholder="Start typing...">
+                                <select class="form-control" id="add_search_select"></select>
+                            </div>
+                            <div class="form-group">
+                                <h6>Title</h6>
+                                <input type="text" class="form-control" id="add_title">
+                            </div>
+                            <div class="form-group">
+                                <h6>Description</h6>
+                                <input type="text" class="form-control" id="add_desc">
+                            </div>
+                            <div class="custom-file form-group">
+                                <input type="file" accept=".doc, .docx, .pdf" class="custom-file-input" id="add_vault_document" name="add_document">
+                                <label class="custom-file-label" for="add_vault_document">Upload Document</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" onclick="addVault();">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="vault_edit_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit vault</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class = "row">
+                        <div class = 'col-md-12'>
+                            <div class="form-group">
+                                <h6>Patient ID</h6>
+                                <input type="text" class="form-control" id="edit_patient_id">
+                            </div>
+                            <div class="form-group">
+                                <h6>Title</h6>
+                                <input type="text" class="form-control" id="edit_title">
+                            </div>
+                            <div class="form-group">
+                                <h6>Desc</h6>
+                                <input type="text" class="form-control" id="edit_desc">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" onclick = "updateVault();">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="vault_upload_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Upload Document</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <div class="custom-file form-group">
+                                <input type="file" accept=".doc, .docx, .pdf" class="custom-file-input" id="upload_vault_document" name="upload_vault_document">
+                                <label class="custom-file-label" for="upload_vault_document">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" onclick="uploadVault();">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var table_status = 0
+    var _contact_reason = "All Reason"
+    var _contact_assigned = "all"
+
+    var __chartList = []
+    var __requests = null
+    var __staffs = null
+    var __reasons = null
+    var __date = null
+    var __year = null
+    var __month = null
+
+    function getTimeDiff(start, end) {
+        var diff = parseInt(Math.abs(new Date(end) - new Date(start)) / 1000)
+        var _str = ''
+        if (parseInt(diff / (86400 * 30))) {
+            _str = `more than ${parseInt(diff / (86400 * 30))} Month(s)`
+        } else if (parseInt(diff / 86400)) {
+            _str = `${parseInt(diff / 86400)} Day(s) ${parseInt((diff % 86400) / 3600)} Hour(s)`
+        } else if (parseInt(diff / 3600)) {
+            _str = `${parseInt(diff / 3600)} Hour(s) ${parseInt((diff % 3600) / 60)} Minute(s)`
+        } else if (parseInt(diff / 60)) {
+            _str = `${parseInt(diff / 60)} Minute(s) ${parseInt(diff % 60)} Second(s)`
+        } else {
+            _str = `${diff} Second(s)`
+        }
+        return _str
+    }
+
+    const getReports = async (dayType, year, month, date) => {
+        $.post({
+            'url': '<%= site_url + prefix %>/patient-areas/getReports',
+            'type': 'POST',
+            'data': {
+                dayType: dayType ?? 1,
+                year: year,
+                month: parseInt(month) + 1,
+                date: date
+            },
+            'dataType': 'json',
+            'success': function(data) {
+                __requests = null
+                __requests = data.data
+                __staffs = data.staffs
+                __reasons = data.reasons
+                const _dayType = data.dayType
+
+                let _data = null
+                if (_dayType == "monthly") {
+                    _data = __requests[$("#request_monthly_select").val()]
+                } else if (_dayType == "biweekly") {
+                    _data = __requests[$("#request_biweekly_select").val()]
+                } else if (_dayType == "weekly") {
+                    _data = __requests[$("#request_weekly_select").val()]
+                    if (_data.length == 4) {
+                        $("#request_fifth-week").addClass("d-none")
+                    } else if (_data.length == 5) {
+                        $("#request_fifth-week").removeClass("d-none")
+                    }
+                } else if (_dayType == "daily") {
+                    _data = __requests
+                }
+
+                renderBarChart(_dayType, __staffs, __reasons, _data)
+            },
+            'error': function(error) {
+                toastr.error("An error was occurred on the server");
+            }
+        })
+    }
+
+    const renderBarChart = (_dayType, _staffs, _reasons, _data) => {
+        const _total = []
+        // calculate total
+        for (var i = 0; i < _data.length; i++) {
+            if (i == 0) {
+                for (var j = 0; j < _reasons.length; j++) {
+                    _total[j] = 0
+                    _total[j] += parseInt(_data[i]['data'][j]['count'])
+                }
+            } else {
+                for (var j = 0; j < _reasons.length; j++) {
+                    _total[j] += parseInt(_data[i]['data'][j]['count'])
+                }
+            }
+        }
+
+        _canvasIndex = 0
+        var _canvasList = $("canvas")
+        _canvasList.each(function() {
+            // re-render
+            const _canvas = $(this)[0]; // Get the DOM element
+            const _ctx = _canvas.getContext('2d'); // Get the 2D context
+            _ctx.clearRect(0, 0, _canvas.width, _canvas.height); // Clear the canvas
+
+            const xValues = _reasons
+            const yValues = []
+            if ($(this).attr("data-id") == "all") {
+                _total.forEach(item => {
+                    yValues.push(item)
+                })
+            } else {
+                _data[_canvasIndex]['data'].forEach(item => {
+                    yValues.push(parseInt(item.count))
+                })
+                _canvasIndex++
+            }
+
+            const color = ["red", "green", "blue", "orange", "brown", "pink"]
+
+            const theChart = __chartList[$(this).attr("id")]
+            if (theChart == null || theChart == undefined) {
+                const newChart = new Chart($(this).attr("id"), {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            data: yValues,
+                            backgroundColor: color,
+                            borderColor: color,
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: $(this).attr("data-name"),
+                            position: 'bottom',
+                            fontSize: 21,
+                            fontColor: "gray"
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: Math.max(...yValues) < 12 ? 12 : Math.round(Math.max(...yValues) * 1.2)
+                                }
+                            }]
+                        }
+                    }
+                })
+                __chartList[$(this).attr("id")] = newChart
+            } else {
+                theChart.data.datasets[0].data = yValues
+                theChart.options.scales.yAxes[0].ticks.max = Math.max(...yValues) < 12 ? 12 : Math.round(Math.max(...yValues) * 1.2)
+                theChart.update()
+            }
+        })
+    }
+
+    function addVault() {
+        var patient_id = $("#add_search_select").val();
+        var title = $("#add_title").val();
+        var desc = $("#add_desc").val();
+
+        var fd = new FormData();
+        var document = $('#add_vault_document')[0].files;
+        if (document.length > 0) {
+            fd.append('patient_id', patient_id);
+            fd.append('title', title);
+            fd.append('desc', desc);
+            fd.append('document', document[0]);
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/vaults/create',
+                method: "POST",
+                data: fd,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == "success") {
+                        handleTableReload("ok", '#vault_tb')
+                    }
+                },
+                error: function () {
+                    toastr.error("An error was occurred on the server!")
+                }
+            });
+        } else {
+            toastr.warning('Please select a document file!');
+        }
+    }
+
+    function addVault_1() {
+        var patient_id = $("#add_patient_id_1").val();
+        var title = $("#add_title_1").val();
+        var desc = $("#add_desc_1").val();
+        $.ajax({
+            url: '<%= site_url + prefix %>/vaults/create',
+            method: "POST",
+            data: {
+                patient_id: patient_id,
+                title: title,
+                desc: desc
+            },
+            dataType: "json",
+            success: function(res) {
+                if (res.status == "success") {
+                    handleTableReload("ok", '#vault_tb');
+                    $("#vault_document_nav").click();
+                }
+            },
+            error: function () {
+                toastr.error("An error was occurred on the server!")
+            }
+        });
+    }
+
+    function updateVault() {
+        var id = window.id;
+        var patient_id = $("#edit_patient_id").val();
+        var title = $("#edit_title").val();
+        var desc = $("#edit_desc").val();
+        $.ajax ({
+            url: '<%= site_url + prefix %>/vaults/update',
+            method: "POST",
+            data: {id: id, patient_id: patient_id, title: title, desc: desc},
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    handleTableReload("ok", '#vault_tb');
+                }
+            },
+            error: function () {
+                toastr.error("An error was occurred on the server!")
+            }
+        });
+    }
+
+    function uploadVault() {
+        var fd = new FormData();
+        var document = $('#upload_vault_document')[0].files;
+        var id = window.id;
+        if (document.length > 0) {
+            fd.append('id', id);
+            fd.append('document', document[0]);
+        }
+        $.ajax({
+            url: '<%= site_url + prefix %>/vaults/upload',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(res) {
+                if (res.status == "success") {
+                    $("#vault_tb").DataTable().ajax.reload();
+                    mynotify('success', 'Upload Success');
+                    $("#vault_upload_modal").modal("hide")
+                } else {
+                    mynotify('danger', 'Upload Fail');
+                }
+            },
+            error: function () {
+                toastr.error("An error was occurred on the server!")
+            }
+        });
+    }
+
+    function updateVaultDesc() {
+        title_en = $("#vault_title_en").val()
+        title_es = $("#vault_title_es").val()
+
+        desc_en = $("#vault_desc_en").val()
+        desc_es = $("#vault_desc_es").val()
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/vaults/updateVaultDesc',
+            method: "POST",
+            data: {title_en: title_en, title_es: title_es, desc_en: desc_en, desc_es: desc_es},
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    handleResponse("ok")
+                }
+            },
+            error: function () {
+                toastr.error("An error was occurred on the server!")
+            }
+        })
+    }
+    
+    function updateLoginDesc() {
+        title_en = $("#login_title_en").val()
+        title_es = $("#login_title_es").val()
+
+        desc_en = $("#login_desc_en").val()
+        desc_es = $("#login_desc_es").val()
+
+        footer_en = $("#login_footer_en").val()
+        footer_es = $("#login_footer_es").val()
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/vaults/updateLoginDesc',
+            method: "POST",
+            data: {title_en: title_en, title_es: title_es, desc_en: desc_en, desc_es: desc_es, footer_en: footer_en, footer_es: footer_es},
+            dataType: "json",
+            success: function (res) {
+                if (res.status == "success") {
+                    handleResponse("ok")
+                }
+            },
+            error: function () {
+                toastr.error("An error was occurred on the server!")
+            }
+        })
+    }
+
+    $(document).ready(function() {
+        handleAreaToggleBox('#vault_toggle', 'vault_area');
+        
+        const _curr_date = new Date(Date.now())
+        $("#contact_start_date").val("2024-01-01")
+        $("#contact_end_date").val(_curr_date.toISOString().substr(0, 10))
+
+        const tracktable = $('#contact_track_tb').DataTable({
+            "pagingType": "full_numbers",
+            "processing": true,
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "order": [
+                [2, 'desc']
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            "ajax": {
+                "url": '<%= site_url + prefix %>/contacts/getAllContacts',
+                "type": "POST",
+                "data": function(data) {
+                    data.clinic = "<%= contact_info.name %>"
+                    data.status = table_status
+                    data.reason = _contact_reason
+                    data.assigned = _contact_assigned
+                    data.start_date = $("#contact_start_date").val()
+                    data.end_date = $("#contact_end_date").val()
+                }
+            },
+            "columns": [{
+                data: 'case_number',
+                render: function(data, type, row) {
+                    return `${row.case_number}${'<%= acronym %>'}`
+                }
+            }, {
+                data: 'assigned_name'
+            }, {
+                data: 'date',
+                render: function(data, type, row) {
+                    return new Date(row.date).toLocaleDateString('en-US', {
+                        month: '2-digit',
+                        day: '2-digit',
+                        year: 'numeric',
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true
+                    })
+                }
+            }, {
+                data: 'reason',
+                render: function(data, type, row) {
+                    if (row.msg_type == 1) {
+                        return `<i class="fa fa-globe-asia"></i> ${row.reason}`
+                    } else if (row.msg_type == 0) {
+                        return `<i class="fa fa-person-booth"></i> ${row.reason}`
+                    }
+                }
+            }, {
+                data: 'name',
+                render: function(data, type, row) {
+                    return `<div>
+                                <p class='text-primary'>${row.name}</p>
+                                <p class='text-danger m-0'>${new Date(row.dob) > new Date(1900, 1, 1) ? new Date(row.dob).toLocaleString().substr(0, 10) : ''}</p>
+                            </div>`
+                }
+            }, {
+                data: 'cel',
+                render: function(data, type, row) {
+                    return `<div>
+                                <p class='text-danger'>${row.cel ? row.cel : ''}</p>
+                                <a href="mailto:${row.email ? row.email : 'info@doctorpimentel.com'}" class="text-primary">${row.email ? row.email : ''}</a>
+                            </div>`
+                }
+            }, {
+                data: 'subject'
+            }, {
+                data: 'date',
+                render: function(data, type, row) {
+                    return row.status == 3 ? getTimeDiff(row.sent, row.closed_date) : `<div class="px-5"><hr></div>`
+                }
+            }, {
+                data: 'priority',
+                render: function(data, type, row) {
+                    return `<span class = '${row.priority==1?"text-danger":(row.priority==2?"text-warning":"text-success")}'>${row.priority==1?"Routine":(row.priority==2?"Medium":"Low")}</span>`
+                }
+            }, {
+                data: 'status',
+                render: function(data, type, row) {
+                    return `<span class = '${row.status==1?"text-danger":(row.status==2?"text-success":"text-primary")}'>${row.status==1?"Open":(row.status==2?"In progress":"Closed")}</span>`
+                }
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return `
+                    <div idkey="${row.id}" assigned="${row.assign}" patient_name="${row.patient_fname + ' ' + row.patient_lname}" patient_dob=${row.patient_dob} patient_sex=${row.patient_sex} patient_lang=${row.patient_lang} case_number="${row.case_number}" patient_id="${row.pt_emr_id}" status="${row.status}">
+                        <span class='btn btn-icon mx-1 btn-sm btn-light-warning viewbtn'><i class='fa fa-eye'></i></span>
+                        <span class='btn btn-icon mx-1 btn-sm btn-light-success chatbtn'><i class="fa fa-clipboard-list"></i></span>
+                        <%- userType === 1 ? "<span class='btn btn-icon mx-1 btn-sm btn-light-danger deletebtn'><i class='fa fa-trash'></i></span>" : '' %>
+                    </div>
+                    `
+                }
+            }],
+            createdRow: function(row, data, dataIndex) {
+                if (data.sf_unread_count > 0) {
+                    $(row).addClass('bg-light-primary')
+                }
+            }
+        })
+
+        $(document).on("click", ".viewbtn", function() {
+            window.id = $(this).parent().attr("idkey");
+            $('#view_patient_id').val($(this).parent().attr('patient_id'));
+            $.ajax({
+                url: '<%= site_url + prefix %>/contacts/viewContact',
+                method: "POST",
+                data: {
+                    id: window.id
+                },
+                dataType: "json",
+                success: function(data) {
+                    var data = data.data
+                    $("#view_case").html(data['case_number']);
+                    $("#view_date").html(new Date(data['date']).toLocaleString());
+                    $("#view_reason").html(data['reason']);
+                    $("#view_name").html(data['name']);
+                    $("#view_dob").html(new Date(data['dob']).toLocaleDateString());
+                    $("#view_email").html(data['email']);
+                    $("#view_cel").html(data['cel']);
+                    $("#view_lang").html(data['lang'] == 'en' ? 'English' : 'Spanish');
+                    $("#view_subject").html(data['subject']);
+                    $("#view_message").html(data['message']);
+                    $("#view_assigned_to").val(data['assign']);
+                    $("#view_priority").val(data['priority']);
+                    $('#view_old_status').val(data['status']);
+                    $("#view_status").val(data['status']);
+                    //$("#comment").val("");
+                    $("#cview_modal").modal('show');
+                }
+            });
+        })
+
+        $(document).on('click', '.chatbtn', function() {
+            $('#message-modal-input').val('')
+
+            var id = $(this).parent().attr("idkey")
+
+            $('#reply-contact_id').val($(this).parent().attr("idkey"))
+            $('#reply-case_number').val($(this).parent().attr("case_number"))
+            $('#reply-assigned').val($(this).parent().attr("assigned"))
+            $('#reply-patient_id').val($(this).parent().attr('patient_id'))
+
+            var case_number = $(this).parent().attr("case_number")
+            var assign = $(this).parent().attr("assigned")
+            var patient_id = $(this).parent().attr("patient_id")
+            $.ajax({
+                url: '<%= site_url + prefix %>/contacts/viewCommunicationHistory',
+                method: "POST",
+                data: {
+                    id: id,
+                    case_number: case_number,
+                    assign: assign,
+                    patient_id: patient_id,
+                    person_type: 'patient' // read message of patient
+                },
+                dataType: "json",
+                success: function(res) {
+                    let contact = res.contact
+
+                    var html = ''
+
+                    // Calculate the difference in years
+                    var date2 = new Date(contact['dob'])
+                    var date1 = new Date(Date.now())
+                    let differenceInYears = date1.getFullYear() - date2.getFullYear();
+
+                    // Adjust for months and days
+                    const monthDifference = date2.getMonth() - date1.getMonth();
+                    const dayDifference = date2.getDate() - date1.getDate();
+
+                    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+                        differenceInYears--;
+                    }
+
+                    $('#modal_history_title').text(`Contact History | Case Number : ${contact['case_number']}<%= acronym %>`)
+                    $('#modal_history_title_patient').text(`${contact['name']} | ${new Date(contact['dob']).toLocaleDateString()} | ${contact['patient_sex']} | Age : ${differenceInYears} | Lang : ${contact['patient_lang']}`)
+                    $('#modal_history_title_status').html(`<div class="d-flex">
+                                                                <div style="margin-right: 30px;">Turn Around : ${contact['status'] == 3 ? getTimeDiff(contact['sent'], contact['closed_date']) : '--/--/----'}</div>
+                                                                <span class = "${contact['status']==1?'text-danger':(contact['status']==2?'text-success':'text-primary')}">${contact['status']==1?"Open":(contact['status']==2?"In progress":"Closed")}</span>
+                                                           </div>`)
+
+                    var history = res.history
+                    history.forEach(item => {
+                        html += `<div class='w-100 mb-5'>
+                                    <div class='d-flex ${item['person_type'] == 'staff' ? 'justify-content-end' : 'justify-content-start'}'>
+                                        <p class='text-black-50' style='font-size: 11px;'>${item['person_type'] == 'staff' ? 'You' : contact['name']}&nbsp;&nbsp;${new Date(item['created_time']).toLocaleString()}</p>
+                                    </div>
+                                    <div class='d-flex ${item['person_type'] == 'staff' ? 'justify-content-end' : 'justify-content-start'}' style='margin-top: -10px;'>
+                                        <div class='${item['person_type'] == 'patient' ? 'bg-light-primary' : 'bg-secondary'} rounded'>
+                                            <div class='p-3' style='word-break: break-word; font-size: 15px;'>${item['message']}</div>
+                                        </div>
+                                        <i class="mx-2 d-flex justify-content-center align-items-center ${item['seen'] == 0 ? 'fa fa-check' : 'fa fa-check-double'} text-success"></i>
+                                    </div>
+                                </div>`
+                    })
+
+                    if (!history.length) {
+                        html = `<div style="width: 100%; height: 120px; display: flex; justify-content: center; align-items: center;">
+                                    <div style="text-align: center; font-size: xx-large; color: gray;">
+                                        <i class="fa fa-folder-open" style="font-size: xx-large;"></i> No History
+                                    </div>
+                                </div>`
+                    }
+                    $('#contact_history_panel').html(html)
+                    $('#contact_history_modal').modal('show')
+                },
+                error: function(error) {
+                    toastr.error("Error!")
+                }
+            });
+        })
+
+        $(document).on("click", ".deletebtn", function() {
+            window.id = $(this).parent().attr("idkey");
+            var tmp = $(this).parent().parent().parent();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '<%= site_url + prefix %>/contacts/deleteContact',
+                        method: "POST",
+                        data: {
+                            id: window.id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            if (res.status == "success") {
+                                tracktable.ajax.reload()
+                                toastr.success("Deleted Successfully!")
+                            }
+                        }
+                    });
+                }
+            });
+        })
+
+        $(".update_track_btn").click(function() {
+            var entry = {
+                id: window.id,
+                patient_id: $('#view_patient_id').val(),
+                case_number: $('#view_case').text(),
+                assign: $("#view_assigned_to").val(),
+                priority: $("#view_priority").val(),
+                status: $("#view_status").val(),
+                old_status: $('#view_old_status').val(),
+                comment: $("#comment").val(),
+            }
+            $.ajax({
+                url: '<%= site_url + prefix %>/contacts/updateTrack',
+                type: 'POST',
+                data: entry,
+                dataType: "json",
+                success: function(data) {
+                    if (data.status == 'success') {
+                        toastr.success('Success!')
+                        tracktable.ajax.reload()
+                    } else {
+                        toastr.error('Failed!')
+                    }
+                }
+            });
+        })
+
+        $('#message_modal_reply').click(function() {
+            let message = $('#message-modal-input').val()
+            let assign = $('#reply-assigned').val()
+            let case_number = $('#reply-case_number').val()
+            let patient_id = $('#reply-patient_id').val()
+
+            if (!message) {
+                toastr.warning('Please input your message')
+            } else {
+                var encrypt = new JSEncrypt()
+                encrypt.setPublicKey(`<%= public_key %>`)
+                $.post({
+                    url: '<%= site_url + prefix %>/contacts/addMessage',
+                    method: "POST",
+                    data: {
+                        contact_id: $('#reply-contact_id').val(),
+                        message: message,
+                        patient_id: patient_id,
+                        assign: assign,
+                        case_number: case_number,
+                        person_type: "staff"
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status == "success") {
+                            toastr.success('Message has been sent successfully!')
+                            tracktable.ajax.reload()
+                        } else {
+                            toastr.error('Failed in sending')
+                        }
+
+                        $('#contact_history_modal').modal('hide')
+                    }
+                })
+            }
+        })
+
+        $('.static-body').click(function() {
+            table_status = $(this).attr("data")
+            tracktable.ajax.reload()
+        })
+
+        $(document).on("change", ".contact_reason", (e) => {
+            _contact_reason = e.target.value
+            tracktable.ajax.reload()
+        })
+
+        $(document).on("change", ".contact_assigned", (e) => {
+            _contact_assigned = e.target.value
+            tracktable.ajax.reload()
+        })
+
+        $('#contact_start_date').change((e) => {
+            if (new Date(e.target.value) > new Date($('#contact_end_date').val())) {
+                $('#contact_end_date').val(e.target.value)
+            }
+            tracktable.ajax.reload()
+        })
+
+        $('#contact_end_date').change((e) => {
+            if (new Date(e.target.value) < new Date($('#contact_start_date').val())) {
+                $('#contact_end_date').val($('#contact_start_date').val())
+            }
+            tracktable.ajax.reload()
+        })
+
+
+        // request report //
+        __date = new Date()
+        __year = __date.getFullYear()
+        __month = __date.getMonth()
+
+        // Year
+        let __html = ""
+        for (var i = 2000; i <= __year; i++) {
+            __html += `<option value="${i}">${i}</option>`
+        }
+        $("#request_year_select").html(__html)
+        $("#request_year_select").val(__year)
+        __html = ""
+        // Monthly
+        $("#request_monthly_select").val(new Date().getMonth())
+        // Daily
+        $("#request_daily_date").val(__date.toISOString().substr(0, 10))
+
+        $(document).on("change", "input[name='request_filter_day']", function() {
+            const _type = $(this).val()
+            if (_type == 1) { // Monthly
+                $("#request_year_container").removeClass("d-none")
+                $("#request_monthly_container").removeClass("d-none")
+                $("#request_biweekly_container").addClass("d-none")
+                $("#request_weekly_container").addClass("d-none")
+                $("#request_daily_container").addClass("d-none")
+            } else if (_type == 2) { // Bi-Weekly
+                $("#request_year_container").removeClass("d-none")
+                $("#request_monthly_container").removeClass("d-none")
+                $("#request_biweekly_container").removeClass("d-none")
+                $("#request_weekly_container").addClass("d-none")
+                $("#request_daily_container").addClass("d-none")
+            } else if (_type == 3) { // Weekly
+                $("#request_year_container").removeClass("d-none")
+                $("#request_monthly_container").removeClass("d-none")
+                $("#request_biweekly_container").addClass("d-none")
+                $("#request_weekly_container").removeClass("d-none")
+                $("#request_daily_container").addClass("d-none")
+            } else if (_type == 4) { // Daily
+                $("#request_year_container").addClass("d-none")
+                $("#request_monthly_container").addClass("d-none")
+                $("#request_biweekly_container").addClass("d-none")
+                $("#request_weekly_container").addClass("d-none")
+                $("#request_daily_container").removeClass("d-none")
+            }
+            getReports(_type, $("#request_year_select").val(), $("#request_monthly_select").val(), $("#request_daily_date").val())
+        })
+
+        getReports(1, __year, __month, __date)
+
+        $("#request_year_select").change(e => {
+            const _type = $("input[name='request_filter_day']:checked").val()
+            getReports(_type, e.target.value, $("#request_monthly_select").val(), $("#request_daily_date").val())
+        })
+
+        $("#request_monthly_select").change(e => {
+            const _type = $("input[name='request_filter_day']:checked").val()
+            if (_type == 2 || _type == 3) {
+                getReports(_type, $("#request_year_select").val(), e.target.value, $("#request_daily_date").val())
+            } else if (_type == 1) {
+                renderBarChart(_type, __staffs, __reasons, __requests[$("#request_monthly_select").val()])
+            }
+        })
+
+        $("#request_biweekly_select").change(e => {
+            const _type = $("input[name='request_filter_day']:checked").val()
+            renderBarChart(_type, __staffs, __reasons, __requests[$("#request_biweekly_select").val()])
+        })
+
+        $("#request_weekly_select").change(e => {
+            const _type = $("input[name='request_filter_day']:checked").val()
+            renderBarChart(_type, __staffs, __reasons, __requests[$("#request_weekly_select").val()])
+        })
+
+        $("#request_daily_date").change(e => {
+            const _type = $("input[name='request_filter_day']:checked").val()
+            getReports(_type, $("#request_year_select").val(), $("#request_monthly_select").val(), e.target.value)
+        })
+
+        // patient //
+        $(document).on("click", ".add_vault_btn", function() {
+            window.id = $(this).parent().attr("idkey");
+            var patient_id;
+            $.ajax({
+                url: '<%= site_url + prefix %>/patients/choose',
+                method: "POST",
+                data: {
+                    id: window.id
+                },
+                dataType: "json",
+                success: function(data) {
+                    patient_id = data['id'];
+                }
+            }).then(() => {
+                $("#add_patient_id_1").val(patient_id);
+                $("#vault_add_modal_1").modal("show");
+            });
+
+        });
+
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        const patienttable = $('#patient_tb').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            serverSide: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search patients",
+            },
+            "ajax": {
+                "url": "<%= site_url + prefix %>/patients/read",
+                "type": "GET"
+            },
+            "columns": [{
+                    data: 'patient_id',
+                    render: function(data, type, row) {
+                        return `<div class = "d-flex align-items-center" style = "height:40px;">${row.id}</div>`;
+                    }
+                },
+                {
+                    data: 'fname',
+                    render: function(data, type, row) {
+                        return (row.fname ? row.fname : "") + ' ' + (row.mname ? row.mname : "") + ' ' + (row.lname ? row.lname : "");
+                    }
+                },
+                {
+                    data: 'phone',
+                    render: function(data, type, row) {
+                        return row.phone == null || row.phone == undefined || row.phone == 'null' ? '' : row.phone
+                    }
+                },
+                {
+                    data: 'email',
+                    render: function(data, type, row) {
+                        return row.email == null || row.email == undefined ? '' : row.email
+                    }
+                },
+                {
+                    data: 'address',
+                    render: function(data, type, row) {
+                        return row.address == null || row.address == undefined ? '' : row.address
+                    }
+                },
+                {
+                    data: 'gender'
+                },
+                {
+                    data: 'dob',
+                    render: function(data, type, row) {
+                        return new Date(row.dob) > new Date(1900, 1, 1) ? row.dob : ''
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        return `
+                        <div idkey="${row.id}" style = "min-width:100px;">
+                            <span class="btn btn-icon btn-sm btn-light-primary add_vault_btn"><i class="fa fa-file"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-warning personeditbtn"><i class="fas fa-edit"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-primary add_security_btn"><i class="fa fa-question"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-warning pwdupdatebtn"><i class="fa fa-key"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-danger  persondeletebtn"><i class="fas fa-trash"></i></span>
+                        </div>
+                        `
+                    }
+                }
+            ]
+        });
+
+        $(document).on("click", ".pwdupdatebtn", function() {
+            window.id = $(this).parent().attr("idkey");
+            $("#pwd_reset_modal").modal("show");
+        });
+
+        $(".resetpwdbtn").click(function() {
+            if ($("#pwd").val() == "") {
+                mynotify('danger', 'Please enter password');
+            } else if ($("#pwd").val() != $("#cpwd").val()) {
+                mynotify('danger', 'Please check password again');
+            } else {
+                $.ajax({
+                    url: '<%= site_url + prefix %>/patients/reset-pwd',
+                    type: 'post',
+                    data: {
+                        id: window.id,
+                        pwd: $("#pwd").val()
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status == "success") {
+                            mynotify('success', 'Password Reset Success');
+                        } else {
+                            mynotify('danger', 'Password Reset Fail');
+                        }
+                    }
+                });
+            }
+        });
+
+        $(".person_add").click(function() {
+            $("#person_add_modal").modal('show');
+        });
+
+        $(".personaddbtn").click(function() {
+            var data = {
+                'patient_id': $("#patient_id").val(),
+                'fname': $("#fname").val(),
+                'lname': $("#lname").val()
+            }
+            $.ajax({
+                url: '<%= site_url + prefix %>/patients/create',
+                type: 'post',
+                data: data,
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == "success") {
+                        patienttable.ajax.reload()
+                        mynotify('success', 'Added successfully')
+                    } else if (res.status == "existed") {
+                        mynotify('warning', "The patient id is already existed!")
+                    } else {
+                        mynotify('danger', 'Failed in add')
+
+                    }
+                }
+            })
+        })
+
+        $(document).on("click", ".personeditbtn", function() {
+            window.id = $(this).parent().attr("idkey");
+            $.ajax({
+                url: '<%= site_url + prefix %>/patients/choose',
+                method: "POST",
+                data: {
+                    id: window.id
+                },
+                dataType: "json",
+                success: function(data) {
+                    $("#epatient_id").val(data['patient_id']);
+                    $("#efname").val(data['fname']);
+                    $("#emname").val(data['mname']);
+                    $("#elname").val(data['lname']);
+                    $("#ephone").val(data['phone']);
+                    $("#emobile").val(data['mobile']);
+                    $("#eemail").val(data['email']);
+                    $("#eaddress").val(data['address']);
+                    $("#ecity").val(data['city']);
+                    $("#estate").val(data['state']);
+                    $("#ezip").val(data['zip']);
+                    $("#egender").val(data['gender']);
+                    $("#edob").val(data['dob']);
+                    $("#elanguage").val(data['language']);
+                    $("#eethnicity").val(data['ethnicity']);
+                    $("#erace").val(data['race']);
+                    $('#patient_active').prop('checked', data['status'] == 1 ? true : false);
+
+                    $("#person_edit_modal").modal('show');
+                }
+            });
+        });
+
+        $(".personeditsubmitbtn").click(function() {
+            var data = {
+                id: window.id,
+                patient_id: $("#epatient_id").val(),
+                fname: $("#efname").val(),
+                mname: $("#emname").val(),
+                lname: $("#elname").val(),
+                phone: $("#ephone").val(),
+                mobile: $("#emobile").val(),
+                email: $("#eemail").val(),
+                address: $("#eaddress").val(),
+                city: $("#ecity").val(),
+                state: $("#estate").val(),
+                zip: $("#ezip").val(),
+                gender: $("#egender").val(),
+                dob: $("#edob").val(),
+                language: $("#elanguage").val(),
+                ethnicity: $("#eethnicity").val(),
+                race: $("#erace").val(),
+                status: $('#patient_active').prop('checked') == true ? 1 : 0
+            }
+
+            if (!data.email) {
+                toastr.warning("Please enter your email!")
+                return
+            }
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/patients/update',
+                type: 'post',
+                data: data,
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == "success") {
+                        patienttable.ajax.reload()
+                        mynotify("success", "Updated successfully!")
+                    } else if (res.status == "existed") {
+                        if (res.error == "id") {
+                            mynotify("warning", "The patient id is already existed!")
+                        } else if (res.error == "email") {
+                            mynotify("warning", "The email is already existed!")
+                        }
+                    }
+                }
+            })
+        })
+
+        $(document).on("click", ".persondeletebtn", function() {
+            window.id = $(this).parent().attr("idkey");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '<%= site_url + prefix %>/patients/delete',
+                        method: "POST",
+                        data: {
+                            id: window.id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            if (res.status == "success") {
+                                patienttable.ajax.reload()
+                                toastr.success("Deleted Successfully!")
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#btn-patient-upload').click(() => {
+            $('#patient-upload-modal').modal('show')
+        })
+
+        $('#btn-patient-gather').click(() => {
+            $('#patient-gather-modal').modal('show')
+        })
+
+        $('#btn-gather-modal').click(() => {
+            if (!$('#patient-gather-url').val()) {
+                toastr.error('Please enter the url!')
+                return
+            }
+
+            $('#btn-gather-modal').prop('disabled', true)
+            $('#gather-btn-spinner').removeClass('d-none')
+            $('#gather-btn-text').html('Gathering ...')
+
+            $.post({
+                url: '<%= site_url + prefix %>/patientsArea/addPatients',
+                type: 'POST',
+                data: {
+                    url: $('#patient-gather-url').val()
+                },
+                dataType: 'json',
+                success: function(result) {
+                    if (result.status === 'success') {
+                        toastr.success(`You saved ${result.total} new patients information`)
+                        $('#patient-gather-modal').hide()
+                    } else {
+                        toastr.error(`Action failed!`)
+                        $('#patient-gather-modal').hide()
+                    }
+
+                    $('#btn-gather-modal').prop('disabled', false)
+                    $('#gather-btn-spinner').addClass('d-none')
+                    $('#gather-btn-text').html('Gather')
+
+                    $('#patient-gather-modal').modal('hide')
+                },
+                error: function() {
+                    toastr.error(`Error was occured on server side!`)
+                    $('#btn-gather-modal').prop('disabled', false)
+                    $('#gather-btn-spinner').addClass('d-none')
+                    $('#gather-btn-text').html('Gather')
+                }
+            })
+        })
+
+        $(document).on('click', '.add_security_btn', function() {
+            $('#chosen_patient_id').val($(this).parent().attr("idkey"))
+            $('#question_add_modal').modal('show')
+        })
+
+        // Security Questions
+        $.post({
+            url: '<%= site_url + prefix %>/managers/readOnlyActive',
+            // url: '<?php echo base_url() ?>local/Security/readOnlyActive',
+            type: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                var html = ''
+                result.data.forEach(item => {
+                    html += `<option value='${item.id}'>${item.en}</option>`
+                })
+                $('#question_list').html(html)
+            }
+        })
+
+        $('#question_save').click(() => {
+            $.post({
+                url: '<%= site_url + prefix %>/managers/addUserSecurity',
+                type: 'POST',
+                data: {
+                    user_id: $('#chosen_patient_id').val(),
+                    question_id: $('#question_list').val(),
+                    user_type: 'patient',
+                    answer: $('#question_answer').val()
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if (res.status == 'success') {
+                        toastr.success('Action Succeed!')
+                    }
+                },
+                error: function(err) {
+                    toastr.error('Action Failed!')
+                }
+            })
+        })
+
+        // vault document //
+        const vault_tb = $('#vault_tb').DataTable({
+            "autoWidth": false,
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search vault",
+            },
+            "ajax": {
+                "url": "<%= site_url + prefix %>/vaults/read",
+                "type": "POST",
+            },
+            "columns": [{
+                data: 'patient_id',
+                render: function(data, type, row) {
+                    return `<div class = "d-flex align-items-center" style = "height:40px;">${row.patient_id}</div>`;
+                }
+            },
+            {
+                data: 'fname',
+                render: function(data, type, row) {
+                    return '<span>' + row.fname + ' ' + row.mname + ' ' + row.lname + '</span>'
+                }
+            },
+            { data: 'title' },
+            { data: 'desc' },
+            {
+                data: 'document',
+                render: function(data, type, row) {
+                    if (row.document != null)
+                        return `<a href="<%= site_url + prefix %>/vaults/gf?category=vault&filename=${row.document}" target="_blank">${row.document}</a>`
+                    else
+                        return "";
+                }
+            },
+            { data: 'submit_date' },
+            {
+                data: 'id',
+                render: function(data, type, row) {
+                    return `
+                    <div data-id = "${row.id}">
+                        <span class="btn btn-icon btn-sm btn-light-primary upload_vault_btn"><i class="fa fa-file"></i></span>
+                        <span class="btn btn-icon btn-sm btn-light-warning edit_vault_btn"><i class="fas fa-edit"></i></span>
+                        <span class="btn btn-icon btn-sm btn-light-danger  delete_vault_btn"><i class="fas fa-trash"></i></span>
+                    </div>
+                    `
+                }
+            }],
+            "order": [
+                [5, 'desc'],
+                [0, 'asc']
+            ]
+        });
+
+        $(document).on('click', '.upload_vault_btn', function() {
+            var id = $(this).closest('div').attr('data-id');
+            $.ajax({
+                url: '<%= site_url + prefix %>/vaults/choose',
+                method: "POST",
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(data) {
+                    position = data['position'];
+                }
+            }).then(() => {
+                window.id = id;
+                $("#vault_upload_modal").modal('show');
+            });
+        });
+
+        $(document).on('click', '.delete_vault_btn', function() {
+            var id = $(this).closest('div').attr('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '<%= site_url + prefix %>/vaults/delete',
+                        method: "POST",
+                        data: {
+                            id: id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            if (res.status == "success") {
+                                vault_tb.ajax.reload()
+                                toastr.success("Deleted Successfully!")
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $(".add_vault_btn").click(function() {
+            $("#vault_add_modal").modal('show');
+        });
+
+
+        $("#add_search_value").on("input", e => {
+            $("#suggestions").html("")
+            if (e.target.value.length > 2) {
+                $.post({
+                    url: '<%= site_url + prefix %>/patients/filter',
+                    mothod: "POST",
+                    data: {
+                        value: e.target.value
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        let html = ""
+                        res.forEach(info => {
+                            html += `<option class="m-1" value="${info.id}">
+                                <div>${info.id} : ${info.fname} ${info.lname}, ${new Date(info.dob).toLocaleDateString().substr(0, 10)}, ${info.email}</div>
+                            </option>`
+                        })
+                        $("#add_search_select").html(html)
+                    }
+                })
+            } else {
+                $("#add_search_select").html("")
+            }
+        })
+
+        $(document).on('click', '.edit_vault_btn', function(){
+            var id = $(this).closest('div').attr('data-id');
+            var patient_id, title, desc;
+            $.ajax({
+                url: '<%= site_url + prefix %>/vaults/choose',
+                method: "POST",
+                data: {id: id},
+                dataType: "json",
+                success: function (data) {
+                    patient_id = data['patient_id'];
+                    title = data['title'];
+                    desc = data['desc'];
+                }
+            }).then(() => {
+                window.id = id;
+                $("#edit_patient_id").val(patient_id);
+                $("#edit_title").val(title);
+                $("#edit_desc").val(desc);
+                $("#vault_edit_modal").modal('show');
+            });
+        });
+
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+    })
+</script>
+
+</html>

@@ -1,0 +1,327 @@
+<script>
+    function getTimeDiff(start, end) {
+        var diff = parseInt(Math.abs(new Date(end) - new Date(start)) / 1000)
+        var _str = ''
+        if (parseInt(diff / (86400 * 30))) {
+            _str = `more than ${parseInt(diff / (86400 * 30))} Month(s)`
+        } else if (parseInt(diff / 86400)) {
+            _str = `${parseInt(diff / 86400)} Day(s) ${parseInt((diff % 86400) / 3600)} Hour(s)`
+        } else if (parseInt(diff / 3600)) {
+            _str = `${parseInt(diff / 3600)} Hour(s) ${parseInt((diff % 3600) / 60)} Minute(s)`
+        } else if (parseInt(diff / 60)) {
+            _str = `${parseInt(diff / 60)} Minute(s) ${parseInt(diff % 60)} Second(s)`
+        } else {
+            _str = `${diff} Second(s)`
+        }
+        return _str
+    }
+
+    $(document).ready(function() {
+        const inbox_table = $('#inbox_table').DataTable({
+            'pagingType': 'full_numbers',
+            'order': [
+                [2, 'desc']
+            ],
+            'lengthMenu': [
+                [-1],
+                ['All']
+            ],
+            searching: false,
+            paging: false,
+            responsive: true,
+            'ajax': {
+                'url': './vault/getContacts',
+                'type': 'POST',
+                'data': function(data) {
+                    data.patient_id = '<%= patient_info.id %>'
+                    data.pt_emr_id = '<%= patient_info.patient_id %>'
+                }
+            },
+            'columns': [
+                {
+                    data: 'case_number',
+                    render: function(data, type, row) {
+                        return `<div idkey="${row.id}" assigned="${row.assign}" assigned_name="${row.assigned_name}" case_number="${row.case_number}" patient_id="${row.pt_emr_id}" status="${row.status}">
+                                    <button type="button" class="btn btn-outline-success btn-floating historybtn">
+                                        <i class='fa fa-comment'></i>
+                                    </button>
+                                </div>`
+                    }
+                },
+                {
+                    data: 'case_number',
+                    render: function(data, type, row) {
+                        return row.case_number + '<%= acronym %>'
+                    }
+                },
+                {
+                    data: 'date',
+                    render: function(data, type, row) {
+                        var date = new Date(row.date)
+                        return date.toLocaleDateString('en-US', {
+                            month: '2-digit',
+                            day: '2-digit',
+                            year: 'numeric',
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true
+                        })
+                    }
+                },
+                {
+                    data: 'reason'
+                },
+                {
+                    data: 'subject'
+                },
+                {
+                    data: 'assign',
+                    render: function(data, type, row) {
+                        return row.assign > 0 ? row.assigned_name : 'NoBody'
+                    }
+                },
+                {
+                    data: 'priority',
+                    render: function(data, type, row) {
+                        return `<span class="badge rounded-pill ${row.priority == 1 ? "bg-danger-light" : (row.priority == 2 ? "bg-warning-light" : "bg-success-light")}">${row.priority == 1 ? "Routine" : (row.priority == 2 ? "Medium" : "Low")}</span>`
+                    }
+                },
+                {
+                    data: 'status',
+                    render: function(data, type, row) {
+                        return `<span class="badge rounded-pill ${row.status == 1 ? "bg-danger-light" : (row.status == 2 ? "bg-success-light" : "bg-primary-light")}">${row.status == 1 ? "Open" : (row.status == 2 ? "In progress" : "Closed")}</span>`
+                    }
+                },
+                {
+                    data: 'date',
+                    render: function(data, type, row) {
+                        return row.status == 3 ? getTimeDiff(row.sent, row.closed_date) : `<div class="px-5"><hr></div>`
+                    }
+                },
+            ],
+            createdRow: function(row, data, dataIndex) {
+                if (data.pt_unread_count > 0) {
+                    $(row).addClass('bg-light-primary')
+                }
+            }
+        })
+
+        $('#btn_submit_contact').click(() => {
+            var errors = ""
+            var app_subject = document.getElementById("contact_subject")
+            var app_message = document.getElementById("contact_message")
+            if (app_subject.value == "") {
+                errors += '<%= component_text.m_invalid_subject %>'
+            } else if (app_message.value == "") {
+                errors += '<%= component_text.m_invalid_message %>'
+            }
+            if (errors) {
+                Swal.fire({
+                    title: '<%= component_text.t_invalid_info %>',
+                    text: errors,
+                    icon: 'warning',
+                    confirmButtonText: 'Cool'
+                })
+                return false
+            } else {
+                $("#contactsubmitbtn").prop("disabled", true)
+
+                $.ajax({
+                    type: "POST",
+                    url: './vault/submitContact',
+                    data: {
+                        patient_id: '<%= patient_info.id %>',
+                        patient_name: "<%= patient_info.fname %>" + ' ' + "<%= patient_info.lname %>",
+                        patient_dob: '<%= patient_info.dob %>',
+                        patient_phone: '<%= patient_info.phone %>',
+                        patient_email: '<%= patient_info.email %>',
+                        reason: $('input[name="contactreason"]:checked').val(),
+                        subject: $('#contact_subject').val(),
+                        message: $('#contact_message').val(),
+                        best_time: $('#contact_time').val()
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            Swal.fire({
+                                title: '<%= component_text.c_case %>' + ' # : ' + data.id + '<%= acronym %>',
+                                text: '<%= component_text.t_pa_v_alert_success %>',
+                                icon: 'success',
+                            })
+                            inbox_table.ajax.reload()
+                        } else if (data.status == 'failed') {
+                            Swal.fire({
+                                title: '<%= component_text.c_error %>',
+                                text: '<%= component_text.t_pa_v_alert_failed %>',
+                                icon: 'error',
+                            })
+                        } else {
+                            Swal.fire({
+                                title: '<%= component_text.c_error %>',
+                                text: data.status,
+                                icon: 'error',
+                            })
+                        }
+                        $("#contact_form")[0].reset()
+                    }
+                })
+            }
+        })
+
+        $(document).on('click', '.historybtn', function() {
+            $('#message-modal-input').val('')
+
+            $('#reply-contact_id').val($(this).parent().attr("idkey"))
+            $('#reply-assigned').val($(this).parent().attr("assigned"))
+            $('#reply-case_number').val($(this).parent().attr("case_number"))
+            $('#reply-patient_id').val($(this).parent().attr('patient_id'))
+
+            var id = $(this).parent().attr("idkey")
+            var case_number = $(this).parent().attr("case_number")
+            var assign = $(this).parent().attr("assigned")
+            var patient_id = $(this).parent().attr("patient_id")
+            $.ajax({
+                url: './vault/viewCommunicationHistory',
+                method: "POST",
+                data: {
+                    id: id,
+                    case_number: case_number,
+                    assign: assign,
+                    patient_id: patient_id,
+                    person_type: 'staff' // read message of staff
+                },
+                dataType: "json",
+                success: function(res) {
+                    let contact = res.contact
+
+                    var html = ''
+
+                    // Calculate the difference in years
+                    var date2 = new Date(contact['dob'])
+                    var date1 = new Date(Date.now())
+                    let differenceInYears = date1.getFullYear() - date2.getFullYear();
+
+                    // Adjust for months and days
+                    const monthDifference = date2.getMonth() - date1.getMonth();
+                    const dayDifference = date2.getDate() - date1.getDate();
+
+                    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+                        differenceInYears--;
+                    }
+
+                    $('#modal_history_title').text(`<%= component_text.c_item_contact_history %> | <%= component_text.c_item_case_num %> : ${contact['case_number']}<%= acronym %>`)
+                    $('#modal_history_title_patient').text(`${contact['name']} | ${new Date(contact['dob']).toLocaleDateString()} | ${contact['patient_sex'] == 'Male' ? '<%= component_text.c_item_male %>' : '<%= component_text.c_item_female %>'} | <%= component_text.c_item_age %> : ${differenceInYears} | Lang : ${contact['patient_lang']}`)
+                    $('#modal_history_title_status').html(`<div class="d-flex">
+                                                            <div style="margin-right: 30px;"><%= component_text.c_item_time_around %> : ${contact['status'] == 3 ? getTimeDiff(contact['sent'], contact['closed_date']) : '--/--/----'}</div>
+                                                            <span class = "${contact['status']==1?'text-danger':(contact['status']==2?'text-success':'text-primary')}">${contact['status']==1?"Open":(contact['status']==2?"In progress":"Closed")}</span>
+                                                        </div>`)
+                    var history = res.history
+                    history.forEach(item => {
+                        html += `<li class="notify-block ${item['person_type'] == "patient" ? "sent" : "received"} d-flex">
+                                    <div class="media-body flex-grow-1">
+                                        <div class="msg-box">
+                                            <div>
+                                                <p>${item['message']}</p>
+                                                <ul class="chat-msg-info">
+                                                    <li>
+                                                        <div class="chat-time">
+                                                            <span>${new Date(item['created_time']).toLocaleString()}</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>`
+                    })
+
+                    if (!history.length) {
+                        html = `<div style="font-size: 32px; width: 100%; height: 120px; display: flex; justify-content: center; align-items: center;">
+                                <div style="text-align: center;">
+                                    <i class="fa fa-folder-open"></i> <%= component_text.c_item_no_history %>
+                                </div>
+                            </div>`
+                    }
+
+                    $('#contact_history_panel').html(`<div class="chat-body">
+                                                          <div class="chat-scroll">
+                                                              <ul class="list-unstyled">${html}</ul>
+                                                          </div>
+                                                      </div>`)
+
+                    $("#history-modal-view").click()
+                }
+            })
+        })
+
+        $('#message_modal_reply').click(function() {
+            let message = $('#message-modal-input').val()
+            let assign = $('#reply-assigned').val()
+            let case_number = $('#reply-case_number').val()
+            let patient_id = $('#reply-patient_id').val()
+
+            if (!message) {
+                Swal.fire({
+                    text: 'Please input your message',
+                    icon: 'warning',
+                    confirmButtonText: 'Close'
+                })
+            } else {
+                var encrypt = new JSEncrypt()
+                encrypt.setPublicKey(`<%= public_key %>`)
+                $.post({
+                    url: './vault/addMessage',
+                    method: "POST",
+                    data: {
+                        contact_id: $('#reply-contact_id').val(),
+                        message: message,
+                        patient_id: patient_id,
+                        assign: assign,
+                        case_number: case_number,
+                        person_type: "patient"
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status == "success") {
+                            inbox_table.ajax.reload()
+                            Swal.fire({
+                                text: 'Message has been sent successfully!',
+                                icon: 'success',
+                                confirmButtonText: 'Close'
+                            })
+                        } else {
+                            Swal.fire({
+                                text: 'Failed in sending',
+                                icon: 'error',
+                                confirmButtonText: 'Close'
+                            })
+                        }
+                    }
+                })
+            }
+        })
+
+        window.addEventListener('resize', () => {
+            $('#inbox_table').css({
+                'width': '100%',
+                'table-layout': 'auto'
+            })
+        })
+
+        $("#view_appt_info").click(function() {
+            $.ajax({
+                type: "POST",
+                url: './vault/getApptInfo',
+                data: {
+                    patient_id: '<%= patient_info.patient_id %>'
+                },
+                dataType: 'json',
+                success: function(res) {
+                    console.log(res)
+                }
+            })
+
+            $("#appt-info-modal-view").click()
+        })
+    })
+</script>

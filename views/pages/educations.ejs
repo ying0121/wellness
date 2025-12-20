@@ -1,0 +1,79 @@
+<!-- Hero Parallax Video -->
+<% let index = Math.floor(Math.random() * 2) + 1 %>
+<div class="video-parallax-container">
+    <video class="parallax-video" autoplay muted loop playsinline>
+        <source src="./assets/videos/education<%= index %>.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+<!-- /Hero Parallax Video -->
+<!-- Video Section -->
+<section class="specialities-section-one">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 aos" data-aos="fade-up">
+                <div class="section-header-one section-header-slider">
+                    <h2 class="section-title"><%= component_text["menu_" + page_type] %></h2>
+                </div>
+            </div>
+            <div class="col-md-6 aos" data-aos="fade-up">
+                <div class="owl-nav slide-nav-1 text-end nav-control"></div>
+            </div>
+        </div>
+        <div class="banner-section-fifteen mt-0 pt-0">
+            <div class="banner-content banner-content-fifteen mt-0 pt-0">
+                <div class="owl-carousel specialities-slider-one owl-theme aos" data-aos="fade-up">
+                    <% for (let i = 1; i < videos.length; i++) { %>
+                        <div class="aboutus-companyimg">
+                            <a href="" class="mb-2">
+                                <img src="./assets/images/bg/video.png" alt="image" class="img-fluid">
+                            </a>
+                            <a href="<%= videos[i].url %>" data-fancybox>
+                                <div class="playicon">
+                                    <span>
+                                        <i class="fa-solid fa-play"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <h5 class="text-center mt-2"><%= videos[i].title %></h5>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Video Section -->
+<!-- Document Section -->
+<section class="faq-info my-5 aos" data-aos="fade-right">
+    <div class="container accordion">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header-one text-center aos" data-aos="fade-up">
+                    <h2 class="section-title"><%= component_text.v_document %></h2>
+                </div>
+            </div>
+        </div>
+        <% for (let i = 0; i < docs.length; i++) { %>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading<%= i %>">
+                    <a href="javascript:;" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>" aria-expanded="true" aria-controls="collapse<%= i %>"><%= docs[i].title %></a>
+                </h2>
+                <div id="collapse<%= i %>" class="accordion-collapse collapse show" aria-labelledby="heading<%= i %>" data-bs-parent="#faq-details">
+                    <div class="accordion-body mb-3">
+                        <div class="accordion-content">
+                            <p><%= docs[i].desc %></p>
+                        </div> 
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-danger text-white <%= docs[i].url ? "" : "disabled" %>" href="<%= "./home/gf?category=education&filename=" + docs[i].url %>" target="_blank">
+                            <i class="fas fa-download me-2"></i>
+                            <%= component_text.t_download %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</section>
+<!-- /Document Section -->

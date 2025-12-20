@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('header') %>
+
+<% const educations = [{
+    title: "Asthma",
+    id: "asthma"
+}, {
+    title: "Aye and Vision",
+    id: "aye_vision"
+}, {
+    title: "Cholesterol",
+    id: "cholesterol"
+}, {
+    title: "Diabietes",
+    id: "diabietes"
+}, {
+    title: "Drug and Abuse",
+    id: "drug_abuse"
+}, {
+    title: "Nutrition",
+    id: "nutrition"
+}, {
+    title: "Pain",
+    id: "pain"
+}, {
+    title: "Pain Back",
+    id: "pain_back"
+}, {
+    title: "Pulmonary Disease",
+    id: "pulmonary_disease"
+}, {
+    title: "Tobacco Treatment",
+    id: "tobacco_treatment"
+}] %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row">
+                        <div class="col-md-12 bg-primary p-2 mb-2 text-white">
+                            <div class="d-flex justify-content-around">
+                                <div class="d-flex align-items-center" style="font-size:20px; font-weight:bold;">Educations</div>
+                                <ul class="nav nav-tabs nav-pills" data-tabs="tabs">
+                                    <% for (let i = 0; i < educations.length; i ++) { %>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-white <%= i === 0 ? "active" : "" %>" href="#<%= educations[i].id %>" data-toggle="tab">
+                                                <%= educations[i].title %>
+                                            </a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="tab-content">
+                                <% for (let i = 0; i < educations.length; i ++) { %>
+                                    <div class="tab-pane <%= i === 0 ? "active" : "" %>" id="<%= educations[i].id %>" data-id="<%= educations[i].id %>">
+                                        <div class="row my-3 p-10 bg-white border rounded">
+                                            <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                                <div>
+                                                    <h3><%= educations[i].title %> Videos</h3>
+                                                </div>
+                                                <div><span class='add_<%= educations[i].id %>_video_btn btn btn-light-primary btn-icon'><i class='fa fa-plus'></i></span></div>
+                                            </div>
+                                            <div class="col-12 my-5">
+                                                <table class="table" id="<%= educations[i].id %>_video_tb">
+                                                    <thead>
+                                                        <th>Title(EN)</th>
+                                                        <th>Title(ES)</th>
+                                                        <th>URL(EN)</th>
+                                                        <th>URL(ES)</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-12"><hr></div>
+                                            <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-10">
+                                                <div>
+                                                    <h3><%= educations[i].title %> Documents</h3>
+                                                </div>
+                                                <div><span class='add_<%= educations[i].id %>_document_btn btn btn-light-primary btn-icon'><i class='fa fa-plus'></i></span></div>
+                                            </div>
+                                            <div class="col-12">
+                                                <table class="table" id="<%= educations[i].id %>_document_tb">
+                                                    <thead>
+                                                        <th>Title(EN)</th>
+                                                        <th>Title(ES)</th>
+                                                        <th>URL(EN)</th>
+                                                        <th>URL(ES)</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="video_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <input type="hidden" id="modal_video_type" />
+                <input type="hidden" id="chosen_video_id" />
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit Education</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Title (EN)</h6>
+                                <input type="text" class="form-control" id="title_video_en">
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Title (ES)</h6>
+                                <input type="text" class="form-control" id="title_video_es">
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Video URL (EN)</h6>
+                                <input type="text" class="form-control" id="url_video_en">
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Video URL (ES)</h6>
+                                <input type="text" class="form-control" id="url_video_es">
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <select id="video_status" class="form-control">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary video_save">Save</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="document_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <input type="hidden" id="modal_document_type" />
+                <input type="hidden" id="chosen_document_id" />
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit Education</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Title (EN)</h6>
+                                <input type="text" class="form-control" id="title_document_en">
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Title (ES)</h6>
+                                <input type="text" class="form-control" id="title_document_es">
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Description (EN)</h6>
+                                <textarea class="form-control" id="desc_document_en" style="height:100px;"></textarea>
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <h6>Description (ES)</h6>
+                                <textarea class="form-control" id="desc_document_es" style="height:100px;"></textarea>
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <select id="document_status" class="form-control">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary document_save">Save</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="upload_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <input type="hidden" id="modal_upload_type" />
+                <input type="hidden" id="chosen_upload_id" />
+                <div class="modal-header">
+                    <h4 class="modal-title ">Upload Document</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class='col-md-12 mb-5'>
+                            <h6>Document (EN)</h6>
+                            <div class="custom-file form-group">
+                                <input type="file" accept=".doc, .docx, .pdf" class="custom-file-input" id="upload_file_en" name="upload_file_en">
+                                <label class="custom-file-label" for="upload_file_en">Choose file</label>
+                            </div>
+                        </div>
+                        <div class='col-md-12'>
+                            <h6>Document (ES)</h6>
+                            <div class="custom-file form-group">
+                                <input type="file" accept=".doc, .docx, .pdf" class="custom-file-input" id="upload_file_es" name="upload_file_es">
+                                <label class="custom-file-label" for="upload_file_es">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary upload_save">Save</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    let videoTables = []
+    let documentTables = []
+</script>
+
+<% for (let i = 0; i < educations.length; i ++) { %>
+    <script>
+        $(document).ready(async () => {
+            videoTables["<%= educations[i].id %>"] = $('#<%= educations[i].id %>_video_tb').DataTable({
+                "autoWidth": false,
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search ...",
+                },
+                "ajax": {
+                    "url": "<%= site_url + prefix %>/educations/readVideo",
+                    "type": "POST",
+                    "data": {
+                        "tag": "<%= educations[i].id %>"
+                    }
+                },
+                "columns": [{
+                        data: 'title_en'
+                    },
+                    {
+                        data: 'title_es',
+                    },
+                    {
+                        data: 'url_en'
+                    },
+                    {
+                        data: 'url_es'
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row) {
+                            return `
+                            <div data-id = "${row.id}">
+                                <span class="btn btn-icon btn-sm btn-light-warning edit_<%= educations[i].id %>_video_btn"><i class="fas fa-edit"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-danger delete_<%= educations[i].id %>_video_btn"><i class="fas fa-trash"></i></span>
+                            </div>
+                            `
+                        }
+                    }
+                ]
+            })
+
+            // video
+            $('.add_<%= educations[i].id %>_video_btn').click(function() {
+                $("#modal_video_type").val("0")
+
+                $("#title_video_en").val("")
+                $("#title_video_es").val("")
+                $("#url_video_es").val("")
+                $("#url_video_en").val("")
+                $("#video_status").val(1)
+
+                $("#video_modal").modal("show")
+            })
+
+            $(document).on('click', '.edit_<%= educations[i].id %>_video_btn', function() {
+                $("#chosen_video_id").val($(this).closest('div').attr('data-id'))
+                $.ajax({
+                    url: `<%= site_url + prefix %>/educations/readVideoById`,
+                    method: "POST",
+                    data: {
+                        id: $(this).closest('div').attr('data-id')
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data) {
+                            $("#title_video_en").val(data.title_en)
+                            $("#title_video_es").val(data.title_es)
+                            $("#url_video_es").val(data.url_es)
+                            $("#url_video_en").val(data.url_en)
+                            $("#video_status").val(data.status)
+                        }
+                        $("#modal_video_type").val("1")
+                        $("#video_modal").modal("show")
+                    },
+                    error: function(error) {
+                        toastr.error("Error was occurred on the server!")
+                    }
+                });
+            })
+
+            $(document).on('click', '.delete_<%= educations[i].id %>_video_btn', function() {
+                var id = $(this).closest('div').attr('data-id')
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '<%= site_url + prefix %>/educations/deleteVideo',
+                            method: "POST",
+                            data: {
+                                id: id,
+                                tag: "<%= educations[i].id %>"
+                            },
+                            dataType: "json",
+                            success: function(res) {
+                                if (res.status == "success") {
+                                    toastr.success("Deleted Successfully!")
+                                    videoTables["<%= educations[i].id %>"].ajax.reload()
+                                } else {
+                                    toastr.success("Action Failed!")
+                                }
+                            },
+                            error: function(error) {
+                                toastr.error("An error was occurred on the server!")
+                            }
+                        })
+                    }
+                })
+            })
+
+            // document
+            documentTables["<%= educations[i].id %>"] = $('#<%= educations[i].id %>_document_tb').DataTable({
+                "autoWidth": false,
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search ...",
+                },
+                "ajax": {
+                    "url": "<%= site_url + prefix %>/educations/readDocument",
+                    "type": "POST",
+                    "data": {
+                        "tag": "<%= educations[i].id %>"
+                    }
+                },
+                "columns": [{
+                        data: 'title_en'
+                    },
+                    {
+                        data: 'title_es',
+                    },
+                    {
+                        data: 'url_en'
+                    },
+                    {
+                        data: 'url_es'
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row) {
+                            return `
+                            <div data-id = "${row.id}">
+                                <span class="btn btn-icon btn-sm btn-light-primary edit_<%= educations[i].id %>_document_btn"><i class="fas fa-edit"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-warning upload_<%= educations[i].id %>_document_btn"><i class="fas fa-upload"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-danger  delete_<%= educations[i].id %>_document_btn"><i class="fas fa-trash"></i></span>
+                            </div>
+                            `
+                        }
+                    }
+                ]
+            })
+
+            $(".add_<%= educations[i].id %>_document_btn").click(function() {
+                $("#modal_document_type").val("0")
+
+                $("#title_document_en").val("")
+                $("#title_document_es").val("")
+                $("#desc_document_en").val("")
+                $("#desc_document_es").val("")
+                $("#document_status").val(1)
+
+                $("#document_modal").modal("show")
+            })
+
+            $(document).on('click', '.edit_<%= educations[i].id %>_document_btn', function() {
+                $("#chosen_document_id").val($(this).closest('div').attr('data-id'))
+                $.ajax({
+                    url: `<%= site_url + prefix %>/educations/readDocumentById`,
+                    method: "POST",
+                    data: {
+                        id: $(this).closest('div').attr('data-id')
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data) {
+                            $("#title_document_en").val(data.title_en)
+                            $("#title_document_es").val(data.title_es)
+                            $("#desc_document_en").val(data.desc_en)
+                            $("#desc_document_es").val(data.desc_es)
+                            $("#document_status").val(data.status)
+                        }
+                        $("#modal_document_type").val("1")
+                        $("#document_modal").modal("show")
+                    },
+                    error: function(error) {
+                        toastr.error("Error was occurred on the server!")
+                    }
+                });
+            })
+
+            $(document).on('click', '.upload_<%= educations[i].id %>_document_btn', function() {
+                $("#chosen_document_id").val($(this).closest('div').attr('data-id'))
+                $("#upload_modal").modal("show")
+            })
+
+            $(document).on('click', '.delete_<%= educations[i].id %>_document_btn', function() {
+                var id = $(this).closest('div').attr('data-id');
+                var tmp = $(this).parent().parent().parent();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '<%= site_url + prefix %>/educations/deleteDocument',
+                            method: "POST",
+                            data: {
+                                id: id,
+                                tag: "<%= educations[i].id %>"
+                            },
+                            dataType: "json",
+                            success: function(res) {
+                                if (res.status = "success") {
+                                    toastr.success("Deleted Successfully!")
+                                    documentTables["<%= educations[i].id %>"].ajax.reload()
+                                } else {
+                                    toastr.success("Action Failed!")
+                                }
+                            },
+                            error: function(error) {
+                                toastr.error("Error was occurred on the server!")
+                            }
+                        });
+                    }
+                });
+            })
+
+        })
+    </script>
+<% } %>
+
+<script>
+    let _tag = "asthma"
+    $(document).ready(async () => {
+        $(".tab-pane").click(function () {
+            _tag = $(this).attr("data-id")
+        })
+
+        $(document).on('click', '.video_save', function() {
+            const type = $("#modal_video_type").val()
+
+            const data = {
+                id: $("#chosen_video_id").val(),
+                title_en: $("#title_video_en").val(),
+                title_es: $("#title_video_es").val(),
+                url_en: $("#url_video_en").val(),
+                url_es: $("#url_video_es").val(),
+                status: $("#video_status").val(),
+                tag: _tag
+            }
+
+            $.ajax({
+                url: `<%= site_url + prefix %>/educations/${type == 0 ? "addVideo" : "updateVideo"}`,
+                method: "POST",
+                data: data,
+                dataType: "json",
+                success: function(res) {
+                    if (res.status = "success") {
+                        toastr.success("Saved Successfully!")
+                        videoTables[_tag].ajax.reload()
+                    } else {
+                        toastr.success("Action Failed!")
+                    }
+                    $("#video_modal").modal("hide")
+                },
+                error: function(error) {
+                    toastr.error("Error was occurred on the server!")
+                }
+            });
+        })
+
+        $(document).on('click', '.document_save', function() {
+                const type = $("#modal_document_type").val()
+
+                const data = {
+                    id: $("#chosen_document_id").val(),
+                    title_en: $("#title_document_en").val(),
+                    title_es: $("#title_document_es").val(),
+                    desc_en: $("#desc_document_en").val(),
+                    desc_es: $("#desc_document_es").val(),
+                    status: $("#document_status").val(),
+                    tag: _tag
+                }
+
+                $.ajax({
+                    url: `<%= site_url + prefix %>/educations/${type == 0 ? "addDocument" : "updateDocument"}`,
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status = "success") {
+                            toastr.success("Saved Successfully!")
+                            documentTables[_tag].ajax.reload()
+                        } else {
+                            toastr.success("Action Failed!")
+                        }
+                        $("#document_modal").modal("hide")
+                    },
+                    error: function(error) {
+                        toastr.error("Error was occurred on the server!")
+                    }
+                });
+            })
+
+        // upload document
+        $(".upload_save").click(function() {
+            var fd = new FormData()
+
+            var file_en = $('#upload_file_en')[0].files
+            var file_es = $('#upload_file_es')[0].files
+
+            var id = $("#chosen_document_id").val()
+            fd.append('id', id)
+
+            if (file_en.length > 0) {
+                fd.append('file_en', file_en[0])
+            }
+            if (file_es.length > 0) {
+                fd.append('file_es', file_es[0])
+            }
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/educations/uploadFiles',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == "success") {
+                        documentTables[_tag].ajax.reload()
+                        mynotify('success', 'Saved Successfully.')
+                        $("#upload_modal").modal("hide")
+                    } else {
+                        mynotify('danger', 'Upload Failed!')
+                    }
+                }
+            })
+        })
+
+    })
+</script>
+
+</html>

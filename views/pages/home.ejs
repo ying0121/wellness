@@ -1,0 +1,416 @@
+<!-- Hero Carousel -->
+<section id="hero-section">
+    <div id="home-hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000" style="height: calc(100vh - 125px);">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#home-hero-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <% for (let i = 1; i < HEADER_BANNER.length; i++) { %>
+                <button type="button" data-bs-target="#home-hero-carousel" data-bs-slide-to="<%= i %>" aria-label="Slide <%= i + 1 %>"></button>
+            <% } %>
+        </div>
+        <!-- Inner Slides -->
+        <div class="carousel-inner" style="height: calc(100vh - 125px);">
+            <% for (let i = 0; i < HEADER_BANNER.length; i++) { %>
+                <div class="carousel-item <%= i == 0 ? "active" : "" %>">
+                    <div class="bg-image" style="background-image: url('./assets/images/pageimgs/<%= HEADER_BANNER[i].img %>'); height: 100vh; background-size: cover; background-position: center;">
+                        <div class="mask" style="background-color: #00000020; height: 100vh;">
+                            <div class="container d-flex flex-column justify-content-center align-items-center h-100 text-center text-white">
+                                <h1 class="display-3 fw-bold"><%- HEADER_BANNER[i].title %></h1>
+                                <p class="lead"><%- HEADER_BANNER[i].desc %></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#home-hero-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Prev</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#home-hero-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+<!-- /Hero Carousel -->
+<!-- Make an Appointment -->
+<div class="container d-flex justify-content-start gap-3 articles-content" style="margin-top: -42px; position: absolute; z-index: 1;">
+    <a href="#home-make-appointment-container" class="btn" data-bs-toggle="collapse" data-bs-target="#home-make-appointment" aria-expanded="false" aria-controls="home-make-appointment">
+        <i class="fas fa-handshake"></i> <%= component_text.t_make_an_appointment %>
+    </a>
+</div>
+<!-- Contact Form -->
+<div id="home-make-appointment-container">
+    <section class="collapse contact-section" id="home-make-appointment">
+        <div class="container">
+            <div class="card contact-form-card">
+                <div class="card-body">
+                    <div class="row mb-5">
+                        <div class="col-lg-3">
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <p class="h5 text-info"><%= component_text.t_contact_user_desc %> (*):</p>
+                                </div>
+                                <div class="col-md-6 contactusertype mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactusertype" id="contactusertype" value="1" checked />
+                                        <label class="form-check-label" for="contactusertype"> <%= component_text.t_contact_option_patient %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 contactusertype mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactusertype" id="contactusertype1" value="2" />
+                                        <label class="form-check-label" for="contactusertype1"> <%= component_text.t_contact_option_business %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 contactpttype-patient mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype" value="1" checked />
+                                        <label class="form-check-label" for="contactpttype"> <%= component_text.t_contact_option_existing %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 contactpttype-patient mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype1" value="2" />
+                                        <label class="form-check-label" for="contactpttype1"> <%= component_text.t_contact_option_new %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 contactpttype-institution mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype2" value="3" checked />
+                                        <label class="form-check-label" for="contactpttype2"> <%= component_text.t_contact_option_patient %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 contactpttype-institution mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype3" value="4" />
+                                        <label class="form-check-label" for="contactpttype3"> <%= component_text.t_contact_option_generalmsg %> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="h5 text-info"><%= component_text.t_contact_reason %> (*):</p>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="contactreason1" value="Appointment Request" checked />
+                                        <label class="form-check-label" for="contactreason1"> <%= component_text.t_contact_reason_1 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="contactreason2" value="Letter Request" />
+                                        <label class="form-check-label" for="contactreason2"> <%= component_text.t_contact_reason_2 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="contactreason3" value="Prescription Refill Request" />
+                                        <label class="form-check-label" for="contactreason3"> <%= component_text.t_contact_reason_3 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="contactreason4" value="Referral Request" />
+                                        <label class="form-check-label" for="contactreason4"> <%= component_text.t_contact_reason_4 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="contactreason5" value="Test Results Request" />
+                                        <label class="form-check-label" for="contactreason5"> <%= component_text.t_contact_reason_5 %> </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="contactreason" id="contactreason6" value="General Message" />
+                                        <label class="form-check-label" for="contactreason6"> <%= component_text.t_contact_reason_6 %> </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="row" id="contact_pt_info">
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-focus">
+                                        <input type="text" id="contact_name" class="form-control floating" name="contact_name" required />
+                                        <label class="focus-label" for="contact_name"><%= component_text.placeholder_your_name %></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-focus">
+                                        <input type="text" id="contact_email" class="form-control floating" name="contact_email" required />
+                                        <label class="focus-label" for="contact_email"><%= component_text.placeholder_email_address %></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-focus">
+                                        <input type="text" id="contact_cel" class="form-control floating" name="contact_cel" required />
+                                        <label class="focus-label" for="contact_cel"><%= component_text.placeholder_phone_number %></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-focus">
+                                        <input type="date" id="contact_dob" class="form-control floating" name="contact_dob" required />
+                                        <label class="focus-label" for="contact_dob"><%= component_text.placeholder_dob %></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-focus">
+                                        <input type="text" id="contact_subject" class="form-control floating" name="contact_subject" />
+                                        <label class="focus-label" for="contact_subject"><%= component_text.placeholder_subject %></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <textarea class="form-control floating" id="contact_message" rows="6" name="contact_message" placeholder="<%= component_text.placeholder_message %>"></textarea>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-focus">
+                                        <input type="text" id="contact_time" class="form-control floating" name="contact_time" />
+                                        <label class="focus-label" for="contact_time"><%= component_text.placeholder_besttime %></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <p class="fs-6 my-1"><%= component_text.t_opt_in_out_header %></p>
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="home_opt_status" id="home_opt_in" value="1" checked />
+                                <label class="form-check-label" for="home_opt_in"> <%= component_text.t_opt_in_out_in %> </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="home_opt_status" id="home_opt_out" value="0" />
+                                <label class="form-check-label" for="home_opt_out"> <%= component_text.t_opt_in_out_out %> </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-none" id="home_opt_moreinfo">
+                            <div class="fs-6"><%- component_text.t_opt_in_out_footer %></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="fs-6 m-0"><%- component_text.t_opt_in_out_more %></div>
+                        </div>
+                        <div class="col-md-12">
+                            <a href="#" id="home_opt_more_info_btn"><%- component_text.t_opt_more_info %> &gt;&gt;</a>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex justify-content-between align-items-center mb-3 gap-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2 mb-md-0 gap-1">
+                            <div id="contact_captcha_image"><%- captcha_image %></div>
+                            <i id="captcha_change" class="fa fa-lg fa-rotate-right fs-2 text-primary cursor-pointer"></i>
+                        </div>
+                        <div class="form-focus w-100">
+                            <input type="text" id="contact_captcha" class="form-control floating" name="captcha" />
+                            <label class="focus-label" for="contact_captcha"><%= component_text.placeholder_captcha %></label>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 btn-search">
+                        <button type="button" class="btn" onClick="sendContactform();" id="contact-submit-btn">
+                            <i class="fas fa-paper-plane me-2"></i> <%= component_text.btn_send %>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- /Contact Form -->
+<!-- Service Carousel -->
+<% if (services.length > 0) { %>
+    <section class="latest-blog" id="service-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <% for (let i = 0; i < services.length; i++) { %>
+                    <div class="col-md-4 col-lg-3 aos" data-aos="fade-up">
+                        <div class="blog-wrap">
+                            <div class="image-holder">
+                                <div style="background: url('./assets/service/image/<%= services[i].image %>'); height: 240px;">
+                                    <div style="position: relative;" class="p-2">
+                                        <div class="d-flex justify-content-end align-items-center w-100">
+                                            <% if (services[i].online_payment == 1) { %>
+                                                <span class="badge badge-danger fs-6">$ <%= services[i].cost %></span>
+                                            <% } else { %>
+                                                <span class="badge badge-success fs-6"><%= component_text.c_eligible_health_plan %></span>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blog-wrap-body">
+                                <h3><a href="javascript:;" data-text="<%= services[i].title %>"><%= services[i].title %></a></h3>
+                                <div class="blog-footer">
+                                    <div class="row row-sm align-items-center position-relative">
+                                        <button data-bs-toggle="modal" data-bs-target="#payment-modal" class="btn btn-sm bg-info-light d-none" id="show-service-payment-modal-btn"></button>
+                                        <button data-bs-toggle="modal" data-bs-target="#service_request_modal" class="btn btn-sm bg-info-light d-none" id="show-service-modal-btn"></button>
+                                        <div class="col-6 text-start">
+                                            <a href="javascript:;" class="read-txt service_request" tabindex="0" data-id="<%= services[i].id %>" data-title="<%= services[i].title %>"><%= component_text.t_request %> <i class="fa fa-code-pull-request"></i></a>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <a href="./Services/detail?s=<%= services[i].id %>" class="cal-txt" tabindex="0" target="_blank"><%= component_text.btn_read_more %> <i class="fas fa-long-arrow-alt-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+<% } %>
+<!-- /Service Carousel -->
+<!-- Meet Our Doctor Section -->
+<% if (area_toggle.doctor_area == 1) { %>
+    <div class="main-wrapper home-twelve home-thirteen">
+        <section class="services-section-thirteen common-padding" style="background-color: #F2F6F6;">
+            <div class="container">
+                <div class="section-header text-center aos" data-aos="fade-up">
+                    <h2><%= component_text.t_doctor_title %></h2>
+                </div>
+                <div class="row justify-content-center aos" data-aos="fade-right">
+                    <% for (let i = 0; i < doctors.length; i++) { %>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="service-thirteen-main">
+                                <div class="service-thirteen-all">
+                                    <div class="service-img-thirteen">
+                                        <img src="./assets/images/doctors/<%= doctors[i].img %>" alt="<%= doctors[i].name %>" width="150" height="150" />
+                                    </div>
+                                    <div class="service-inner-contents">
+                                        <h5><%= doctors[i].name %></h5>
+                                        <p><%- doctors[i].fdesc %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+    </div>
+<% } %>
+<!-- /Meet Our Doctor Section -->
+<!-- Our Staffs Section -->
+<% if (area_toggle.staff_area == 1) { %>
+    <section style="background-color: #ffffff !important;" class="doctors-section" id="staff-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 aos" data-aos="fade-up">
+                    <div class="section-header-one section-header-slider">
+                        <h2 class="section-title"><%= component_text.t_staff_title %></h2>
+                    </div>
+                </div>
+                <div class="col-md-6 aos" data-aos="fade-up">
+                    <div class="owl-nav slide-nav-2 text-end nav-control"></div>
+                </div>
+            </div>
+            <div class="owl-carousel doctor-slider-one owl-theme aos" id="our-staff-carousel">
+                <% for (let i = 0; i < staffs.length; i++) { %>
+                    <div class="item w-300px">
+                        <div class="doctor-profile-widget">
+                            <div class="doc-pro-img">
+                                <a href="javascript:;">
+                                    <div class="doctor-profile-img">
+                                        <img src="./assets/images/staffs/<%= staffs[i].img %>" class="img-fluid" alt="Ruby Perrin">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="doc-content">
+                                <div class="doc-pro-info">
+                                    <div class="doc-pro-name">
+                                        <a href="javascript:;"><%= staffs[i].name %></a>
+                                        <p><%- staffs[i].desc %></p>
+                                    </div>
+                                </div>
+                                <div class="doc-pro-location">
+                                    <a href="javascript:;" data-needpopup-show="#staff_detail_modal_<%= i %>"><%= component_text.btn_read_more %> <i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <% for (let i = 0; i < staffs.length; i++) { %>
+                <div id='staff_detail_modal_<%= i %>' class="needpopup">
+                    <div><%= component_text.c_name %>: <%= staffs[i].name %></div>
+                    <div><%= component_text.c_job %>: <%= staffs[i].job %></div>
+                    <% if (staffs[i].email_tel_ext_toggle == 1) { %>
+                        <div><%= component_text.placeholder_email %>: <%= staffs[i].email %></div>
+                        <div class="row">
+                            <div class="col-12 col-md-6"><%= component_text.c_tel %>: <%= staffs[i].tel %></div>
+                            <div class="col-12 col-md-6"><%= component_text.c_ext %>: <%= staffs[i].ext %></div>
+                        </div>
+                    <% } %>
+                    <br>
+                    <%- staffs[i].fdesc %>
+                </div>
+            <% } %>
+        </div>
+    </section>
+<% } %>
+<!-- /Our Staffs Section -->
+<!-- Patient Review Section -->
+<section class="main-wrapper home-ten" id="patient-review-section">
+    <div class="our-doctor-section">
+        <div class="section-floating-bg">
+            <img src="./assets/images/bg/hexagen-group-1.png" alt="design-image">
+            <img src="./assets/images/bg/hexagon-group-2.png" alt="design-image">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 aos" data-aos="fade-up">
+                    <div class="section-header-one section-header-slider">
+                        <h2 class="section-title"><%= component_text.t_patient_review_title %></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-gap aos justify-content-center" data-aos="fade-up">
+                <% for (let i = 0; i < patient_reviews.length; i++) { %>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="module-border-wrap">
+                            <div class="listing-card">
+                                <div class="listing-img">
+                                    <a href="javascript:;" class="d-flex justify-content-center">
+                                        <img src="./assets/images/patient_review/<%= patient_reviews[i].img %>" class="img-fluid" alt="<%= patient_reviews[i].name %>" style="width: 120px;">
+                                    </a>
+                                    <div class="fav-item">
+                                        <div class="featured-rating"><i class="fa fa-star "></i> <span>5</span></div>
+                                        <a href="javascript:void(0)" class="fav-icon">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="listing-content">
+                                    <div class="listing-details">
+                                        <div class="listing-profile-details">
+                                            <div class="listing-floating-img">
+                                                <img src="assets/images/bg/ecg-wave.png" alt="ecg-wave">
+                                            </div>
+                                            <div class="listing-user">
+                                                <div class="listing-user-details">
+                                                    <h6><a href="javascript:;"><%= patient_reviews[i].name %> </a></h6>
+                                                    <span class="mb-2"><%- patient_reviews[i].desc %></span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-btn"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Patient Review Section -->

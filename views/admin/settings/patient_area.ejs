@@ -1,0 +1,1463 @@
+<div class="row my-3 p-10 bg-white border rounded">
+    <div class="col-12 my-3">
+        <h3>Patient Area Setting</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12 bg-primary p-2 mb-2 text-white">
+            <ul class="nav nav-tabs nav-pills" data-tabs="tabs">
+                <li class="nav-item">
+                    <a class="nav-link text-white active" href="#pa_signin" data-toggle="tab">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_signup" data-toggle="tab">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_loginfailed" data-toggle="tab">Login Failed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_logoutrules" data-toggle="tab">Pt Area Rules</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_prompts" data-toggle="tab">Prompts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_emails" data-toggle="tab">Email Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_password" data-toggle="tab">Email Password</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_emailupdate" data-toggle="tab">Email Update</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_emailclosed" data-toggle="tab">Email Closed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_needhelp" data-toggle="tab">Access Help</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#pa_vault" data-toggle="tab">Vault</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div class="tab-pane active" id="pa_signin">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Welcome -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Welcome</h3>
+                                <div id="pa_si_welcome_en" class="pa_si_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Bienvenida</h3>
+                                <div id="pa_si_welcome_sp" class="pa_si_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Sign In -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sign In</h3>
+                                <div id="pa_si_signin_en" class="pa_si_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Iniciar sesión</h3>
+                                <div id="pa_si_signin_sp" class="pa_si_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Form Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Form Text</h3>
+                                <div id="pa_si_formtext_en" class="pa_si_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Texto del formulario</h3>
+                                <div id="pa_si_formtext_sp" class="pa_si_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_si_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_signup">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Active Account -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Active Account</h3>
+                                <div id="pa_su_account_en" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Cuenta activa</h3>
+                                <div id="pa_su_account_sp" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Sign Up -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sign Up</h3>
+                                <div id="pa_su_signup_en" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Inscribirse</h3>
+                                <div id="pa_su_signup_sp" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Send -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Send</h3>
+                                <div id="pa_su_send_en" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Enviar</h3>
+                                <div id="pa_su_send_sp" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Email Header -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sign up Request</h3>
+                                <div id="pa_su_eheader_en" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Solicitud de Registro</h3>
+                                <div id="pa_su_eheader_sp" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-6" />
+                        </div>
+                        <!-- Success Alert -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Success Alert</h3>
+                                <div id="pa_su_alert_success_en" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Alerta de éxito</h3>
+                                <div id="pa_su_alert_success_sp" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Failed Alert -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Failed Alert</h3>
+                                <div id="pa_su_alert_failed_en" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Alerta fallida</h3>
+                                <div id="pa_su_alert_failed_sp" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Existed Alert -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Existed Alert</h3>
+                                <div id="pa_su_alert_exist_en" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Alerta existente</h3>
+                                <div id="pa_su_alert_exist_sp" class="pa_su_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_su_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_loginfailed">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Login Failed -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Login Failed</h3>
+                                <div id="pa_lf_failed_en" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Error de inicio de sesion</h3>
+                                <div id="pa_lf_failed_sp" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Invalid -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Invalid</h3>
+                                <div id="pa_lf_invalid_en" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Inválida</h3>
+                                <div id="pa_lf_invalid_sp" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Text</h3>
+                                <div id="pa_lf_text_en" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Texto</h3>
+                                <div id="pa_lf_text_sp" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Inactived -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Inactive</h3>
+                                <div id="pa_lf_inactive_en" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Inactivo</h3>
+                                <div id="pa_lf_inactive_sp" class="pa_lf_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_lf_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_logoutrules">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <div class="d-flex form-group">
+                                <label for="pa_timeout" class="form-control">Automatic Logout Time (mins)</label>
+                                <input type="number" class="form-control" id="pa_timeout" style="max-width: 100px;">
+                            </div>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <div class="d-flex form-group">
+                                <label for="pa_limit" class="form-control">Unsuccessful Account Login Limit</label>
+                                <input type="number" class="form-control" id="pa_limit" style="max-width: 100px;">
+                            </div>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <div class="d-flex form-group">
+                                <label for="pa_limit" class="form-control">Automatic Vault Doc Auto Delete (Days)</label>
+                                <input type="number" class="form-control" id="pa_vault_doc_del" style="max-width: 100px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_prompts">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Login Footer -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Login Footer</h3>
+                                <div id="pa_pr_footer_en" class="pa_pr_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Pie de Iniciar Sesión</h3>
+                                <div id="pa_pr_footer_sp" class="pa_pr_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Security Question -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Security Question</h3>
+                                <div id="pa_pr_security_en" class="pa_pr_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Pregunta de seguridad</h3>
+                                <div id="pa_pr_security_sp" class="pa_pr_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Sign In Help -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sign In Help</h3>
+                                <div id="pa_pr_sihelp_en" class="pa_pr_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Ayuda para iniciar sesión</h3>
+                                <div id="pa_pr_sihelp_sp" class="pa_pr_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_pr_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_emails">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Subject -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Subject</h3>
+                                <div id="pa_ea_subject_en" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sujeto</h3>
+                                <div id="pa_ea_subject_sp" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Email Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Email Text</h3>
+                                <div id="pa_ea_email_text_en" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Email Texto</h3>
+                                <div id="pa_ea_email_text_sp" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Link -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Link</h3>
+                                <div id="pa_ea_link_en" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Enlace</h3>
+                                <div id="pa_ea_link_sp" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Disclaimer -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Disclaimer</h3>
+                                <div id="pa_ea_disclaimer_en" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Descargo de responsabilidad</h3>
+                                <div id="pa_ea_disclaimer_sp" class="pa_ea_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_ea_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_password">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Subject -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Subject</h3>
+                                <div id="pa_ep_subject_en" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sujeto</h3>
+                                <div id="pa_ep_subject_sp" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Email Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Email Text</h3>
+                                <div id="pa_ep_emailtext_en" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Email Texto</h3>
+                                <div id="pa_ep_emailtext_sp" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Link Time -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Link Time</h3>
+                                <div id="pa_ep_linktime_en" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Enlace Tiempo</h3>
+                                <div id="pa_ep_linktime_sp" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Not Existed -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Not Existed</h3>
+                                <div id="pa_ep_notexisted_en" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">No existía</h3>
+                                <div id="pa_ep_notexisted_sp" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-6" />
+                        </div>
+                        <!-- Success Alert -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Success Alert</h3>
+                                <div id="pa_ep_alert_success_en" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Alerta de éxito</h3>
+                                <div id="pa_ep_alert_success_sp" class="pa_ep_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_ep_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_emailupdate">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Subject -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Subject</h3>
+                                <div id="pa_eu_subject_en" class="pa_eu_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sujeto</h3>
+                                <div id="pa_eu_subject_sp" class="pa_eu_summernote"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <hr class="my-6" />
+                        </div>
+                        <!-- Updated Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Updated Text</h3>
+                                <div id="pa_eu_etext_en" class="pa_eu_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Texto actualizado</h3>
+                                <div id="pa_eu_etext_sp" class="pa_eu_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_eu_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_emailclosed">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Subject -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Subject</h3>
+                                <div id="pa_ec_subject_en" class="pa_ec_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Sujeto</h3>
+                                <div id="pa_ec_subject_sp" class="pa_ec_summernote"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <hr class="my-6" />
+                        </div>
+                        <!-- Closed Text -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Closed Text</h3>
+                                <div id="pa_ec_etext_en" class="pa_ec_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Texto cerrado</h3>
+                                <div id="pa_ec_etext_sp" class="pa_ec_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_ec_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_needhelp">
+                    <div class = "row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Invalid Value -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Invalid</h3>
+                                <div id="pa_ah_invalid_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Inválido</h3>
+                                <div id="pa_ah_invalid_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Access Help -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Access Help</h3>
+                                <div id="pa_ah_help_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Acceso Ayuda</h3>
+                                <div id="pa_ah_help_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Header Question -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Header Question</h3>
+                                <div id="pa_ah_hques_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Pregunta de encabezado</h3>
+                                <div id="pa_ah_hques_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Forgot Account -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Forgot Account</h3>
+                                <div id="pa_ah_facc_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Olvidé mi cuenta</h3>
+                                <div id="pa_ah_facc_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Forgot Password -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Forgot Password</h3>
+                                <div id="pa_ah_fpwd_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Has olvidado tu contraseña</h3>
+                                <div id="pa_ah_fpwd_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Description -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Description</h3>
+                                <div id="pa_ah_desc_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Descripción</h3>
+                                <div id="pa_ah_desc_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Repassword Header -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Repassword Header</h3>
+                                <div id="pa_ah_rpheader_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Encabezado de recontraseña</h3>
+                                <div id="pa_ah_rpheader_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Footer Question -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Footer Question</h3>
+                                <div id="pa_ah_ques_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Pregunta de pie de página</h3>
+                                <div id="pa_ah_ques_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-6" />
+                        </div>
+                        <!-- Success Alert -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Success Alert</h3>
+                                <div id="pa_ah_alert_success_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Alerta de éxito</h3>
+                                <div id="pa_ah_alert_success_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Failed Alert -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Failed Alert</h3>
+                                <div id="pa_ah_alert_failed_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Alerta fallida</h3>
+                                <div id="pa_ah_alert_failed_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Not Exited Alert -->
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Not Existed Alert</h3>
+                                <div id="pa_ah_alert_notexisted_en" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class = "form-group">
+                                <h3 class="mx-5">Alerta No Existía</h3>
+                                <div id="pa_ah_alert_notexisted_sp" class="pa_ah_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_ah_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="pa_vault">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">English</h1>
+                        </div>
+                        <div class="col-6 mt-10">
+                            <h1 class="mb-3">Español</h1>
+                        </div>
+                        <div class="col-12">
+                            <hr class="my-5" />
+                        </div>
+                        <!-- Welcome -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Welcome</h3>
+                                <div id="pa_v_welcome_en" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Bienvenido</h3>
+                                <div id="pa_v_welcome_sp" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Description -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Description</h3>
+                                <div id="pa_v_desc_en" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Descripción</h3>
+                                <div id="pa_v_desc_sp" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Header Text -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Patient Area Description</h3>
+                                <div id="pa_v_htext_en" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Area del Paciente Descripción</h3>
+                                <div id="pa_v_htext_sp" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <hr class="my-6" />
+                        </div>
+                        <!-- Alert Success -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5"> Alert Success</h3>
+                                <div id="pa_v_alert_success_en" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Alerta de éxito</h3>
+                                <div id="pa_v_alert_success_sp" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <!-- Alert Failed -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Alert Failed</h3>
+                                <div id="pa_v_alert_failed_en" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h3 class="mx-5">Alerta fallida</h3>
+                                <div id="pa_v_alert_failed_sp" class="pa_v_summernote"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button id="pa_v_update" class="btn btn-light-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(async () => {
+        // sign in //
+        $('.pa_si_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readSignInContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_si_welcome_en').summernote('code', result.en.t_pa_si_welcome)
+                    $('#pa_si_welcome_sp').summernote('code', result.es.t_pa_si_welcome)
+                    $('#pa_si_signin_en').summernote('code', result.en.t_pa_si_signin)
+                    $('#pa_si_signin_sp').summernote('code', result.es.t_pa_si_signin)
+                    $('#pa_si_formtext_en').summernote('code', result.en.t_pa_si_formtext)
+                    $('#pa_si_formtext_sp').summernote('code', result.es.t_pa_si_formtext)
+                }
+            }
+        })
+
+        $('#pa_si_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateSignInContent',
+                method: "POST",
+                data: {
+                    pa_si_welcome_en: $('#pa_si_welcome_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_si_welcome_sp: $('#pa_si_welcome_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_si_signin_en: $('#pa_si_signin_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_si_signin_sp: $('#pa_si_signin_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_si_formtext_en: $('#pa_si_formtext_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_si_formtext_sp: $('#pa_si_formtext_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+    
+        // sing up //
+        $('.pa_su_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readSignUpContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_su_account_en').summernote('code', result.en.t_pa_su_account)
+                    $('#pa_su_account_sp').summernote('code', result.es.t_pa_su_account)
+                    $('#pa_su_signup_en').summernote('code', result.en.t_pa_su_signup)
+                    $('#pa_su_signup_sp').summernote('code', result.es.t_pa_su_signup)
+                    $('#pa_su_send_en').summernote('code', result.en.t_pa_su_send)
+                    $('#pa_su_send_sp').summernote('code', result.es.t_pa_su_send)
+                    $('#pa_su_eheader_en').summernote('code', result.en.t_pa_su_eheader)
+                    $('#pa_su_eheader_sp').summernote('code', result.es.t_pa_su_eheader)
+                    $('#pa_su_alert_success_en').summernote('code', result.en.t_pa_su_alert_success)
+                    $('#pa_su_alert_success_sp').summernote('code', result.es.t_pa_su_alert_success)
+                    $('#pa_su_alert_failed_en').summernote('code', result.en.t_pa_su_alert_failed)
+                    $('#pa_su_alert_failed_sp').summernote('code', result.es.t_pa_su_alert_failed)
+                    $('#pa_su_alert_exist_en').summernote('code', result.en.t_pa_su_alert_exist)
+                    $('#pa_su_alert_exist_sp').summernote('code', result.es.t_pa_su_alert_exist)
+                }
+            }
+        })
+
+        $('#pa_su_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateSignUpContent',
+                method: "POST",
+                data: {
+                    pa_su_account_en: $('#pa_su_account_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_su_account_sp: $('#pa_su_account_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_su_signup_en: $('#pa_su_signup_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_su_signup_sp: $('#pa_su_signup_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_su_send_en: $('#pa_su_send_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_su_send_sp: $('#pa_su_send_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_su_eheader_en: $('#pa_su_eheader_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_su_eheader_sp: $('#pa_su_eheader_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_su_alert_success_en: $('#pa_su_alert_success_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_su_alert_success_sp: $('#pa_su_alert_success_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_su_alert_failed_en: $('#pa_su_alert_failed_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_su_alert_failed_sp: $('#pa_su_alert_failed_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_su_alert_exist_en: $('#pa_su_alert_exist_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_su_alert_exist_sp: $('#pa_su_alert_exist_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+    
+        // login failed //
+        $('.pa_lf_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readLoginFailedContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_lf_invalid_en').summernote('code', result.en.t_pa_lf_invalid)
+                    $('#pa_lf_invalid_sp').summernote('code', result.es.t_pa_lf_invalid)
+                    $('#pa_lf_text_en').summernote('code', result.en.t_pa_lf_text)
+                    $('#pa_lf_text_sp').summernote('code', result.es.t_pa_lf_text)
+                    $('#pa_lf_failed_en').summernote('code', result.en.t_pa_lf_failed)
+                    $('#pa_lf_failed_sp').summernote('code', result.es.t_pa_lf_failed)
+                    $('#pa_lf_inactive_en').summernote('code', result.en.t_pa_lf_inactive)
+                    $('#pa_lf_inactive_sp').summernote('code', result.es.t_pa_lf_inactive)
+                }
+            }
+        })
+
+        $('#pa_lf_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateLoginFailedContent',
+                method: "POST",
+                data: {
+                    pa_lf_invalid_en: $('#pa_lf_invalid_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_lf_invalid_sp: $('#pa_lf_invalid_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_lf_text_en: $('#pa_lf_text_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_lf_text_sp: $('#pa_lf_text_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_lf_failed_en: $('#pa_lf_failed_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_lf_failed_sp: $('#pa_lf_failed_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_lf_inactive_en: $('#pa_lf_inactive_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_lf_inactive_sp: $('#pa_lf_inactive_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+    
+        // logout rules //
+        $('#pa_timeout').val('<%= logout_rules[0].value %>')
+        $('#pa_limit').val('<%= logout_rules[1].value %>')
+        $('#pa_vault_doc_del').val('<%= logout_rules[2].value %>')
+
+        $('#pa_timeout').change(e => {
+            if (e.target.value < 1) {
+                toastr.warning('Please Input Correctly!')
+                return
+            }
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateSettingValue',
+                method: 'POST',
+                data: {
+                    value: e.target.value,
+                    type: 'session_timeout'
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if (res.status == "success") {
+                        toastr.success('Action Success!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+
+        $('#pa_limit').change(e => {
+            if (e.target.value < 1) {
+                toastr.warning('Please Input Correctly!')
+                return
+            }
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateSettingValue',
+                method: 'POST',
+                data: {
+                    value: e.target.value,
+                    type: 'failed_limit'
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if (res.status == "success") {
+                        toastr.success('Action Success!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+
+        $('#pa_vault_doc_del').change(e => {
+            if (e.target.value < 1) {
+                toastr.warning('Please Input Correctly!')
+                return
+            }
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateSettingValue',
+                method: 'POST',
+                data: {
+                    value: e.target.value,
+                    type: 'vault_doc_del_timeout'
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if (res.status == "success") {
+                        toastr.success('Action Success!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+    
+        // propts //
+        $('.pa_pr_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readPromptsContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_pr_footer_en').summernote('code', result.en.t_pa_pr_footer)
+                    $('#pa_pr_footer_sp').summernote('code', result.es.t_pa_pr_footer)
+                    $('#pa_pr_security_en').summernote('code', result.en.t_pa_pr_security)
+                    $('#pa_pr_security_sp').summernote('code', result.es.t_pa_pr_security)
+                    $('#pa_pr_sihelp_en').summernote('code', result.en.t_pa_pr_sihelp)
+                    $('#pa_pr_sihelp_sp').summernote('code', result.es.t_pa_pr_sihelp)
+                }
+            }
+        })
+
+        $('#pa_pr_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updatePromptsContent',
+                method: "POST",
+                data: {
+                    pa_pr_footer_en: $('#pa_pr_footer_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_pr_footer_sp: $('#pa_pr_footer_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_pr_security_en: $('#pa_pr_security_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_pr_security_sp: $('#pa_pr_security_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_pr_sihelp_en: $('#pa_pr_sihelp_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_pr_sihelp_sp: $('#pa_pr_sihelp_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+    
+        // emails //
+        $('.pa_ea_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readEmailAccountContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_ea_email_text_en').summernote('code', result.en.t_pa_ea_email_text)
+                    $('#pa_ea_email_text_sp').summernote('code', result.es.t_pa_ea_email_text)
+                    $('#pa_ea_link_en').summernote('code', result.en.t_pa_ea_link)
+                    $('#pa_ea_link_sp').summernote('code', result.es.t_pa_ea_link)
+                    $('#pa_ea_subject_en').summernote('code', result.en.t_pa_ea_subject)
+                    $('#pa_ea_subject_sp').summernote('code', result.es.t_pa_ea_subject)
+                    $('#pa_ea_disclaimer_en').summernote('code', result.en.t_pa_ea_disclaimer)
+                    $('#pa_ea_disclaimer_sp').summernote('code', result.es.t_pa_ea_disclaimer)
+                }
+            }
+        })
+
+        $('#pa_ea_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateEmailAccountContent',
+                method: "POST",
+                data: {
+                    pa_ea_email_text_en: $('#pa_ea_email_text_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ea_email_text_sp: $('#pa_ea_email_text_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ea_link_en: $('#pa_ea_link_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ea_link_sp: $('#pa_ea_link_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ea_subject_en: $('#pa_ea_subject_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ea_subject_sp: $('#pa_ea_subject_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ea_disclaimer_en: $('#pa_ea_disclaimer_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ea_disclaimer_sp: $('#pa_ea_disclaimer_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+    
+        // password
+        $('.pa_ep_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readEmailPasswordContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_ep_subject_en').summernote('code', result.en.t_pa_ep_subject)
+                    $('#pa_ep_subject_sp').summernote('code', result.es.t_pa_ep_subject)
+                    $('#pa_ep_emailtext_en').summernote('code', result.en.t_pa_ep_emailtext)
+                    $('#pa_ep_emailtext_sp').summernote('code', result.es.t_pa_ep_emailtext)
+                    $('#pa_ep_linktime_en').summernote('code', result.en.t_pa_ep_linktime)
+                    $('#pa_ep_linktime_sp').summernote('code', result.es.t_pa_ep_linktime)
+                    $('#pa_ep_notexisted_en').summernote('code', result.en.t_pa_ep_notexisted)
+                    $('#pa_ep_notexisted_sp').summernote('code', result.es.t_pa_ep_notexisted)
+                    $('#pa_ep_alert_success_en').summernote('code', result.en.t_pa_ep_alert_success)
+                    $('#pa_ep_alert_success_sp').summernote('code', result.es.t_pa_ep_alert_success)
+                }
+            }
+        })
+
+        $('#pa_ep_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateEmailPasswordContent',
+                method: "POST",
+                data: {
+                    pa_ep_subject_en: $('#pa_ep_subject_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ep_subject_sp: $('#pa_ep_subject_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ep_emailtext_en: $('#pa_ep_emailtext_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ep_emailtext_sp: $('#pa_ep_emailtext_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ep_linktime_en: $('#pa_ep_linktime_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ep_linktime_sp: $('#pa_ep_linktime_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ep_notexisted_en: $('#pa_ep_notexisted_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ep_notexisted_sp: $('#pa_ep_notexisted_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ep_alert_success_en: $('#pa_ep_alert_success_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ep_alert_success_sp: $('#pa_ep_alert_success_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+
+        // email update //
+        $('.pa_eu_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readEmailUpdateContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_eu_subject_en').summernote('code', result.en.t_pa_eu_subject)
+                    $('#pa_eu_subject_sp').summernote('code', result.es.t_pa_eu_subject)
+                    $('#pa_eu_etext_en').summernote('code', result.en.t_pa_eu_etext)
+                    $('#pa_eu_etext_sp').summernote('code', result.es.t_pa_eu_etext)
+                }
+            }
+        })
+
+        $('#pa_eu_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateEmailUpdateContent',
+                method: "POST",
+                data: {
+                    pa_eu_subject_en: $('#pa_eu_subject_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_eu_subject_sp: $('#pa_eu_subject_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_eu_etext_en: $('#pa_eu_etext_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_eu_etext_sp: $('#pa_eu_etext_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+
+        // email closed //
+        $('.pa_ec_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readEmailCloseContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_ec_subject_en').summernote('code', result.en.t_pa_ec_subject)
+                    $('#pa_ec_subject_sp').summernote('code', result.es.t_pa_ec_subject)
+                    $('#pa_ec_etext_en').summernote('code', result.en.t_pa_ec_etext)
+                    $('#pa_ec_etext_sp').summernote('code', result.es.t_pa_ec_etext)
+                }
+            }
+        })
+
+        $('#pa_ec_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateEmailCloseContent',
+                method: "POST",
+                data: {
+                    pa_ec_subject_en: $('#pa_ec_subject_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ec_subject_sp: $('#pa_ec_subject_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ec_etext_en: $('#pa_ec_etext_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ec_etext_sp: $('#pa_ec_etext_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+
+        // access help //
+        $('.pa_ah_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readNeedHelpContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_ah_invalid_en').summernote('code', result.en.t_pa_ah_invalid)
+                    $('#pa_ah_invalid_sp').summernote('code', result.es.t_pa_ah_invalid)
+                    $('#pa_ah_help_en').summernote('code', result.en.t_pa_ah_help)
+                    $('#pa_ah_help_sp').summernote('code', result.es.t_pa_ah_help)
+                    $('#pa_ah_hques_en').summernote('code', result.en.t_pa_ah_hques)
+                    $('#pa_ah_hques_sp').summernote('code', result.es.t_pa_ah_hques)
+                    $('#pa_ah_facc_en').summernote('code', result.en.t_pa_ah_facc)
+                    $('#pa_ah_facc_sp').summernote('code', result.es.t_pa_ah_facc)
+                    $('#pa_ah_fpwd_en').summernote('code', result.en.t_pa_ah_fpwd)
+                    $('#pa_ah_fpwd_sp').summernote('code', result.es.t_pa_ah_fpwd)
+                    $('#pa_ah_desc_en').summernote('code', result.en.t_pa_ah_desc)
+                    $('#pa_ah_desc_sp').summernote('code', result.es.t_pa_ah_desc)
+                    $('#pa_ah_rpheader_en').summernote('code', result.en.t_pa_ah_rpheader)
+                    $('#pa_ah_rpheader_sp').summernote('code', result.es.t_pa_ah_rpheader)
+                    $('#pa_ah_ques_en').summernote('code', result.en.t_pa_ah_ques)
+                    $('#pa_ah_ques_sp').summernote('code', result.es.t_pa_ah_ques)
+                    $('#pa_ah_alert_success_en').summernote('code', result.en.t_pa_ah_alert_success)
+                    $('#pa_ah_alert_success_sp').summernote('code', result.es.t_pa_ah_alert_success)
+                    $('#pa_ah_alert_failed_en').summernote('code', result.en.t_pa_ah_alert_failed)
+                    $('#pa_ah_alert_failed_sp').summernote('code', result.es.t_pa_ah_alert_failed)
+                    $('#pa_ah_alert_notexisted_en').summernote('code', result.en.t_pa_ah_alert_notexisted)
+                    $('#pa_ah_alert_notexisted_sp').summernote('code', result.es.t_pa_ah_alert_notexisted)
+                }
+            }
+        })
+
+        $('#pa_ah_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateNeedHelpContent',
+                method: "POST",
+                data: {
+                    pa_ah_invalid_en: $('#pa_ah_invalid_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_invalid_sp: $('#pa_ah_invalid_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_help_en: $('#pa_ah_help_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_help_sp: $('#pa_ah_help_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_hques_en: $('#pa_ah_hques_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_hques_sp: $('#pa_ah_hques_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_facc_en: $('#pa_ah_facc_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_facc_sp: $('#pa_ah_facc_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_fpwd_en: $('#pa_ah_fpwd_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_fpwd_sp: $('#pa_ah_fpwd_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_desc_en: $('#pa_ah_desc_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_desc_sp: $('#pa_ah_desc_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_rpheader_en: $('#pa_ah_rpheader_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_rpheader_sp: $('#pa_ah_rpheader_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_ques_en: $('#pa_ah_ques_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_ques_sp: $('#pa_ah_ques_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_alert_success_en: $('#pa_ah_alert_success_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_alert_success_sp: $('#pa_ah_alert_success_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_alert_failed_en: $('#pa_ah_alert_failed_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_alert_failed_sp: $('#pa_ah_alert_failed_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_ah_alert_notexisted_en: $('#pa_ah_alert_notexisted_en').summernote('code').replace(/<[^>]*>/g, ''), 
+                    pa_ah_alert_notexisted_sp: $('#pa_ah_alert_notexisted_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == 'success') {
+                        toastr.success('Updated Successfully!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+
+        // vault //
+        $('.pa_v_summernote').summernote({
+            tabsize: 1,
+            height: 100,
+        })
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/settings/patient-areas/readVaultContent',
+            method: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(result) {
+                if (result) {
+                    $('#pa_v_welcome_en').summernote('code', result.en.t_pa_v_welcome)
+                    $('#pa_v_welcome_sp').summernote('code', result.es.t_pa_v_welcome)
+                    $('#pa_v_desc_en').summernote('code', result.en.t_pa_v_desc)
+                    $('#pa_v_desc_sp').summernote('code', result.es.t_pa_v_desc)
+                    $('#pa_v_htext_en').summernote('code', result.en.t_pa_v_htext)
+                    $('#pa_v_htext_sp').summernote('code', result.es.t_pa_v_htext)
+                    $('#pa_v_alert_success_en').summernote('code', result.en.t_pa_v_alert_success)
+                    $('#pa_v_alert_success_sp').summernote('code', result.es.t_pa_v_alert_success)
+                    $('#pa_v_alert_failed_en').summernote('code', result.en.t_pa_v_alert_failed)
+                    $('#pa_v_alert_failed_sp').summernote('code', result.es.t_pa_v_alert_failed)
+                }
+            }
+        })
+
+        $('#pa_v_update').click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/settings/patient-areas/updateVaultContent',
+                method: "POST",
+                data: {
+                    pa_v_welcome_en: $('#pa_v_welcome_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_welcome_sp: $('#pa_v_welcome_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_desc_en: $('#pa_v_desc_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_desc_sp: $('#pa_v_desc_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_htext_en: $('#pa_v_htext_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_htext_sp: $('#pa_v_htext_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_alert_success_en: $('#pa_v_alert_success_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_alert_success_sp: $('#pa_v_alert_success_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_alert_failed_en: $('#pa_v_alert_failed_en').summernote('code').replace(/<[^>]*>/g, ''),
+                    pa_v_alert_failed_sp: $('#pa_v_alert_failed_sp').summernote('code').replace(/<[^>]*>/g, ''),
+                },
+                dataType: "text",
+                success: function(data) {
+                    let result = JSON.parse(data)
+                    if (result.status == 'success') {
+                        toastr.success('Action Success!')
+                    } else {
+                        toastr.error('Action Failed!')
+                    }
+                }
+            })
+        })
+
+    })
+</script>

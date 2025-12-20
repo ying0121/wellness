@@ -1,0 +1,256 @@
+
+<% const topMenu = JSON.parse(menus || '[]') %>
+
+<div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
+    <div class="brand flex-column-auto mt-5" id="kt_brand">
+        <a href="#" class="brand-logo">
+            <img class="logo-img" alt="Logo" src="<%= site_url %>/assets/images/logo.png" style="width:100%;" />
+        </a>
+    </div>
+    <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
+        <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
+            <ul class="menu-nav">
+                <% if (topMenu.includes("Home")) { %>
+                    <li class="menu-item <%= sideItem === 'home' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/home" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-home" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Home</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Clinic")) { %>
+                    <li class="menu-item <%= sideItem === 'the_clinic' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/the-clinic" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-medkit" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">The Clinic</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("About Us")) { %>
+                    <li class="menu-item <%= sideItem === 'about_us' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/about-us" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-book" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">About Us</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Insurance")) { %>
+                    <li class="menu-item <%= sideItem === 'insurance' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/insurances" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fa fa-hospital" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Insurance</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Orientation")) { %>
+                    <li class="menu-item <%= sideItem === 'orientation' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/orientations" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-star" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Orientation</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Services")) { %>
+                    <li class="menu-item <%= sideItem === 'services' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/services" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fa fa-hand-holding" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Services</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Letter")) { %>
+                    <li class="menu-item <%= sideItem === 'letter' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/letters" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fa fa-newspaper" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Letters</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Education")) { %>
+                    <li class="menu-item <%= sideItem === 'education' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/educations" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-school" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Educations</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Contacts")) { %>
+                    <li class="menu-item <%= sideItem === 'contacts' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/contacts" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-list" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Contacts</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Doctors")) { %>
+                    <li class="menu-item <%= sideItem === 'doctors' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/doctors" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-stethoscope" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Doctors</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Staffs")) { %>
+                    <li class="menu-item <%= sideItem === 'staffs' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/staffs" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-users" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Staffs</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Patient Reviews")) { %>
+                    <li class="menu-item <%= sideItem === 'patient-reviews' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/patient-reviews" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-thumbs-up" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Patient Reviews</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Page Images")) { %>
+                    <li class="menu-item <%= sideItem === 'page-images' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/page-images" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-image" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Page Images</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Page Videos")) { %>
+                    <li class="menu-item <%= sideItem === 'page-videos' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/page-videos" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-video" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Page Videos</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Patient Area")) { %>
+                    <li class="menu-item <%= sideItem === 'patient-areas' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/patient-areas" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-wheelchair" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Patient Area</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Setting")) { %>
+                    <li class="menu-item <%= sideItem === 'settings' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/settings" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-cogs" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Setting</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (userType === 1) { %>
+                    <li class="menu-item <%= sideItem === 'managers' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/managers" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-user" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Managers</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Alert")) { %>
+                    <li class="menu-item <%= sideItem === 'alerts' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/alerts" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-bell" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Alert</span>
+                        </a>
+                    </li>
+                <% } %>
+                <hr>
+                <% if (topMenu.includes("Survey")) { %>
+                    <li class="menu-item <%= sideItem === 'surveys' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/surveys" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-chart-bar" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Survey</span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (topMenu.includes("Newsletter")) { %>
+                    <li class="menu-item <%= sideItem === 'newsletter' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/newsletter" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fas fa-newspaper" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Newsletter</span>
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(async () => {
+        // sub menu
+        document.querySelectorAll('.menu-item-rel > .menu-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+                const submenu = this.nextElementSibling; // Get the submenu
+                if (submenu) {
+                    submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block'; // Toggle display
+                }
+            });
+        });
+
+        setInterval(() => {
+            localStorage.setItem('once_logged_in', 'false')
+
+            var loginTime = '<%= loginTime %>'
+            var expiredTime = '<%= expiredTime %>'
+            var current_time = Math.floor(Date.now() / 1000)
+
+            if (current_time - loginTime > expiredTime * 60) {
+                var tag = document.createElement('a')
+                tag.href = "<%= site_url + prefix %>/logout"
+
+                // Append to the body
+                document.body.appendChild(tag)
+
+                // Set localStorage item
+                localStorage.setItem("once_logged_in", "false")
+
+                // Trigger the click event
+                tag.click()
+
+                document.body.removeChild(tag)
+            }
+        }, 5000)
+    })
+</script>

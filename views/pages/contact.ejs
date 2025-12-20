@@ -1,0 +1,196 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar-two m-0 p-0 min-h-auto">
+    <div class="container">
+        <div class="row align-items-center inner-banner">
+            <div class="col-md-12 col-12 text-center">
+                <h2 class="breadcrumb-title"><%= component_text.menu_contact %></h2>
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <p><%= component_text.t_contact_desc %></p>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Contact Form -->
+<section class="contact-section">
+    <div class="container">
+        <div class="card contact-form-card">
+            <div class="card-body">
+                <div class="row mb-5">
+                    <div class="col-lg-3">
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <p class="h5 text-info"><%= component_text.t_contact_user_desc %> (*):</p>
+                            </div>
+                            <div class="col-md-6 contactusertype mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactusertype" id="contactusertype" value="1" checked />
+                                    <label class="form-check-label" for="contactusertype"> <%= component_text.t_contact_option_patient %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 contactusertype mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactusertype" id="contactusertype1" value="2" />
+                                    <label class="form-check-label" for="contactusertype1"> <%= component_text.t_contact_option_business %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 contactpttype-patient mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype" value="1" checked />
+                                    <label class="form-check-label" for="contactpttype"> <%= component_text.t_contact_option_existing %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 contactpttype-patient mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype1" value="2" />
+                                    <label class="form-check-label" for="contactpttype1"> <%= component_text.t_contact_option_new %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 contactpttype-institution mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype2" value="3" checked />
+                                    <label class="form-check-label" for="contactpttype2"> <%= component_text.t_contact_option_patient %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 contactpttype-institution mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactpttype" id="contactpttype3" value="4" />
+                                    <label class="form-check-label" for="contactpttype3"> <%= component_text.t_contact_option_generalmsg %> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="h5 text-info"><%= component_text.t_contact_reason %> (*):</p>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactreason" id="contactreason1" value="Appointment Request" checked />
+                                    <label class="form-check-label" for="contactreason1"> <%= component_text.t_contact_reason_1 %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactreason" id="contactreason2" value="Letter Request" />
+                                    <label class="form-check-label" for="contactreason2"> <%= component_text.t_contact_reason_2 %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactreason" id="contactreason3" value="Prescription Refill Request" />
+                                    <label class="form-check-label" for="contactreason3"> <%= component_text.t_contact_reason_3 %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactreason" id="contactreason4" value="Referral Request" />
+                                    <label class="form-check-label" for="contactreason4"> <%= component_text.t_contact_reason_4 %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactreason" id="contactreason5" value="Test Results Request" />
+                                    <label class="form-check-label" for="contactreason5"> <%= component_text.t_contact_reason_5 %> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="contactreason" id="contactreason6" value="General Message" />
+                                    <label class="form-check-label" for="contactreason6"> <%= component_text.t_contact_reason_6 %> </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row" id="contact_pt_info">
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="contact_name" class="form-control floating" name="contact_name" required />
+                                    <label class="focus-label" for="contact_name"><%= component_text.placeholder_your_name %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="contact_email" class="form-control floating" name="contact_email" required />
+                                    <label class="focus-label" for="contact_email"><%= component_text.placeholder_email_address %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="contact_cel" class="form-control floating" name="contact_cel" required />
+                                    <label class="focus-label" for="contact_cel"><%= component_text.placeholder_phone_number %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-focus">
+                                    <input type="date" id="contact_dob" class="form-control floating" name="contact_dob" required />
+                                    <label class="focus-label" for="contact_dob"><%= component_text.placeholder_dob %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="contact_subject" class="form-control floating" name="contact_subject" />
+                                    <label class="focus-label" for="contact_subject"><%= component_text.placeholder_subject %></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <textarea class="form-control floating" id="contact_message" rows="6" name="contact_message" placeholder="<%= component_text.placeholder_message %>"></textarea>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-focus">
+                                    <input type="text" id="contact_time" class="form-control floating" name="contact_time" />
+                                    <label class="focus-label" for="contact_time"><%= component_text.placeholder_besttime %></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <p class="fs-6 my-1"><%= component_text.t_opt_in_out_header %></p>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="opt_status" id="home_opt_in" value="1" checked />
+                            <label class="form-check-label" for="home_opt_in"> <%= component_text.t_opt_in_out_in %> </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="opt_status" id="home_opt_out" value="0" />
+                            <label class="form-check-label" for="home_opt_out"> <%= component_text.t_opt_in_out_out %> </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-none" id="home_opt_moreinfo">
+                        <div class="fs-6"><%- component_text.t_opt_in_out_footer %></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="fs-6 m-0"><%- component_text.t_opt_in_out_more %></div>
+                    </div>
+                    <div class="col-md-12">
+                        <a href="#" id="home_opt_more_info_btn"><%- component_text.t_opt_more_info %> &gt;&gt;</a>
+                    </div>
+                </div>
+                <div class="d-sm-flex justify-content-between align-items-center mb-3 gap-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2 mb-md-0 gap-1">
+                        <div id="contact_captcha_image"><%- captcha_image %></div>
+                        <i id="captcha_change" class="fa fa-lg fa-rotate-right fs-2 text-primary cursor-pointer"></i>
+                    </div>
+                    <div class="form-focus w-100">
+                        <input type="text" id="contact_captcha" class="form-control floating" name="captcha" />
+                        <label class="focus-label" for="contact_captcha"><%= component_text.placeholder_captcha %></label>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 btn-search">
+                    <button type="button" class="btn" onClick="sendContactform();" id="contact-submit-btn">
+                        <i class="fas fa-paper-plane me-2"></i> <%= component_text.btn_send %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Contact Form -->

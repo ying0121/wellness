@@ -1,0 +1,554 @@
+<script>
+    var animation = lottie.loadAnimation({
+        container: document.getElementById("loading-lottie-container"),
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: "./assets/animations/medical-loader.json"
+    })
+
+    // Hide preloader once page is fully loaded
+    window.addEventListener("load", function () {
+        const preloader = document.getElementById("preloader")
+        preloader.style.opacity = "0"
+        setTimeout(() => {
+            preloader.style.display = "none"
+        }, 500)
+    })
+    // loading end //
+
+    const HEADER_BANNER = 'HEADER-BANNER'
+    const CENTRAL = 'CENTRAL'
+    const IMAGE_POSITION = {
+        'Home': [HEADER_BANNER],
+        'TheClinic': [HEADER_BANNER],
+        'AboutUs': [HEADER_BANNER, CENTRAL],
+        'Orientation': [HEADER_BANNER],
+        'Vault': [HEADER_BANNER, CENTRAL],
+    }
+    const VIDEO_POSITION = {
+        'Home': ['DEFAULT_POSITION'],
+        'TheClinic': ['DEFAULT_POSITION']
+    }
+
+    $('.contactpttype-institution').addClass('d-none')
+    $('.contactusertype').click((e) => {
+        if (e.target.value == 1) {
+            $('.contactpttype-patient').removeClass('d-none')
+            $('.contactpttype-institution').addClass('d-none')
+        } else if (e.target.value == 2) {
+            $('.contactpttype-patient').addClass('d-none')
+            $('.contactpttype-institution').removeClass('d-none')
+        }
+    })
+
+    function mynotify(type, message) {
+        Swal.fire({
+            text: message,
+            icon: type,
+            confirmButtonText: 'Close'
+        })
+    }
+
+    function setLang(lang) {
+        $.ajax({
+            url: '<%= site_url %>/changeLanguage',
+            method: "POST",
+            data: {
+                language: lang
+            },
+            dataType: "text",
+            success: function(data) {
+                location.reload()
+            }
+        })
+    }
+
+    function sendContactform() {
+        const isPt = parseInt('<%= patient_info.id %>');
+
+        var errors = "";
+        var app_name = isPt > 0 ? '<%= patient_info.fname + patient_info.lname %>' : $("#contact_name").val()
+        var app_email_address = isPt > 0 ? '<%= patient_info.email %>' : $("#contact_email").val()
+        var app_date = isPt > 0 ? '<%= patient_info.dob %>' : $("#contact_dob").val()
+        var app_subject = $("#contact_subject").val();
+        var app_message = $("#contact_message").val();
+        var app_captcha = $("#contact_captcha").val();
+        var cel = isPt > 0 ? '<%= patient_info.phone %>' : $("#contact_cel").val()
+
+        if (cel) {
+            cel = cel.replace('-', '')
+            cel = cel.replace(' ', '')
+            if (cel.length > 6) {
+                cel = cel.slice(0, 6) + '-' + cel.slice(6)
+            }
+            if (cel.length > 4) {
+                cel = cel.slice(0, 4) + '-' + cel.slice(4)
+            }
+        }
+
+        if (app_name.value == "") {
+            errors += '<%= component_text.m_invalid_name %>';
+        } else if (app_email_address.value == "") {
+            errors += '<%= component_text.m_invalid_email %>';
+        } else if (app_date.value == "") {
+            errors += '<%= component_text.m_invalid_dob %>';
+        } else if (app_subject.value == "") {
+            errors += '<%= component_text.m_invalid_subject %>';
+        } else if (app_message.value == "") {
+            errors += '<%= component_text.m_invalid_message %>';
+        } else if (app_captcha == "") {
+            errors += '<%= component_text.m_invalid_captcha %>';
+        }
+        if (errors) {
+            Swal.fire({
+                title: '<%= component_text.t_invalid_info %>',
+                text: errors,
+                icon: 'warning',
+                confirmButtonText: 'Cool'
+            })
+            return false
+        } else {
+            $("#contact-submit-btn").prop("disabled", true)
+            var encrypt = new JSEncrypt()
+            encrypt.setPublicKey(`<%= public_key %>`)
+            $.ajax({
+                method: "POST",
+                url: './submit',
+                data: {
+                    contact_name: app_name,
+                    contact_email: app_email_address,
+                    contact_cel: cel,
+                    contact_dob: app_date,
+                    contact_captcha: $("#contact_captcha").val(),
+                    contact_lang: "<%= language %>",
+                    contact_subject: $('#contact_subject').val(),
+                    contact_message: $('#contact_message').val(),
+                    contact_time: $('#contact_time').val(),
+                    opt_status: $('input[name="opt_status"]:checked').val(),
+                    contactpttype: $('input[name="contactpttype"]:checked').val(),
+                    contactusertype: $('input[name="contactusertype"]:checked').val(),
+                    contactreason: $('input[name="contactreason"]:checked').val()
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            title: '<%= component_text.c_case %>' + '#: ' + data.id + '<%= acronym %>',
+                            text: '<%= component_text.t_contact_result_success %>',
+                            icon: data.status,
+                        })
+                    } else if (data.status === "error") {
+                        let error_text = ""
+                        if (data.message === "captcha") {
+                            error_text = '<%= component_text.c_non_verified %>'
+                            $('#contact_captcha_image').html(data.captcha)
+                        } else if (data.message === "mail") {
+                            error_text = '<%= component_text.c_failed_mail %>'
+                        } else if (data.message === "central") {
+                            error_text = '<%= component_text.c_failed_central %>'
+                        }
+                        Swal.fire({
+                            title: '<%= component_text.c_error %>',
+                            text: error_text,
+                            icon: data.status,
+                        })
+                    }
+
+                    $("#contact-submit-btn").prop("disabled", false)
+                },
+                error: function(data) {
+                    Swal.fire({
+                        title: '<%= component_text.c_error %>',
+                        icon: 'error',
+                    });
+
+                    $("#contact-submit-btn").prop("disabled", false)
+                }
+            })
+        }
+    }
+
+    document.getElementById("hours-toggle").addEventListener("click", function() {
+        document.getElementById("working-hours").classList.toggle("active");
+    })
+
+    $(document).ready(function () {
+        // need popup
+        needPopup.init()
+
+        $(".popup").click(() => {
+            var popup = document.getElementById("alert-details")
+            popup.classList.toggle("show")
+        })
+
+        $(".patient-info").click(() => {
+            $("#patient-info-modal-view").click()
+        })
+
+        $("#info_edit_btn").click(() => {
+            $("#epatient_id").val('<%= patient_info.patient_id %>')
+            $("#efname").val('<%= patient_info.fname %>')
+            $("#emname").val('<%= patient_info.mname %>')
+            $("#elname").val('<%= patient_info.lname %>')
+            $("#ephone").val('<%= patient_info.phone %>')
+            $("#emobile").val('<%= patient_info.mobile %>')
+            $("#eemail").val('<%= patient_info.email %>')
+            $("#eaddress").val('<%= patient_info.address %>')
+            $("#ecity").val('<%= patient_info.city %>')
+            $("#estate").val('<%= patient_info.state %>')
+            $("#ezip").val('<%= patient_info.zip %>')
+            $("#egender").val('<%= patient_info.gender %>')
+            $("#edob").val(new Date('<%= patient_info.dob %>').toISOString().substr(0, 10))
+            $("#elanguage").val('<%= patient_info.language %>')
+            $("#eethnicity").val('<%= patient_info.ethnicity %>')
+            $("#erace").val('<%= patient_info.race %>')
+            $('#patient_active').prop('checked', true)
+
+            $("#info-edit-modal-view").click()
+        })
+
+        $(".personeditsubmitbtn").click(() => {
+            var data = {
+                id: "<%= patient_info.id %>",
+                patient_id: $("#epatient_id").val(),
+                fname: $("#efname").val(),
+                mname: $("#emname").val(),
+                lname: $("#elname").val(),
+                phone: $("#ephone").val(),
+                mobile: $("#emobile").val(),
+                email: $("#eemail").val(),
+                address: $("#eaddress").val(),
+                city: $("#ecity").val(),
+                state: $("#estate").val(),
+                zip: $("#ezip").val(),
+                gender: $("#egender").val(),
+                dob: $("#edob").val(),
+                language: $("#elanguage").val(),
+                ethnicity: $("#eethnicity").val(),
+                race: $("#erace").val(),
+                status: $('#patient_active').prop('checked') == true ? 1 : 0
+            }
+            $.ajax({
+                url: '<%= site_url %>/vault/updatePatient',
+                type: 'post',
+                data: data,
+                dataType: "json",
+                success: function(data) {
+                    if (data.status === 'success') {
+                        mynotify('success', 'Your information has saved successfully!')
+                    } else {
+                        mynotify('error', 'Action Failed!')
+                    }
+                }
+            })
+        })
+
+        $("#info_pwd_reset_btn").click(() => {
+            $("#new-password").val("")
+            $("#re-password").val("")
+
+            $("#pwd-reset-modal-view").click()
+        })
+
+        $("#info_edit_comm").click(() => {
+            $("#opt-in-out-modal-view").click()
+        })
+
+        $('#pt_opt_more_info_btn').click(function(e) {
+            e.preventDefault()
+            if ($('#pt_opt_moreinfo').hasClass('d-none')) {
+                $('#pt_opt_moreinfo').removeClass('d-none');
+                $('#pt_opt_more_info_btn').text("<< " + "<%= component_text.t_opt_less_info %>")
+            } else {
+                $('#pt_opt_moreinfo').addClass('d-none');
+                $('#pt_opt_more_info_btn').text("<%= component_text.t_opt_more_info %>" + " >>")
+            }
+        })
+
+        $(".resetpwdbtn").click(function() {
+            if ($("#new-password").val() == "") {
+                mynotify('error', 'Please enter password');
+            } else if ($("#new-password").val() != $("#re-password").val()) {
+                mynotify('error', 'Please check password again');
+            } else {
+                $.ajax({
+                    url: '<%= site_url %>/vault/resetPassword',
+                    type: 'post',
+                    data: {
+                        id: "<%= patient_info.id %>",
+                        pwd: $("#new-password").val()
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.status == "success") {
+                            mynotify('success', 'Password Reset Success');
+                        } else {
+                            mynotify('error', 'Password Reset Failed');
+                        }
+                    }
+                })
+            }
+        })
+
+        $("#footer_singup_btn").click(function() {
+            const data = {
+                fname: $("#footer_first_name").val(),
+                lname: $("#footer_last_name").val(),
+                dob: $("#footer_dob").val(),
+                email: $("#footer_email").val(),
+                phone: $("#footer_phone").val(),
+                captcha: $("#footer_captcha").val()
+            }
+            
+            if (!data.fname) {
+                const input = document.getElementById('footer-first-name-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!data.lname) {
+                const input = document.getElementById('footer-last-name-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!data.dob) {
+                const input = document.getElementById('footer-dob-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!data.email) {
+                const input = document.getElementById('footer-email-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!data.phone) {
+                const input = document.getElementById('footer-phone-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!data.captcha) {
+                const input = document.getElementById('footer-captcha-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            
+            $.post({
+                url: '<%= site_url %>/submitSignUpForFooter',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function(res) {
+                    if (res.message == "success") {
+                        Swal.fire({
+                            title: '<%= component_text.c_case %> # : ' + res.id + "<%= acronym %>",
+                            text: '<%= component_text.t_pa_su_alert_success %>',
+                            icon: res.status,
+                            confirmButtonText: '<%= component_text.c_item_close %>'
+                        })
+                    } else if (res.message == "exist") {
+                        Swal.fire({
+                            title: '<%= component_text.c_warning %>',
+                            text: '<%= component_text.t_pa_su_alert_exist %>',
+                            icon: res.status,
+                            confirmButtonText: 'OK'
+                        })
+                    } else if (res.message == "required") {
+                        Swal.fire({
+                            title: '<%= component_text.c_warning %>',
+                            text: '<%= component_text.t_invalid_info %>',
+                            icon: res.status,
+                            confirmButtonText: 'OK'
+                        })
+                    } else if (res.message == "captcha") {
+                        Swal.fire({
+                            title: '<%= component_text.c_error %>',
+                            text: '<%= component_text.c_alert_incorrect_captcha %>',
+                            icon: res.status,
+                            confirmButtonText: '<%= component_text.c_item_close %>'
+                        })
+
+                        $("#footer_captcha_image").html(res.captcha)
+                    } else if (res.message == "error") {
+                        Swal.fire({
+                            title: '<%= component_text.c_error %>',
+                            text: '<%= component_text.t_pa_su_alert_failed %>',
+                            icon: res.status,
+                            confirmButtonText: '<%= component_text.c_item_close %>'
+                        })
+                    }
+                }
+            })
+        })
+
+        $('#home_opt_more_info_btn').click(function(e) {
+            e.preventDefault()
+            if ($('#home_opt_moreinfo').hasClass('d-none')) {
+                $('#home_opt_moreinfo').removeClass('d-none')
+                $('#home_opt_more_info_btn').text("<< " + "<%= component_text.t_opt_less_info %>")
+            } else {
+                $('#home_opt_moreinfo').addClass('d-none');
+                $('#home_opt_more_info_btn').text("<%= component_text.t_opt_more_info %>" + " >>")
+            }
+        })
+
+        // Captcha change buttons
+        $('#footer_captcha_change').click(() => {
+            $.post({
+                url: '<%= site_url %>/changeCaptchaImage',
+                method: 'POST',
+                data: {
+                    type: "footer"
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $("#footer_captcha_image").html(res.image)
+                }
+            })
+        })
+
+        $('#captcha_change').click(() => {
+            $.post({
+                url: '<%= site_url %>/changeCaptchaImage',
+                method: 'POST',
+                data: {
+                    type: "home"
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $("#contact_captcha_image").html(res.image)
+                }
+            })
+        })
+
+        // Payment Submit Button
+        $(document).on("click", "#payment-submit", async function(e) {
+            e.preventDefault()
+
+            const name = $("#payment-name").val()
+            const email = $("#payment-email").val()
+            const phone = $("#payment-phone").val()
+
+            if (!name) {
+                showMessage("⚠️ Please enter your name!")
+                return
+            }
+            if (!email) {
+                showMessage("⚠️ Please enter your email!")
+                return
+            }
+            if (!phone) {
+                showMessage("⚠️ Please enter your phone number!")
+                return
+            }
+
+            setLoading(true)
+
+            const { error, paymentIntent } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    payment_method_data: {
+                        billing_details: {
+                            name: name,
+                            email: email,
+                            phone: phone,
+                        }
+                    },
+                    // Make sure to change this to your payment completion page
+                    return_url: "<%= site_url %>/payment",
+                },
+                redirect: "if_required",
+            })
+
+            // This point will only be reached if there is an immediate error when
+            // confirming the payment. Otherwise, your customer will be redirected to
+            // your `return_url`. For some payment methods like iDEAL, your customer will
+            // be redirected to an intermediate site first to authorize the payment, then
+            // redirected to the `return_url`.
+            if (error) {
+                if (error.type === "card_error" || error.type === "validation_error") {
+                    showMessage("❌ " + error.message);
+                } else {
+                    showMessage("❌ An unexpected error occurred.")
+                    console.log(error)
+                }
+            } else {
+                switch (paymentIntent.status) {
+                    case "succeeded":
+                        Swal.fire({
+                            title: '<%= component_text.c_success %>',
+                            text: '<%= component_text.t_payment_success %>',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        })
+                        showMessage("🎉 Payment succeeded!")
+                        $("#payment-modal-close").click()
+                        break;
+                    case "processing":
+                        showMessage("⏳ Payment is processing.")
+                        break;
+                    case "requires_payment_method":
+                        showMessage("❌ Payment failed. Please try again.")
+                        break;
+                    default:
+                        showMessage("⚠️ Unexpected payment status: " + paymentIntent.status)
+                        break;
+                }
+
+                // send to backend
+                const entry = {
+                    payment_id: paymentIntent.id,
+                    amount: paymentIntent.amount / 100,
+                    currency: paymentIntent.currency,
+                    payment_method: paymentIntent.payment_method,
+                    status: paymentIntent.status,
+                    category: $("#payment-category").val(),
+                    category_id: $("#payment-category-id").val()
+                }
+
+                $.post({
+                    url: '<%= site_url %>/payment/paymentResult',
+                    method: 'POST',
+                    data: entry,
+                    dataType: 'json',
+                    success: function(res) {}
+                })
+            }
+
+            setLoading(false)
+        })
+
+        // Time Table Clock
+        $("#clock").click(function() {
+            if (parseInt($("#timetable").css('height')) != 0)
+                $("#timetable").css('height', 0)
+            else {
+                var height = $("#timetable_content").height() + parseInt($("#timetable_content").css('padding-top')) * 2
+                $("#timetable").css('height', height)
+            }
+        })
+    })
+</script>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('header') %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row my-3 p-10 bg-white border rounded">
+                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                            <div><h3>Page Images</h3></div>
+                            <div><span class = 'add_image_btn btn btn-light-primary btn-icon' ><i class='fa fa-plus'></i></span></div>
+                        </div>
+                        <div class = "col-12">
+                            <div class="table-responsive">
+                                <table class="table" id="page_image_tb">
+                                    <thead>
+                                        <th>ID</th>
+                                        <th>Image</th>
+                                        <th>Page</th>
+                                        <th>Position</th>
+                                        <th style = "width:100px;">Display</th>
+                                        <th style = "width: 200px;">Action</th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="image_add_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Add image</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class = "row">
+                        <div class = 'col-md-12'>
+                            <div class="form-group">
+                                <h6>Page</h6>
+                                <select class="form-control" id="apage">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <h6>Position</h6>
+                                <select class="form-control" id="aposition">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" id="page_image_add_btn">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="image_edit_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Edit image</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class = "col-12">
+                            <div class="form-group">
+                                <h6>ID</h6>
+                                <input type="text" class="form-control" id="edit_id">
+                            </div>
+                        </div>
+                        <div class = "col-12">
+                            <div class="form-group">
+                                <h6>Page</h6>
+                                <select class="form-control" id="edit_image_page">
+                                </select>
+                            </div>
+                        </div>
+                        <div class = "col-12">
+                            <div class="form-group">
+                                <h6>Position</h6>
+                                <select class="form-control" id="edit_image_position">
+                                </select>
+                            </div>
+                        </div>
+                        <div class = "col-6">
+                            <div class = "form-group">
+                                <h6 class="mb-3">Image Title(EN)</h6>
+                                <div id="edit_title_en"></div>
+                            </div>
+                        </div>
+                        <div class = "col-6">
+                            <div class = "form-group">
+                                <h6 class="mb-3">Image Title(ES)</h6>
+                                <div id="edit_title_es"></div>
+                            </div>
+                        </div>
+                        <div class = "col-6">
+                            <div class = "form-group">
+                                <h6 class="mb-3">Image Description</h6>
+                                <div id="edit_desc_en"></div>
+                            </div>
+                        </div>
+                        <div class = "col-6">
+                            <div class = "form-group">
+                                <h6 class="mb-3">Image Description(ES)</h6>
+                                <div id="edit_desc_es"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h6>Status</h6>
+                            <select class="form-control" id = "edit_image_status" style="height:36px;">
+                                <option value="1">Visible</option>
+                                <option value="0">Invisible</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" id="page_imag_edit_btn">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="image_upload_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Upload Image</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <h6>Photo (1920 x 1080)</h6>
+                            <div class="custom-file form-group">
+                                <input type="file" class="custom-file-input" id="upload_image_img" name="upload_image_img">
+                                <label class="custom-file-label" for="upload_image_img">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" data-dismiss="modal" id="page_image_upload_btn">Done</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function() {
+        var keys = Object.keys(IMAGE_POSITION)
+        $("#apage").html("")
+        for(i = 0 ; i < keys.length ; i++)
+            $("#apage").append("<option value='"+keys[i]+"'>"+keys[i]+"</option>")
+        for(i = 0 ; i < IMAGE_POSITION[keys[0]].length ; i++)
+            $("#aposition").append("<option value='"+IMAGE_POSITION[keys[0]][i]+"'>"+IMAGE_POSITION[keys[0]][i]+"</option>")
+
+        $("#apage").change(function() {
+            $("#aposition").html("")
+            var page = $("#apage").val()
+            for(i = 0 ; i < IMAGE_POSITION[page].length ; i++)
+                $("#aposition").append("<option value='"+IMAGE_POSITION[page][i]+"'>"+IMAGE_POSITION[page][i]+"</option>")
+        })
+
+        $(".add_image_btn").click(function() {
+            $("#image_add_modal").modal('show')
+        })
+
+        $('#edit_title_en').summernote({
+            toolbar: [
+                ['color', ['color']],
+                ['codeview']
+            ],
+            tabsize: 1,
+            height: 100,
+        })
+        $('#edit_desc_en').summernote({
+            toolbar: [
+                ['color', ['color']],
+                ['codeview']
+            ],
+            tabsize: 1,
+            height: 150,
+        })
+        $('#edit_title_es').summernote({
+            toolbar: [
+                ['color', ['color']],
+                ['codeview']
+            ],
+            tabsize: 1,
+            height: 100,
+        })
+        $('#edit_desc_es').summernote({
+            toolbar: [
+                ['color', ['color']],
+                ['codeview']
+            ],
+            tabsize: 1,
+            height: 150,
+        })
+
+        var keys = Object.keys(IMAGE_POSITION)
+        $("#edit_image_page").html("")
+        for(i = 0 ; i < keys.length ; i++)
+            $("#edit_image_page").append("<option value='"+keys[i]+"'>"+keys[i]+"</option>")
+        for(i = 0 ; i < IMAGE_POSITION[keys[0]].length ; i++)
+            $("#edit_image_position").append("<option value='"+IMAGE_POSITION[keys[0]][i]+"'>"+IMAGE_POSITION[keys[0]][i]+"</option>")
+
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop()
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName)
+        })
+        
+        $("#edit_image_page").change(function(){
+            $("#edit_image_position").html("")
+            var page = $("#edit_image_page").val()
+            for(i = 0 ; i < IMAGE_POSITION[page].length ; i++)
+                $("#edit_image_position").append("<option value='"+IMAGE_POSITION[page][i]+"'>"+IMAGE_POSITION[page][i]+"</option>")
+        })
+
+        $(document).on('click', '.edit_image_btn', function() {
+            var id = $(this).closest('div').attr('data-id')
+            var page, position, status
+            $.ajax({
+                url: '<%= site_url + prefix %>/page-images/choose',
+                method: "POST",
+                data: {id: id},
+                dataType: "json",
+                success: function (data) {
+                    page = data['page'];
+                    position = data['position']
+                    status = data['status']
+                    title_en = data['title_en']
+                    desc_en = data['desc_en']
+                    title_es = data['title_es']
+                    desc_es = data['desc_es']
+                }
+            }).then(() => {
+                window.id = id
+                $("#edit_id").val(id)
+                $("#edit_image_page").val(page)
+                $("#edit_image_position").html("")
+                for(i = 0 ; i < IMAGE_POSITION[page].length ; i++)
+                    $("#edit_image_position").append("<option value='"+IMAGE_POSITION[page][i]+"'>"+IMAGE_POSITION[page][i]+"</option>")
+                $("#edit_image_position").val(position)
+                $("#edit_image_status").val(status)
+
+                $("#edit_title_en").summernote("code", title_en)
+                $("#edit_desc_en").summernote("code", desc_en)
+                $("#edit_title_es").summernote("code", title_es)
+                $("#edit_desc_es").summernote("code", desc_es)
+
+                $("#image_edit_modal").modal('show')
+            })
+        })
+
+        const page_image_tb = $('#page_image_tb').DataTable({
+            "autoWidth": false,
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search image",
+            },
+            "ajax": {
+                "url": "<%= site_url + prefix %>/page-images/read",
+                "type": "POST",
+            },
+            "columns": [
+                { data:'id', render:function(data, type, row){
+                        return `<div class = "d-flex align-items-center" style = "height:40px;">`+row.id+`</div>`;
+                    }
+                },
+                { data: 'img', render:function(data, type, row){
+                        return `<img style="width:150px; height:80px;" src="` + `<%= site_url %>/assets/images/pageimgs/` + row.img +`"></img>`
+                    }
+                },
+                { data: 'page' },
+                { data: 'position' },
+                { data: 'status', render: function(data, type, row){
+                    if(row.status == 1)
+                        return `<div class="text-success">Visible</div>`;
+                    else
+                        return `<div class="text-danger">Invisible</div>`;
+                    }
+                },
+                { data: 'id',
+                    render: function (data, type, row) {
+                    return `
+                        <div data-id = "`+row.id+`">
+                            <span class="btn btn-icon btn-sm btn-light-primary upload_image_btn"><i class="fas fa-image"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-warning edit_image_btn"><i class="fas fa-edit"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-danger  delete_image_btn"><i class="fas fa-trash"></i></span>
+                        </div>
+                        `
+                    }
+                }
+            ],
+            "order":[[2,'asc'],[0,'asc']]
+        })
+
+        $(document).on('click', '.upload_image_btn', function() {
+            var id = $(this).closest('div').attr('data-id')
+            $.ajax({
+                url: '<%= site_url + prefix %>/page-images/choose',
+                method: "POST",
+                data: {id: id},
+                dataType: "json",
+            }).then(() => {
+                window.id = id
+                $("#image_upload_modal").modal('show')
+            })
+        })
+
+        $(document).on('click', '.delete_image_btn', function() {
+            var id = $(this).closest('div').attr('data-id')
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax ({
+                        url: '<%= site_url + prefix %>/page-images/delete',
+                        method: "POST",
+                        data: {id: id},
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.status == "success") {
+                                page_image_tb.ajax.reload()
+                                toastr.success("Deleted Successfully!")
+                            }
+                        },
+                        error: function () {
+                            toastr.error("An error was occurred on the server!")
+                        }
+                    })
+                }
+            })
+        })
+
+        $("#page_image_add_btn").click(function () {
+            var page = $("#apage").val()
+            var position = $("#aposition").val()
+            $.ajax ({
+                url: '<%= site_url + prefix %>/page-images/create',
+                method: "POST",
+                data: {page: page, position: position},
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == "success") {
+                        page_image_tb.ajax.reload()
+                        mynotify('success', 'Added Successfully!')
+                    }
+                },
+                error: function () {
+                    toastr.error("An error was occurred on the server!")
+                }
+            })
+        })
+
+        $("#page_imag_edit_btn").click(function () {
+            var original_id = window.id
+            var id = $("#edit_id").val()
+            var page = $("#edit_image_page").val()
+            var position = $("#edit_image_position").val()
+            var status = $("#edit_image_status").val()
+
+            var title_en = $("#edit_title_en").summernote("code")
+            var desc_en = $("#edit_desc_en").summernote("code")
+            var title_es = $("#edit_title_es").summernote("code")
+            var desc_es = $("#edit_desc_es").summernote("code")
+
+            $.ajax ({
+                url: '<%= site_url + prefix %>/page-images/update',
+                method: "POST",
+                data: {original_id: original_id, id: id, page: page, position: position, title_en: title_en, desc_en: desc_en, title_es: title_es, desc_es: desc_es, status: status},
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == "success") {
+                        page_image_tb.ajax.reload()
+                        mynotify('success', 'Updated Successfully')
+                    }
+                },
+                error: function () {
+                    toastr.error("An error was occurred on the server!")
+                }
+            })
+        })
+        
+        $("#page_image_upload_btn").click(function () {
+            var fd = new FormData()
+            var img = $('#upload_image_img')[0].files
+            var id = window.id
+            if(img.length > 0 ) {
+                const imgObj = new Image()
+                const objectURL = URL.createObjectURL(img[0])
+
+                imgObj.onload = function () {
+                    if (imgObj.width <= 1920 && imgObj.height <= 1080) {
+                        fd.append('id', id)
+                        fd.append('img', img[0])
+            
+                        $.ajax({
+                            url: '<%= site_url + prefix %>/page-images/upload',
+                            type: 'post',
+                            data: fd,
+                            contentType: false,
+                            processData: false,
+                            dataType: "json",
+                            success: function (res) {
+                                if(res.status == "success") {
+                                    page_image_tb.ajax.reload()
+                                    mynotify('success','Uploaded Successfully')
+                                } else {
+                                    mynotify('danger','Failed in Upload')
+                                }
+                            },
+                            error: function () {
+                                toastr.error("An error was occurred on the server!")
+                            }
+                        })
+
+                        // Free memory
+                        URL.revokeObjectURL(objectURL)
+                    } else {
+                        mynotify("warning", "The photo is too large. please select 1920 x 1080 size image!")
+                    }
+                }
+
+                imgObj.src = objectURL
+            }
+        })
+
+    })
+</script>
+
+</html>

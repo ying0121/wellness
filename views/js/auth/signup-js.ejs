@@ -1,0 +1,133 @@
+<script>
+    lottie.loadAnimation({
+        container: document.getElementById('signup-lottie'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: './assets/animations/register.json'
+    })
+</script>
+<script>
+    function showAlert(title, message, type) {
+        if (title) {
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: type,
+                confirmButtonText: 'Close'
+            })
+        } else {
+            Swal.fire({
+                text: message,
+                icon: type,
+                confirmButtonText: 'Close'
+            })
+        }
+    }
+
+    $(document).ready(function() {
+        $('#captcha_change').click(() => {
+            $.post({
+                url: './home/changeCaptchaImage',
+                method: 'POST',
+                data: {
+                    type: "home"
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#signup_captcha_image').html(res.iamge)
+                }
+            })
+        })
+
+        $("#submit").click(function (e) {
+            e.preventDefault()
+
+            const params = {
+                first_name: $("#first_name").val(),
+                last_name: $("#last_name").val(),
+                dob: $("#signup-dob").val(),
+                email: $("#signup-email").val(),
+                phone: $("#signup-phone").val(),
+                captcha: $("#captcha").val()
+            }
+
+            if (!params.first_name) {
+                const input = document.getElementById('fname-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!params.last_name) {
+                const input = document.getElementById('lname-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!params.dob) {
+                const input = document.getElementById('dob-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!params.email) {
+                const input = document.getElementById('email-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!params.phone) {
+                const input = document.getElementById('phone-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+            if (!params.captcha) {
+                const input = document.getElementById('captcha-container')
+                input.classList.remove('shake')
+                void input.offsetWidth // <== Force reflow
+                input.classList.add('shake')
+
+                input.focus()
+                return
+            }
+
+            $.post({
+                url: "./confirmSignUp",
+                data: params,
+                dataType: "json",
+                success: function (res) {
+                    if (res.status === "success") {
+                        showAlert("<%= component_text.c_case %> # : " + res.case_number + "<%= acronym %>", "<%= component_text.t_pa_ah_alert_success %>", "success")
+                    } else {
+                        if (res.error === "captcha") {
+                            $("#signup_captcha_image").html(res.captcha)
+                        }
+                        $("#alert-message").removeClass("shake")
+                        $("#alert-message").html(res.error_message)
+                        $("#alert-message").addClass("shake")
+                        $("#alert-message").removeClass("d-none")
+                    }
+                },
+                error: function (xhr, status, error) {
+                    showAlert("", error.message, "error")
+                }
+            })
+        })
+    })
+</script>

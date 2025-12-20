@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('header') %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <%- include('mobile-navbar') %>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-row flex-column-fluid page">
+             <%- include('sidebar') %>
+            <div class="d-flex flex-column flex-row-fluid wrapper pt-20" id="kt_wrapper">
+                 <%- include('navbar') %>
+                <div class="content d-flex flex-column flex-column-fluid p-10">
+                    <div class="row">
+                        <div class="col-md-12 bg-primary p-2 mb-2 text-white">
+                            <div class="d-flex justify-content-around">
+                                <div class="d-flex align-items-center" style="font-size:20px; font-weight:bold;">Services</div>
+                                <ul class="nav nav-tabs nav-pills" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white active" href="#clinic_service" data-toggle="tab">Clinic Services</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#service_category" data-toggle="tab">Service Category</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#service_desc" data-toggle="tab">Service Description</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="clinic_service">
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <div class="d-flex justify-content-start align-items-center">
+                                                <h3 class="m-0 mr-5">Clinic Services</h3>
+                                                <div class="mr-5">
+                                                    <select class="form-control" id="clinic_service_category_filter">
+                                                    </select>
+                                                </div>
+                                                <div class="mr-5">
+                                                    <select class="form-control" id="clinic_service_language_filter">
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <select class="form-control" id="clinic_service_status_filter">
+                                                        <option value="all">All Status</option>
+                                                        <option value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class='btn btn-light-primary btn-icon' id="clinic_service_add"><i class='fa fa-plus'></i></div>
+                                        </div>
+                                        <div class="row w-100">
+                                            <div class="col-12">
+                                                <table class="table w-100" id="clinic_service_table">
+                                                    <thead>
+                                                        <th>Title</th>
+                                                        <th>Short Description</th>
+                                                        <th>Image</th>
+                                                        <th>Amount</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="service_category">
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 mb-4 d-flex justify-content-between align-items-center my-5">
+                                            <h3>Service Categories</h3>
+                                            <div class='btn btn-light-primary btn-icon' id="service_category_add"><i class='fa fa-plus'></i></div>
+                                        </div>
+                                        <div class="row w-100">
+                                            <div class="col-12">
+                                                <table class="table w-100" id="service_category_table">
+                                                    <thead>
+                                                        <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="service_desc">
+                                    <div class="row my-3 p-10 bg-white border rounded">
+                                        <div class="col-12 my-3">
+                                            <h3>Meta Info</h3>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <h6 class="mb-3">Description (EN)</h6>
+                                                <textarea class="form-control" id="desc_en" type="text" rows="7"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <h6 class="mb-3">Description (ES)</h6>
+                                                <textarea class="form-control" id="desc_es" type="text" rows="7"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 text-right">
+                                            <button class="btn btn-light-primary" id="desc_update_btn">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="clinic_service_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Clinic Service</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <input type="hidden" id="clinic_service_modal_type" />
+                <input type="hidden" id="clinic_service_chosen_id" />
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Language</h6>
+                                <select class="form-control" id="clinic_service_language">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Category</h6>
+                                <select class="form-control" id="clinic_service_category">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <h6 class="mb-3">Title <span class="text-danger">*</span></h6>
+                                <input id="clinic_service_title" class="form-control" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <h6 class="mb-3">Short Description</h6>
+                                <div class="serivce_summernote" id="clinic_service_short_desc"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <h6 class="mb-3">Long Description</h6>
+                                <div class="serivce_summernote" id="clinic_service_long_desc"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h6>Status</h6>
+                                <select class="form-control" id="clinic_service_status">
+                                    <option value="1" selected>Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h6 class="mb-3">Cost <span class="text-danger"></span></h6>
+                                <input id="clinic_service_cost" class="form-control" type="number" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center"><input type="checkbox" id="clinic_service_request" style="width:24px; height:24px;"></div>
+                                <div class="mr-1 fs-2">&nbsp;Request Services</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center"><input type="checkbox" id="clinic_service_payment" style="width:24px; height:24px;"></div>
+                                <div class="mr-1 fs-2">&nbsp;Online Payment</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center"><input type="checkbox" id="clinic_service_home" style="width:24px; height:24px;"></div>
+                                <div class="mr-1 fs-2">&nbsp;Home Page</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" id="clinic_service_save_btn">Save</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="clinic_service_file_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" id="clinic_service_file_modal_title">Upload File</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <input type="hidden" id="clinic_service_file_modal_type" />
+                <input type="hidden" id="clinic_service_file_chosen_id" />
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-5">
+                            <h6 class=" mb-3" id="clinic_service_file_modal_label">File URL</h6>
+                            <div class="custom-file form-group mb-5">
+                                <input type="file" accept="*.*" class="custom-file-input" id="clinic_service_file" name="clinic_service_file">
+                                <label class="custom-file-label" for="clinic_service_file">File URL</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex justify-content-center align-items-center"
+                            id="progress-wrapper-file">
+                            <progress class="w-100 mr-3" id="progressbar-file" value="0" max="100" style="height: 21px;"></progress>
+                            <span id="progress-percentage-file">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" id="clinic_service_file_save_btn">Upload</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="service_category_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title ">Service Category</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <input type="hidden" id="service_category_modal_type" />
+                <input type="hidden" id="service_category_chosen_id" />
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Category Name</h6>
+                                <input id="service_category_name" class=" form-control" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <h6 class="mb-3">Description</h6>
+                                <textarea class="form-control" id="service_category_desc" type="text" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Status</h6>
+                                <select class="form-control" id="service_category_status">
+                                    <option value="1" selected>Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary" id="service_category_save_btn" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(async function() {
+        $('.serivce_summernote').summernote({
+            tabsize: 1,
+            height: 150,
+        });
+
+        // language
+        $.ajax({
+            url: '<%= site_url + prefix %>/languages/read',
+            method: "POST",
+            dataType: "json",
+            success: function(data) {
+                const result = data.data
+                let html = ""
+                let filter_html = ""
+                result.forEach(item => {
+                    if (item.English) {
+                        if (item.code == 'en') {
+                            html += `<option value="${item.id}" selected>${item.English}</option>`
+                        } else {
+                            html += `<option value="${item.id}">${item.English}</option>`
+                        }
+                        filter_html += `<option value="${item.id}">${item.English}</option>`
+                    }
+                })
+                $("#clinic_service_language").html(html)
+                $("#clinic_service_language_filter").html("<option value='0'>All Languages</option>" + filter_html)
+            }
+        })
+        
+        // service category
+        $.ajax({
+            url: '<%= site_url + prefix %>/services/getServiceCategory',
+            method: "POST",
+            dataType: "json",
+            success: function(data) {
+                const result = data.data
+                let html = ""
+                result.forEach(item => {
+                    html += `<option value="${item.id}">${item.name}</option>`
+                })
+                $("#clinic_service_category").html(html)
+                $("#clinic_service_category_filter").html("<option value='0'>All Categories</option>" + html)
+            }
+        })
+
+        const clinic_service_table = $("#clinic_service_table").DataTable({
+            "pagingType": "full_numbers",
+            "processing": true,
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "order": [
+                [0, 'asc']
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            "ajax": {
+                "url": '<%= site_url + prefix %>/services/getClinicService',
+                "type": "POST",
+                "data": function(data) {
+                    data.category = $("#clinic_service_category_filter").val() ? $("#clinic_service_category_filter").val() : 0
+                    data.language = $("#clinic_service_language_filter").val() ? $("#clinic_service_language_filter").val() : 0
+                    data.status = $("#clinic_service_status_filter").val() ? $("#clinic_service_status_filter").val() : "all"
+                }
+            },
+            "columns": [{
+                data: 'title'
+            }, {
+                data: 'short_desc'
+            }, {
+                data: 'image',
+                render: function(data, type, row) {
+                    return row.image ? `<img src="<%= site_url %>/assets/service/image/${row.image}" width="140px" />` : ""
+                }
+            }, {
+                data: 'cost',
+            }, {
+                data: 'status',
+                render: function(data, type, row) {
+                    if (row.status == 1)
+                        return `<div class="text-success">Active</div>`
+                    else
+                        return `<div class="text-danger">Inactive</div>`
+                }
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return `<div idkey="${row.id}">
+                                <span class="btn btn-icon btn-sm btn-light-warning clinic_service_edit"><i class="fas fa-edit"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-primary clinic_service_image"><i class="fas fa-image"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-success clinic_service_video"><i class="fas fa-video"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-danger clinic_service_delete"><i class="fas fa-trash"></i></span>
+                            </div>`
+                }
+            }]
+        })
+
+        $("#clinic_service_add").click(function() {
+            $("#clinic_service_modal_type").val("0")
+            $("#clinic_service_title").val("")
+            $("#clinic_service_short_desc").val("")
+            $("#clinic_service_long_desc").val("")
+            $("#clinic_service_image").val("")
+            $("#clinic_service_video").val("")
+            $("#clinic_service_cost").val("")
+            $("#clinic_service_modal").modal("show")
+        })
+
+        $("#clinic_service_save_btn").click(function() {
+            const type = $("#clinic_service_modal_type").val()
+
+            const entry = {
+                id: $("#clinic_service_chosen_id").val(),
+                language: $("#clinic_service_language").val(),
+                category: $("#clinic_service_category").val(),
+                title: $("#clinic_service_title").val(),
+                short_desc: $("#clinic_service_short_desc").summernote('code'),
+                long_desc: $("#clinic_service_long_desc").summernote('code'),
+                status: $("#clinic_service_status").val(),
+                request_service: $("#clinic_service_request").prop("checked") == true ? 1 : 0,
+                online_payment: $("#clinic_service_payment").prop("checked") == true ? 1 : 0,
+                home_page: $("#clinic_service_home").prop("checked") == true ? 1 : 0,
+                cost: $("#clinic_service_cost").val()
+            }
+
+            if (!entry.title) {
+                toastr.info("Please enter title!")
+                return
+            }
+
+            $.ajax({
+                url: `<%= site_url + prefix %>/services/${type == 0 ? "addClinicService" : "updateClinicService"}`,
+                method: "POST",
+                data: entry,
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == "success") {
+                        toastr.success("Saved Successfully!");
+                        clinic_service_table.ajax.reload();
+                    }
+                    $("#clinic_service_modal").modal("hide")
+                }
+            });
+        })
+
+        $("#clinic_service_file_save_btn").click(function() {
+            var fd = new FormData();
+
+            const type = $("#clinic_service_file_modal_type").val()
+
+            var service_file = $('#clinic_service_file')[0].files;
+
+            let w, h
+            if (service_file.length > 0) {
+                if (type == 'image') {
+                    const reader = new FileReader()
+                    reader.onload = function(e) {
+                        const img = new Image()
+                        img.src = e.target.result
+
+                        img.onload = function() {
+                            w = img.width
+                            h = img.height
+                        }
+                    }
+                    reader.readAsDataURL(service_file[0])
+                }
+
+                fd.append("file", service_file[0]);
+            } else {
+                toastr.info("Please select a file");
+                return
+            }
+            setTimeout(function() {
+                if (type == 'image') {
+                    if (w > 1024 || w > 768) {
+                        toastr.info("This image is too large.")
+                        return;
+                    }
+                }
+                fd.append("id", $("#clinic_service_file_chosen_id").val());
+                fd.append("type", type);
+
+                $("#clinic_service_file_save_btn").prop("disabled", true);
+                $.ajax({
+                    xhr: function() {
+                        let xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(event) {
+                            if (event.lengthComputable) {
+                                let percentComplete = event.loaded / event.total * 100;
+                                $('#progressbar-file').val(percentComplete);
+                                $('#progress-percentage-file').text(Math.round(percentComplete) + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    url: `<%= site_url + prefix %>/services/uploadServiceFile`,
+                    method: "POST",
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    headers: { "x-file-type": type },
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status == "success") {
+                            toastr.success("Saved Successfully!")
+                            clinic_service_table.ajax.reload()
+                            $("#clinic_service_file_modal").modal("hide")
+                        } else {
+                            toastr.warning("Upload Failed!")
+                        }
+                        $("#clinic_service_file_save_btn").prop("disabled", false);
+                    },
+                    error: function() {
+                        toastr.error("An error was occurred on the server")
+                        $("#clinic_service_file_save_btn").prop("disabled", false)
+                    }
+                })
+            }, 1000)
+        })
+
+        $(document).on("click", ".clinic_service_edit", function() {
+            const id = $(this).parent().attr("idkey")
+            $("#clinic_service_chosen_id").val(id)
+            $("#clinic_service_modal_type").val("1")
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/services/chosenClinicService',
+                method: "POST",
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(res) {
+                    const result = res.data
+                    $("#clinic_service_category").val(result.category)
+                    $("#clinic_service_language").val(result.language)
+                    $("#clinic_service_title").val(result.title)
+                    $("#clinic_service_short_desc").summernote("code", result.short_desc)
+                    $("#clinic_service_long_desc").summernote("code", result.long_desc)
+                    $("#clinic_service_status").val(result.status)
+                    $("#clinic_service_request").prop("checked", result.request_service == 0 ? false : true)
+                    $("#clinic_service_payment").prop("checked", result.online_payment == 0 ? false : true)
+                    $("#clinic_service_home").prop("checked", result.home_page == 0 ? false : true)
+                    $("#clinic_service_cost").val(result.cost)
+
+                    $("#clinic_service_modal").modal("show")
+                }
+            })
+        })
+
+        $(document).on("click", ".clinic_service_image", function() {
+            const id = $(this).parent().attr("idkey")
+            $("#clinic_service_file_chosen_id").val(id)
+            $("#clinic_service_file_modal_type").val("image")
+            $("#clinic_service_file").prop("accept", "image/*")
+            $("#clinic_service_file_modal_title").text("Upload Image (400 * 267)")
+            $("#clinic_service_file_modal_label").text("Please select an image")
+
+            $('#progressbar-file').val(0);
+            $('#progress-percentage-file').text(Math.round(0) + '%');
+
+            $("#clinic_service_file_modal").modal("show")
+        })
+
+        $(document).on("click", ".clinic_service_video", function() {
+            const id = $(this).parent().attr("idkey")
+            $("#clinic_service_file_chosen_id").val(id)
+            $("#clinic_service_file_modal_type").val("video")
+            $("#clinic_service_file").prop("accept", "video/*")
+            $("#clinic_service_file_modal_title").text("Upload Video")
+            $("#clinic_service_file_modal_label").text("Please select a video")
+
+            $('#progressbar-file').val(0);
+            $('#progress-percentage-file').text(Math.round(0) + '%');
+
+            $("#clinic_service_file_modal").modal("show")
+        })
+
+        $(document).on("click", ".clinic_service_delete", function() {
+            const id = $(this).parent().attr("idkey")
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '<%= site_url + prefix %>/services/deleteClinicService',
+                        method: "POST",
+                        data: {
+                            id: id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            if (res.status == "success") {
+                                toastr.success("Deleted Successfully!")
+                                clinic_service_table.ajax.reload()
+                            }
+                        }
+                    })
+                }
+            });
+        })
+
+        // filters
+        $(document).on('change', "#clinic_service_category_filter", function() {
+            clinic_service_table.ajax.reload()
+        })
+
+        $(document).on('change', "#clinic_service_language_filter", function() {
+            clinic_service_table.ajax.reload()
+        })
+
+        $(document).on('change', "#clinic_service_status_filter", function() {
+            clinic_service_table.ajax.reload()
+        })
+
+
+        $.ajax({
+            url: '<%= site_url + prefix %>/services/getDesc',
+            method: "POST",
+            dataType: "json",
+            success: function(res) {
+                const data = res.data
+                $("#desc_en").val(data.en)
+                $("#desc_es").val(data.es)
+            }
+        })
+
+        $("#desc_update_btn").click(function() {
+            $.ajax({
+                url: '<%= site_url + prefix %>/services/updateDesc',
+                method: "POST",
+                data: {
+                    en: $("#desc_en").val(),
+                    es: $("#desc_es").val()
+                },
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == "success") {
+                        toastr.success("Saved Successfully!")
+                    }
+                }
+            })
+        })
+
+
+        const service_category_table = $("#service_category_table").DataTable({
+            "pagingType": "full_numbers",
+            "processing": true,
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "order": [
+                [0, 'asc']
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            "ajax": {
+                "url": '<%= site_url + prefix %>/services/getServiceCategory',
+                "type": "GET",
+                "data": function(data) {}
+            },
+            "columns": [{
+                data: 'name'
+            }, {
+                data: 'desc'
+            }, {
+                data: 'status',
+                render: function(data, type, row) {
+                    if (row.status == 1)
+                        return `<div class="text-success">Active</div>`;
+                    else
+                        return `<div class="text-danger">Inactive</div>`;
+                }
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return `<div idkey="${row.id}">
+                                <span class="btn btn-icon btn-sm btn-light-warning service_category_edit"><i class="fas fa-edit"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-danger service_category_delete"><i class="fas fa-trash"></i></span>
+                            </div>`
+                }
+            }]
+        })
+
+        $("#service_category_add").click(function() {
+            $("#service_category_modal_type").val("0")
+            $("#service_category_name").val("")
+            $("#service_category_desc").val("")
+            $("#service_category_modal").modal("show")
+        })
+
+        $("#service_category_save_btn").click(function() {
+            const type = $("#service_category_modal_type").val()
+
+            const entry = {
+                id: $("#service_category_chosen_id").val(),
+                name: $("#service_category_name").val(),
+                desc: $("#service_category_desc").val(),
+                status: $("#service_category_status").val()
+            }
+
+            $.ajax({
+                url: `<%= site_url + prefix %>/services/${type == 0 ? "addServiceCategory" : "updateServiceCategory"}`,
+                method: "POST",
+                data: entry,
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == "success") {
+                        toastr.success("Saved Successfully!");
+                        service_category_table.ajax.reload();
+                    }
+                }
+            });
+        })
+
+        $(document).on("click", ".service_category_edit", function() {
+            const id = $(this).parent().attr("idkey")
+            $("#service_category_chosen_id").val(id)
+            $("#service_category_modal_type").val("1")
+
+            $.ajax({
+                url: '<%= site_url + prefix %>/services/chosenServiceCategory',
+                method: "POST",
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(res) {
+                    const result = res.data
+                    $("#service_category_name").val(result.name)
+                    $("#service_category_desc").val(result.desc)
+                    $("#service_category_status").val(result.status)
+
+                    $("#service_category_modal").modal("show")
+                }
+            })
+        })
+
+        $(document).on("click", ".service_category_delete", function() {
+            const id = $(this).parent().attr("idkey")
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '<%= site_url + prefix %>/services/deleteServiceCategory',
+                        method: "POST",
+                        data: {
+                            id: id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            if (res.status == "success") {
+                                toastr.success("Deleted Successfully!")
+                                service_category_table.ajax.reload()
+                            }
+                        }
+                    })
+                }
+            });
+        })
+
+    })
+</script>
+
+</html>
