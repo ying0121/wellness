@@ -1,3 +1,186 @@
+<style>
+    .working-hours-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .working-hours-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        /* height: 4px; */
+        /* background: linear-gradient(90deg, #007bff, #00c6ff, #007bff); */
+        /* background-size: 200% 100%; */
+        animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .working-hours-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .working-hour-item {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: all 0.3s ease;
+    }
+
+    .working-hour-item.aos-animate {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .hour-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid transparent;
+    }
+
+    .hour-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .hour-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2);
+        border-color: #007bff;
+    }
+
+    .hour-card:hover::before {
+        left: 100%;
+    }
+
+    .hour-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #007bff, #00c6ff);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        flex-shrink: 0;
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        animation: iconPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+    }
+
+    .hour-content {
+        flex: 1;
+    }
+
+    .hour-day {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .hour-time {
+        font-size: 16px;
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .hour-indicator {
+        width: 8px;
+        height: 8px;
+        background: #28a745;
+        border-radius: 50%;
+        flex-shrink: 0;
+        animation: indicatorBlink 2s ease-in-out infinite;
+        box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+    }
+
+    @keyframes indicatorBlink {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.6;
+            transform: scale(1.2);
+        }
+    }
+
+    .after-hours-card {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        border-left: 4px solid #ffc107;
+        border-radius: 8px;
+        padding: 20px 25px;
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+        font-size: 16px;
+        line-height: 1.6;
+        color: #856404;
+        animation: slideInUp 0.6s ease-out;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .working-hours-list {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .hour-card {
+            padding: 20px;
+        }
+
+        .hour-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+    }
+</style>
+
 <!-- Hero Parallax Image -->
 <% let img_id = Math.floor(Math.random() * HEADER_BANNER.length); %>
 <div class="parallax-container w-100" style="background-image: url('./assets/images/pageimgs/<%= HEADER_BANNER[img_id].img %>'); height: 100vh;">
@@ -79,7 +262,7 @@
 <!-- /Hero Parallax Image -->
 <!-- Google Map -->
 <% if (area_toggle.clinic_map == 1) { %>
-    <div class="w-100 mb-5">
+    <div class="w-100">
         <iframe
             id="preview"
             width="100%"
@@ -92,6 +275,46 @@
     </div>
 <% } %>
 <!-- /Google Map -->
+
+<!-- Working Hours -->
+<section class="working-hours-section py-5">
+    <div class="container">
+        <% if (area_toggle.clinic_workinghour === 1) { %>
+            <div class="title-heading pdbt-30 aos" data-aos="fade-up" data-aos-duration="800" style="color:black!important;">
+                <h2 class="mb-4" style="font-weight: 600; position: relative; display: inline-block;">
+                    <i class="fa fa-clock me-2" style="color: #007bff;"></i>
+                    <%= component_text.t_working_hour %>
+                </h2>
+            </div>
+            <div class="working-hours-list">
+                <% for (let i = 0; i < working_hours.length; i++) { %>
+                    <div class="working-hour-item aos" data-aos="fade-right" data-aos-delay="<%= i * 100 %>" data-aos-duration="600" data-aos-easing="ease-out">
+                        <div class="hour-card">
+                            <div class="hour-icon">
+                                <i class="fa fa-calendar-check"></i>
+                            </div>
+                            <div class="hour-content">
+                                <div class="hour-day"><%= working_hours[i].name %></div>
+                                <div class="hour-time"><%= working_hours[i].time %></div>
+                            </div>
+                            <div class="hour-indicator"></div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
+        <% if (area_toggle.clinic_afterhours === 1) { %>
+            <div class="after-hours-info aos mt-3" data-aos="fade-up" data-aos-delay="<%= working_hours.length * 100 + 200 %>" data-aos-duration="800" style="color:black!important;" class="mt-5">
+                <div class="after-hours-card">
+                    <i class="fa fa-info-circle me-2" style="color: #ffc107;"></i>
+                    <%- component_text.t_after_hours %>
+                </div>
+            </div>
+        <% } %>        
+    </div>
+</section>
+<!-- /Working Hours -->
+
 <!-- Accordion Item -->
 <section class="faq-info mb-5 aos" data-aos="fade-up">
     <div class="container accordion">

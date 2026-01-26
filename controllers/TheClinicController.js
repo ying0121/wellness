@@ -65,6 +65,7 @@ exports.render = async (req, res, next) => {
 	const area_toggle = await AreaToggle.findAll()
 	data.area_toggle = []
 	area_toggle.forEach(item => { data.area_toggle[item.area_id] = item.status })
+	console.log(data.area_toggle)
 
 	data.meta = await Meta.findAll()
 

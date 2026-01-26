@@ -31,6 +31,8 @@ const iconRoutes = require("./iconRoutes")
 const vaultRoutes = require("./vaultRoutes")
 const patientRoutes = require("./patientRoutes")
 
+const emailRoutes = require("./emailRoutes")
+
 // auth controller
 const AuthController = require("../../controllers/admin/AuthController")
 
@@ -70,5 +72,6 @@ router.use("/languages", adminAuthMiddleware, languageRoutes)
 router.use("/icons", adminAuthMiddleware, iconRoutes)
 router.use("/vaults", adminAuthMiddleware, vaultRoutes)
 router.use("/patients", adminAuthMiddleware, patientRoutes)
+router.use("/email", adminAuthMiddleware, emailRoutes)
 
 module.exports = router

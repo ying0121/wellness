@@ -112,7 +112,7 @@
         $('.aside-menu').height($(window).height() - $(".logo-img").height() - 25);
     });
 
-    window.area_toggle = '<%= area_toggle ? area_toggle : [] %>'
+    window.area_toggle = <%- JSON.stringify(area_toggle) %>;
 
     function handleAreaToggleBox(toggle_box_id, toggle_area_name) {
         $(toggle_box_id).prop('checked', window.area_toggle ? window.area_toggle[toggle_area_name] == 1 : false)
