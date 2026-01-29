@@ -270,7 +270,7 @@ exports.renderDetail = async (req, res, next) => {
 
 	data.isLoggedIn = req.session.isLoggedIn ? req.session.isLoggedIn : false
 
-	data.service = await ClinicService.findOne({ where: { id: req.query.s }, include: [{ model: ServiceCategory, as: "serviceCategory", attributes: ["name"] }] })
+	data.service = await ClinicService.findOne({ where: { key: req.query.s }, include: [{ model: ServiceCategory, as: "serviceCategory", attributes: ["name"] }] })
 
 	//
 	data.page_tag = "service-detail"

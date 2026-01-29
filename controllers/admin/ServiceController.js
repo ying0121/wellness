@@ -109,6 +109,8 @@ exports.getClinicService = async (req, res, next) => {
    res.status(200).json({ data: services })
 }
 exports.addClinicService = async (req, res, next) => {
+	const order = req.body.order
+	const key = req.body.key
 	const language = req.body.language
 	const category = req.body.category
 	const title = req.body.title
@@ -120,12 +122,14 @@ exports.addClinicService = async (req, res, next) => {
 	const home_page = req.body.home_page
 	const cost = req.body.cost
 
-	await ClinicService.create({ language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, cost })
+	await ClinicService.create({ order, key, language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, cost })
 
 	res.status(200).json({ status: "success" })
 }
 exports.updateClinicService = async (req, res, next) => {
 	const id = req.body.id
+	const order = req.body.order
+	const key = req.body.key
 	const language = req.body.language
 	const category = req.body.category
 	const title = req.body.title
@@ -137,7 +141,7 @@ exports.updateClinicService = async (req, res, next) => {
 	const home_page = req.body.home_page
 	const cost = req.body.cost
 
-	await ClinicService.update({ language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, cost }, { where: { id: id } })
+	await ClinicService.update({ order, key, language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, cost }, { where: { id: id } })
 
 	res.status(200).json({ status: "success" })
 }

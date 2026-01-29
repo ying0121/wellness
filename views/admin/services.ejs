@@ -57,7 +57,9 @@
                                             <div class="col-12">
                                                 <table class="table w-100" id="clinic_service_table">
                                                     <thead>
+                                                        <th>Order</th>
                                                         <th>Title</th>
+                                                        <th>Key</th>
                                                         <th>Short Description</th>
                                                         <th>Image</th>
                                                         <th>Amount</th>
@@ -135,6 +137,18 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h6>Order</h6>
+                                <input id="clinic_service_order" class="form-control" type="number" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h6>Key</h6>
+                                <input id="clinic_service_key" class="form-control" type="text" />
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <h6>Language</h6>
@@ -365,7 +379,14 @@
                 }
             },
             "columns": [{
+                data: 'order',
+                render: function (data, type, row) {
+                    return row.order ? row.order : 9999
+                }
+            }, {
                 data: 'title'
+            }, {
+                data: 'key'
             }, {
                 data: 'short_desc'
             }, {
@@ -412,6 +433,8 @@
 
             const entry = {
                 id: $("#clinic_service_chosen_id").val(),
+                order: $("#clinic_service_order").val() ? $("#clinic_service_order").val() : 9999,
+                key: $("#clinic_service_key").val(),
                 language: $("#clinic_service_language").val(),
                 category: $("#clinic_service_category").val(),
                 title: $("#clinic_service_title").val(),
@@ -428,6 +451,10 @@
                 toastr.info("Please enter title!")
                 return
             }
+            if (!entry.key) {
+                toastr.info("Please enter key!")
+                return
+            }
 
             $.ajax({
                 url: `<%= site_url + prefix %>/services/${type == 0 ? "addClinicService" : "updateClinicService"}`,
@@ -437,7 +464,7 @@
                 success: function(res) {
                     if (res.status == "success") {
                         toastr.success("Saved Successfully!");
-                        clinic_service_table.ajax.reload();
+                        clinic_service_table.ajax.reload(null, false);
                     }
                     $("#clinic_service_modal").modal("hide")
                 }
@@ -505,7 +532,7 @@
                     success: function(res) {
                         if (res.status == "success") {
                             toastr.success("Saved Successfully!")
-                            clinic_service_table.ajax.reload()
+                            clinic_service_table.ajax.reload(null, false)
                             $("#clinic_service_file_modal").modal("hide")
                         } else {
                             toastr.warning("Upload Failed!")
@@ -534,6 +561,8 @@
                 dataType: "json",
                 success: function(res) {
                     const result = res.data
+                    $("#clinic_service_order").val(result.order)
+                    $("#clinic_service_key").val(result.key)
                     $("#clinic_service_category").val(result.category)
                     $("#clinic_service_language").val(result.language)
                     $("#clinic_service_title").val(result.title)

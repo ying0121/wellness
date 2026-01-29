@@ -23,6 +23,7 @@ const contactRoutes = require("./contactRoutes")
 const vaultRoutes = require("./vaultRoutes")
 const paymentRoutes = require("./paymentRoutes")
 const areaToggleRoutes = require("./areaToggleRoutes")
+const newsletterRoutes = require("./newsletterRoutes")
 
 // controllers
 const AuthController = require("../controllers/AuthController")
@@ -41,6 +42,7 @@ router.use("/contact", contactRoutes)
 router.use("/vault", auth, vaultRoutes)
 router.use("/payment", paymentRoutes)
 router.use("/area-toggle", areaToggleRoutes)
+router.use("/newsletter", newsletterRoutes)
 
 // patient auth routes
 router.get("/login", AuthController.signin)

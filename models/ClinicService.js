@@ -11,6 +11,8 @@ const ClinicService = sequelize.define("clinic_services", {
         allowNull: false,
         primaryKey: true
     },
+    key: DataTypes.STRING(256),
+    order: DataTypes.INTEGER,
     title: DataTypes.TEXT,
     language: DataTypes.INTEGER,
     category: DataTypes.INTEGER,

@@ -1,7 +1,7 @@
 
 const { DataTypes } = require('sequelize')
 const { sequelize } = require('./index')
-
+const NewsletterImage = require('./NewsletterImage')
 const NewsletterData = sequelize.define("newsletterdatas", {
     id: {
         type: DataTypes.INTEGER,
@@ -34,5 +34,7 @@ const NewsletterData = sequelize.define("newsletterdatas", {
     engine: "MyISAM",
     timestamps: true
 })
+
+NewsletterData.belongsTo(NewsletterImage, {foreignKey: "image", as: "newsletterimages"})
 
 module.exports = NewsletterData

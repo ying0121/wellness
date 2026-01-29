@@ -228,7 +228,7 @@ exports.render = async (req, res, next) => {
 
 	data.languages = await FVsLanguage.findAll()
 
-	data.services = await ClinicService.findAll({ where: { home_page: 1, language: siteLang == "en" ? 17 : 25 } })
+	data.services = await ClinicService.findAll({ where: { home_page: 1, language: siteLang == "en" ? 17 : 25 }, order: [['order', 'ASC']] })
 
 	// QR Code
 	let qrcode_text = `NAME : ${data.contact_info.name} \n`

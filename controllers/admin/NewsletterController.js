@@ -105,7 +105,7 @@ exports.deleteImage = async (req, res, next) => {
 }
 
 exports.getData = async (req, res, next) => {
-	const data = await NewsletterData.findAll()
+	const data = await NewsletterData.findAll({ order: [['published', 'DESC']] })
 
 	res.status(200).json({ data: data })
 }

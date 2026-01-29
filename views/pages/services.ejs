@@ -42,7 +42,7 @@
                                     <button data-bs-toggle="modal" data-bs-target="#payment-modal" class="btn btn-sm bg-info-light d-none" id="show-service-payment-modal-btn"></button>
                                     <button data-bs-toggle="modal" data-bs-target="#service_request_modal" class="btn btn-sm bg-info-light d-none" id="show-service-modal-btn"></button>
                                     <a href="javascript:;" class="text-primary service_request fs-5" data-id="<%= services[i].id %>" data-title="<%= services[i].title %>"><%= component_text.t_request %></a>
-                                    <a href="./services/detail?s=<%= services[i].id %>" class="fs-5 text-info" target="_blank"><%= component_text.btn_read_more %></a>
+                                    <a href="./services/detail?s=<%= services[i].key %>" class="fs-5 text-info" target="_blank"><%= component_text.btn_read_more %></a>
                                 </div>
                             </div>
                         </div>
