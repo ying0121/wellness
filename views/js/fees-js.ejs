@@ -1,0 +1,46 @@
+<script>
+    $(document).ready(function () {
+        var $slider = $('#fees-image-slider')
+        var $slides = $slider.find('.fees-slide')
+        var $dots = $('#fees-slider-dots .fees-slider-dot')
+        var total = $slides.length
+        if (total <= 1) return
+
+        var intervalMs = parseInt($slider.attr('data-slide-interval'), 10) || 4500
+        var currentIndex = 0
+        var autoTimer = null
+
+        function goToSlide(index) {
+            index = ((index % total) + total) % total
+            currentIndex = index
+            $slides.removeClass('active').eq(index).addClass('active')
+            $dots.removeClass('active').eq(index).addClass('active')
+        }
+
+        function nextSlide() {
+            goToSlide(currentIndex + 1)
+        }
+
+        function startAuto() {
+            stopAuto()
+            autoTimer = setInterval(nextSlide, intervalMs)
+        }
+
+        function stopAuto() {
+            if (autoTimer) {
+                clearInterval(autoTimer)
+                autoTimer = null
+            }
+        }
+
+        $dots.on('click', function () {
+            var i = parseInt($(this).data('slide-index'), 10)
+            goToSlide(i)
+            startAuto()
+        })
+
+        $slider.on('mouseenter', stopAuto).on('mouseleave', startAuto)
+
+        startAuto()
+    })
+</script>

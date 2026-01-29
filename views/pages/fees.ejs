@@ -1,0 +1,288 @@
+<style>
+    .fees-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        position: relative;
+        overflow: hidden;
+        padding: 3rem 0 4rem;
+    }
+
+    .fees-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+
+    .fees-content-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .fees-slider-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 4px solid rgba(27, 93, 146, 0.15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        aspect-ratio: 1;
+    }
+
+    .fees-slider-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .fees-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+        pointer-events: none;
+    }
+
+    .fees-slide.active {
+        opacity: 1;
+        z-index: 1;
+        pointer-events: auto;
+    }
+
+    .fees-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .fees-slider-wrap:hover .fees-slide img {
+        transition: transform 0.5s ease;
+    }
+
+    .fees-slider-wrap:hover .fees-slide.active img {
+        transform: scale(1.03);
+    }
+
+    .fees-slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .fees-slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(27, 93, 146, 0.3);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .fees-slider-dot:hover,
+    .fees-slider-dot.active {
+        background: #1B5D92;
+        transform: scale(1.2);
+    }
+
+    .fees-noninsured {
+        background: linear-gradient(135deg, #e9fff1 0%, #d6ffe3 100%);
+        color: #2bc471;
+        font-size: 1.15rem;
+        font-weight: 600;
+        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        border-left: 4px solid #2ac667;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 12px rgb(25 220 75 / 14%);
+    }
+
+    .fees-insurance-text {
+        color: #2c3e50;
+        font-size: 1rem;
+        line-height: 1.65;
+        margin-bottom: 1.5rem;
+    }
+
+    .fees-insurance-text strong {
+        color: #1B5D92;
+    }
+
+    .fees-procedures-intro {
+        color: #495057;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+    }
+
+    .fees-procedures-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .fees-procedure-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+        font-size: 0.95rem;
+        color: #2c3e50;
+        transition: padding-left 0.25s ease, color 0.25s ease;
+    }
+
+    .fees-procedure-item:hover {
+        padding-left: 8px;
+        color: #1B5D92;
+    }
+
+    .fees-procedure-item::before {
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: #1B5D92;
+        border-radius: 50%;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+
+    .fees-procedure-price {
+        font-weight: 600;
+        color: #1B5D92;
+        white-space: nowrap;
+    }
+
+    .fees-payment-text {
+        color: #495057;
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .fees-disclaimer {
+        font-size: 0.85rem;
+        color: #6c757d;
+        font-style: italic;
+        line-height: 1.5;
+    }
+
+    .fees-procedure-item.aos-animate {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    @media (max-width: 991px) {
+        .fees-procedures-grid {
+            grid-template-columns: 1fr;
+            gap: 0.35rem 0;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .fees-section {
+            padding: 2rem 0 3rem;
+        }
+
+        .fees-content-card {
+            padding: 1.5rem;
+        }
+
+        .fees-slider-wrap {
+            max-width: 280px;
+            margin: 0 auto 1.5rem;
+        }
+    }
+</style>
+
+<section class="fees-section">
+    <div class="container">
+        <h1 class="fees-title aos" data-aos="fade-up" data-aos-duration="600">
+            <%= typeof component_text !== 'undefined' && component_text.menu_fees ? component_text.menu_fees : 'FEES' %>
+        </h1>
+
+        <div class="fees-content-card aos" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+            <div class="row align-items-start">
+                <!-- Fee Slider -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-lg-0">
+                    <div class="fees-slider-wrap aos" data-aos="fade-right" data-aos-duration="600" data-aos-delay="150" id="fees-image-slider" data-slide-interval="<%= typeof fees_slide_interval !== 'undefined' ? fees_slide_interval : 4500 %>">
+                        <div class="fees-slider-inner">
+                            <% for (let i = 0; i < fees.length; i++) { %>
+                                <div class="fees-slide <%= i === 0 ? 'active' : '' %>" data-slide-index="<%= i %>">
+                                    <img src="<%= site_url %>/assets/service/image/<%= fees[i].image %>" alt="Office / clinic view <%= i + 1 %>" />
+                                </div>
+                            <% } %>
+                        </div>
+                        <% if (fees.length > 1) { %>
+                            <div class="fees-slider-dots" id="fees-slider-dots">
+                                <% for (let i = 0; i < fees.length; i++) { %>
+                                    <button type="button" class="fees-slider-dot <%= i === 0 ? 'active' : '' %>" data-slide-index="<%= i %>" aria-label="Slide <%= i + 1 %>"></button>
+                                <% } %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <!-- Fee List -->
+                <div class="col-lg-8 col-md-7">
+                    <!-- Fee Header -->
+                    <div class="fees-noninsured aos" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
+                        <%= component_text.t_fee_header %>
+                    </div>
+                    <!-- Fee Desc -->
+                    <p class="fees-insurance-text aos" data-aos="fade-up" data-aos-duration="500" data-aos-delay="250">
+                        <%= component_text.t_fee_desc %>
+                    </p>
+                    <!-- Fee Explanation -->
+                    <p class="fees-procedures-intro aos" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                        <%= component_text.t_fee_expl %>
+                    </p>
+                    <!-- Fee List -->
+                    <div class="fees-procedures-grid">
+                        <% if (fees.length > 0) { %>
+                            <% const mid = Math.ceil(fees.length / 2); %>
+                            <div class="aos" data-aos="fade-up" data-aos-duration="500" data-aos-delay="350">
+                                <% for (let i = 0; i < mid; i++) { %>
+                                    <div class="fees-procedure-item aos" data-aos="fade-right" data-aos-delay="<%= 400 + i * 50 %>" data-aos-duration="400">
+                                        <span><%= fees[i].title %></span>
+                                        <span class="fees-procedure-price">$<%= fees[i].fee %></span>
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="aos" data-aos="fade-up" data-aos-duration="500" data-aos-delay="350">
+                                <% for (let i = mid; i < fees.length; i++) { %>
+                                    <div class="fees-procedure-item aos" data-aos="fade-right" data-aos-delay="<%= 400 + (i - mid) * 50 %>" data-aos-duration="400">
+                                        <span><%= fees[i].title %></span>
+                                        <span class="fees-procedure-price">$<%= fees[i].fee %></span>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% } else { %>
+                            <p class="fees-procedures-intro aos my-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                                <%= component_text.t_fee_no_fees %>
+                            </p>
+                        <% } %>
+                    </div>
+                    <!-- Fee Footer -->
+                    <p class="fees-payment-text aos" data-aos="fade-up" data-aos-duration="500" data-aos-delay="450">
+                        <%= component_text.t_fee_footer %>
+                    </p>
+                    <!-- Fee Note -->
+                    <p class="fees-disclaimer aos" data-aos="fade-up" data-aos-duration="500" data-aos-delay="500">
+                        <%= component_text.t_fee_note %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
