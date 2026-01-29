@@ -88,6 +88,12 @@ const ClinicService = sequelize.define("clinic_services", {
         defaultValue: "USD"
     },
     code: DataTypes.STRING,
+    show_in_fee: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 0
+    },
+    fee: DataTypes.FLOAT,
 }, {
     engine: "MyISAM",
     timestamps: true

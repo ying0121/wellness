@@ -10,6 +10,7 @@
     <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
         <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
             <ul class="menu-nav">
+                <!-- Home -->
                 <% if (topMenu.includes("Home")) { %>
                     <li class="menu-item <%= sideItem === 'home' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/home" class="menu-link">
@@ -20,6 +21,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Clinic -->
                 <% if (topMenu.includes("Clinic")) { %>
                     <li class="menu-item <%= sideItem === 'the_clinic' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/the-clinic" class="menu-link">
@@ -30,6 +32,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- About Us -->
                 <% if (topMenu.includes("About Us")) { %>
                     <li class="menu-item <%= sideItem === 'about_us' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/about-us" class="menu-link">
@@ -40,6 +43,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Insurance -->
                 <% if (topMenu.includes("Insurance")) { %>
                     <li class="menu-item <%= sideItem === 'insurance' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/insurances" class="menu-link">
@@ -50,6 +54,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Orientation -->
                 <% if (topMenu.includes("Orientation")) { %>
                     <li class="menu-item <%= sideItem === 'orientation' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/orientations" class="menu-link">
@@ -60,6 +65,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Services -->
                 <% if (topMenu.includes("Services")) { %>
                     <li class="menu-item <%= sideItem === 'services' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/services" class="menu-link">
@@ -70,6 +76,18 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Fees -->
+                <% if (topMenu.includes("Fees")) { %>
+                    <li class="menu-item <%= sideItem === 'fees' ? 'menu-item-active' : '' %>" aria-haspopup="true">
+                        <a href="<%= site_url + prefix %>/fees" class="menu-link">
+                            <span class="menu-icon">
+                                <i class="fa fa-money-bill" style="font-size:inherit; color:inherit"></i>
+                            </span>
+                            <span class="menu-text">Fees</span>
+                        </a>
+                    </li>
+                <% } %>
+                <!-- Letters -->
                 <% if (topMenu.includes("Letter")) { %>
                     <li class="menu-item <%= sideItem === 'letter' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/letters" class="menu-link">
@@ -80,6 +98,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Educations -->
                 <% if (topMenu.includes("Education")) { %>
                     <li class="menu-item <%= sideItem === 'education' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/educations" class="menu-link">
@@ -90,6 +109,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Contacts -->
                 <% if (topMenu.includes("Contacts")) { %>
                     <li class="menu-item <%= sideItem === 'contacts' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/contacts" class="menu-link">
@@ -100,6 +120,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Doctors -->
                 <% if (topMenu.includes("Doctors")) { %>
                     <li class="menu-item <%= sideItem === 'doctors' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/doctors" class="menu-link">
@@ -110,6 +131,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Staffs -->
                 <% if (topMenu.includes("Staffs")) { %>
                     <li class="menu-item <%= sideItem === 'staffs' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/staffs" class="menu-link">
@@ -120,6 +142,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Patient Reviews -->
                 <% if (topMenu.includes("Patient Reviews")) { %>
                     <li class="menu-item <%= sideItem === 'patient-reviews' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/patient-reviews" class="menu-link">
@@ -130,6 +153,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Page Images -->
                 <% if (topMenu.includes("Page Images")) { %>
                     <li class="menu-item <%= sideItem === 'page-images' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/page-images" class="menu-link">
@@ -140,6 +164,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Page Videos -->
                 <% if (topMenu.includes("Page Videos")) { %>
                     <li class="menu-item <%= sideItem === 'page-videos' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/page-videos" class="menu-link">
@@ -150,6 +175,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Patient Area -->
                 <% if (topMenu.includes("Patient Area")) { %>
                     <li class="menu-item <%= sideItem === 'patient-areas' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/patient-areas" class="menu-link">
@@ -160,6 +186,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Setting -->
                 <% if (topMenu.includes("Setting")) { %>
                     <li class="menu-item <%= sideItem === 'settings' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/settings" class="menu-link">
@@ -170,6 +197,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Managers -->
                 <% if (userType === 1) { %>
                     <li class="menu-item <%= sideItem === 'managers' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/managers" class="menu-link">
@@ -180,6 +208,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Alert -->
                 <% if (topMenu.includes("Alert")) { %>
                     <li class="menu-item <%= sideItem === 'alerts' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/alerts" class="menu-link">
@@ -191,6 +220,7 @@
                     </li>
                 <% } %>
                 <hr>
+                <!-- Survey -->
                 <% if (topMenu.includes("Survey")) { %>
                     <li class="menu-item <%= sideItem === 'surveys' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/surveys" class="menu-link">
@@ -201,6 +231,7 @@
                         </a>
                     </li>
                 <% } %>
+                <!-- Newsletter -->
                 <% if (topMenu.includes("Newsletter")) { %>
                     <li class="menu-item <%= sideItem === 'newsletter' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/newsletter" class="menu-link">
