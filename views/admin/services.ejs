@@ -334,7 +334,7 @@
                     }
                 })
                 $("#clinic_service_language").html(html)
-                $("#clinic_service_language_filter").html("<option value='0'>All Languages</option>" + filter_html)
+                $("#clinic_service_language_filter").html("<option value='0'>Languages</option>" + filter_html)
             }
         })
         
@@ -350,7 +350,7 @@
                     html += `<option value="${item.id}">${item.name}</option>`
                 })
                 $("#clinic_service_category").html(html)
-                $("#clinic_service_category_filter").html("<option value='0'>All Categories</option>" + html)
+                $("#clinic_service_category_filter").html("<option value='0'>Categories</option>" + html)
             }
         })
 
@@ -411,6 +411,7 @@
                                 <span class="btn btn-icon btn-sm btn-light-warning clinic_service_edit"><i class="fas fa-edit"></i></span>
                                 <span class="btn btn-icon btn-sm btn-light-primary clinic_service_image"><i class="fas fa-image"></i></span>
                                 <span class="btn btn-icon btn-sm btn-light-success clinic_service_video"><i class="fas fa-video"></i></span>
+                                <span class="btn btn-icon btn-sm btn-light-info clinic_service_download" data-image="${row.image}"><i class="fas fa-download"></i></span>
                                 <span class="btn btn-icon btn-sm btn-light-danger clinic_service_delete"><i class="fas fa-trash"></i></span>
                             </div>`
                 }
@@ -605,6 +606,16 @@
             $('#progress-percentage-file').text(Math.round(0) + '%');
 
             $("#clinic_service_file_modal").modal("show")
+        })
+
+        $(document).on("click", ".clinic_service_download", function() {
+            const imageURL = "<?php echo base_url() ?>/assets/service/image/" + $(this).attr("data-image")
+            const link = document.createElement("a")
+            link.href = imageURL
+            link.download = $(this).attr("data-image")
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
         })
 
         $(document).on("click", ".clinic_service_delete", function() {
