@@ -6,7 +6,7 @@
     let elements = null
     // Fetches a payment intent and captures the client secret
     async function initialize() {
-        const { clientSecret } = await fetch("./payment/createPaymentIntent", {
+        const { clientSecret } = await fetch("<%= site_url %>/payment/createPaymentIntent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -14,7 +14,12 @@
             body: JSON.stringify({
                 items: payment_items
             }),
-        }).then((r) => r.json())
+        }).then((r) => {
+            return r.json()
+        }).catch((error) => {
+            console.error(error)
+            return { status: "error", message: error.message }
+        })
         elements = stripe.elements({
             clientSecret
         })

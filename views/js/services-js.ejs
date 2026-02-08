@@ -17,60 +17,69 @@
     })
 
     const lang = "<%= language %>"
+
+    let _selected_service_id = 0
+    let _selected_service_title = ""
+    let _selected_service_cost = 0
     
     $(document).ready(function () {
         $(document).on("click", ".service_request", function() {
-            const id = $(this).attr("data-id")
-            const title = $(this).attr("data-title")
+            _selected_service_id = $(this).attr("data-id")
+            _selected_service_title = $(this).attr("data-title")
             $.ajax({
                 url: './services/getCost',
                 method: 'POST',
                 data: {
-                    id: id
+                    id: _selected_service_id
                 },
                 dataType: "json",
                 success: function(res) {
-                    const cost = parseFloat(res.cost)
-                    if (cost > 0) { // payment modal
-                        $("#payment-modal-title").text(title + ` - $${cost}`)
-
-                        $("#show-service-payment-modal-btn").click()
-
-                        // initialize payment form
-                        $("#payment-category").val("service")
-                        $("#payment-category-id").val(id)
-                        
-                        payment_items = [{
-                            id: title,
-                            amount: cost * 100.0
-                        }]
-                        initialize()
-                    } else { // request modal
-                        // if login
-                        const isLogged = "<%= patient_id > 0 %>"
-                        if (isLogged == 1) {
-                            $("#service-fname").val("<%= component_text.fname %>")
-                            $("#service-lname").val("<%= component_text.lname %>")
-                            $("#service-phone").val("<%= component_text.phone %>")
-                            $("#service-dob").val("<%= component_text.dob %>")
-                            $("#service-email").val("<%= component_text.email %>")
-                        } else {
-                            $("#service-fname").val("")
-                            $("#service-lname").val("")
-                            $("#service-dob").val("")
-                            $("#service-email").val("")
-                            $("#service-phone").val("")
-                        }
-                        $("#service-message").val("")
-                        $("#service-captcha").val("")
-
-                        $("#service_name").val(title)
-                        $("#service_title").text(`<%= component_text.t_request_service %> - ${title}`)
-
-                        $("#show-service-modal-btn").click()
+                    _selected_service_cost = parseFloat(res.cost)
+                    if (_selected_service_cost > 0) {
+                        $("#service_request_modal_pay").removeClass("d-none")
+                    } else {
+                        $("#service_request_modal_pay").addClass("d-none")
                     }
+
+                    const isLogged = "<%= patient_id > 0 %>"
+                    if (isLogged == 1) {
+                        $("#service-fname").val("<%= component_text.fname %>")
+                        $("#service-lname").val("<%= component_text.lname %>")
+                        $("#service-phone").val("<%= component_text.phone %>")
+                        $("#service-dob").val("<%= component_text.dob %>")
+                        $("#service-email").val("<%= component_text.email %>")
+                    } else {
+                        $("#service-fname").val("")
+                        $("#service-lname").val("")
+                        $("#service-dob").val("")
+                        $("#service-email").val("")
+                        $("#service-phone").val("")
+                    }
+                    $("#service-message").val("")
+                    $("#service-captcha").val("")
+
+                    $("#service_name").val(_selected_service_title)
+                    $("#service_title").text(`<%= component_text.t_request_service %> - ${_selected_service_title}`)
+
+                    $("#show-service-modal-btn").click()
                 }
             })
+        })
+
+        $("#service_request_modal_pay").click(function() {
+            $("#payment-modal-title").text(_selected_service_title + ` - $${_selected_service_cost}`)
+
+            $("#show-service-payment-modal-btn").click()
+
+            // initialize payment form
+            $("#payment-category").val("service")
+            $("#payment-category-id").val(_selected_service_id)
+            
+            payment_items = [{
+                id: _selected_service_title,
+                amount: _selected_service_cost * 100.0
+            }]
+            initialize()
         })
 
         $("#service_request_modal_send").click(function() {

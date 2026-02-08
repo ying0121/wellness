@@ -156,3 +156,9 @@ exports.updateMetaInfo = async (req, res, next) => {
 	await Translation.update({ en: note_en, es: note_es }, { where: { keyvalue: "t_fee_note" } })
 	res.status(200).json({ status: "success" })
 }
+
+exports.updateDisplayFeePage = async (req, res, next) => {
+	const value = req.body.value
+	await AreaToggle.update({ status: value }, { where: { area_id: "fee_area" } })
+	res.status(200).json({ status: "success" })
+}

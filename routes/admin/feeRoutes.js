@@ -81,4 +81,6 @@ router.post('/uploadFeeFile', (req, res) => {
 router.post('/getMetaInfo', FeeController.getMetaInfo)
 router.post('/updateMetaInfo', FeeController.updateMetaInfo)
 
+router.post('/updateDisplayFeePage', FeeController.updateDisplayFeePage)
+
 module.exports = router

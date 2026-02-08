@@ -2402,6 +2402,11 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 .form-focus .form-control:focus::-webkit-input-placeholder {
   transition: none;
 }
+
+/* Date input with floating label: hide native "mm/dd/yyyy" when empty and not focused */
+.form-focus input[type="date"].floating-date-input:not(:focus):not(.has-value)::-webkit-datetime-edit {
+  opacity: 0;
+}
 .form-focus.select-focus .focus-label {
   opacity: 1;
   font-weight: 300;
@@ -26783,7 +26788,7 @@ a.mute-video.stop {
   color: #ffffff;
 }
 .features-section-sixteen .feature-sixteen-main .feature-six-img:hover::after {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, #000000 100%);
 }
 .features-section-sixteen .feature-sixteen-main .feature-six-img:hover .feature-content-six {
   top: 10%;

@@ -1,0 +1,172 @@
+<style>
+    .newsletter-list-hero {
+        min-height: 450px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .newsletter-list-hero .banner-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    .newsletter-list-hero .hero-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 0;
+        position: relative;
+        z-index: 2;
+    }
+
+    .newsletter-list-section {
+        padding: 2rem 0 2.5rem;
+        background: #fff;
+    }
+
+    .newsletter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .newsletter-card {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e9ecef;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .newsletter-card:hover {
+        border-color: #1B5D92;
+        box-shadow: 0 2px 8px rgba(27, 93, 146, 0.12);
+    }
+
+    .newsletter-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .newsletter-card-link:hover {
+        color: inherit;
+    }
+
+    .newsletter-card-img-wrap {
+        height: 145px;
+        overflow: hidden;
+        background: #f1f3f5;
+    }
+
+    .newsletter-card-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .newsletter-card-body {
+        padding: 0.85rem 1rem 1rem;
+    }
+
+    .newsletter-card-meta {
+        font-size: 0.8rem;
+        color: #868e96;
+        margin-bottom: 0.35rem;
+    }
+
+    .newsletter-card-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #212529;
+        line-height: 1.4;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .newsletter-card-link:hover .newsletter-card-title {
+        color: #1B5D92;
+    }
+
+    .newsletter-empty {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: #868e96;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 575px) {
+        .newsletter-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .newsletter-card-img-wrap {
+            height: 110px;
+        }
+
+        .newsletter-card-body {
+            padding: 0.65rem 0.8rem;
+        }
+
+        .newsletter-card-title {
+            font-size: 0.85rem;
+            -webkit-line-clamp: 2;
+        }
+    }
+</style>
+
+<!-- Hero -->
+<% 
+    var newsletterHeroImg = '';
+    if (typeof HEADER_BANNER !== 'undefined' && HEADER_BANNER && HEADER_BANNER.length > 0) {
+        var _idx = Math.floor(Math.random() * HEADER_BANNER.length);
+        newsletterHeroImg = site_url + '/assets/images/pageimgs/' + HEADER_BANNER[_idx].img;
+    } else {
+        newsletterHeroImg = site_url + '/assets/images/pageimgs/education.jpg';
+    }
+%>
+<div class="newsletter-list-hero" style="background-image: url('<%= newsletterHeroImg %>');">
+    <div class="banner-overlay"></div>
+    <div class="container position-relative" style="z-index: 2;">
+        <h1 class="hero-title aos" data-aos="fade-up" data-aos-duration="500">
+            <%= typeof component_text !== 'undefined' && component_text.menu_newsletter ? component_text.menu_newsletter : 'Newsletter' %>
+        </h1>
+    </div>
+</div>
+
+<!-- Articles grid -->
+<section class="newsletter-list-section">
+    <div class="container">
+        <% if (newsletters && newsletters.length > 0) { %>
+            <div class="newsletter-grid">
+                <% newsletters.forEach(function(item, index) { %>
+                    <article class="newsletter-card aos" data-aos="fade-up" data-aos-duration="400" data-aos-delay="<%= Math.min(index * 40, 320) %>">
+                        <a href="<%= site_url %>/newsletter/<%= item.view_url %>" class="newsletter-card-link">
+                            <div class="newsletter-card-img-wrap">
+                                <img src="<%= site_url %>/assets/images/newsimg/<%= item.image_url %>" alt="" loading="lazy" />
+                            </div>
+                            <div class="newsletter-card-body">
+                                <div class="newsletter-card-meta"><%= item.author %> · <%= item.published_date %></div>
+                                <h2 class="newsletter-card-title"><%= item.title %></h2>
+                            </div>
+                        </a>
+                    </article>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="newsletter-empty aos" data-aos="fade-up">
+                <%= typeof component_text !== 'undefined' && component_text.t_no_newsletter ? component_text.t_no_newsletter : 'No newsletters yet. Check back soon.' %>
+            </div>
+        <% } %>
+    </div>
+</section>

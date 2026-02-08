@@ -415,6 +415,16 @@
             }
         })
 
+        // Footer date input: hide native "mm/dd/yyyy" when empty and not focused
+        var $dobContainer = $('.floating-date-input')
+        if ($dobContainer.length) {
+            function updateDobContainerHasValue() {
+                $dobContainer.toggleClass('has-value', !!$dobContainer.val())
+            }
+            $dobContainer.on('input change', updateDobContainerHasValue)
+            updateDobContainerHasValue()
+        }
+
         // Captcha change buttons
         $('#footer_captcha_change').click(() => {
             $.post({

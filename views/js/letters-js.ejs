@@ -18,61 +18,69 @@
     
     const lang = "<%= language %>"
 
+    let _selected_letter_id = 0
+    let _selected_letter_title = ""
+    let _selected_letter_cost = 0
+
     $(document).ready(function() {
         $(document).on("click", ".letter_request", function() {
-            const id = $(this).attr("data-id")
-            const title = $(this).attr("data-title")
+            _selected_letter_id = $(this).attr("data-id")
+            _selected_letter_title = $(this).attr("data-title")
             $.ajax({
                 url: './letters/getCost',
                 method: 'POST',
                 data: {
-                    id: id
+                    id: _selected_letter_id
                 },
                 dataType: 'json',
                 success: function(res) {
-                    const cost = parseFloat(res.cost)
-                    if (cost > 0) {
-                        $("#payment-modal-title").text(title + ` - $${cost}`)
-
-                        $("#show-letter-payment-modal-btn").click()
-
-                        // initialize payment form
-                        $("#payment-category").val("letter")
-                        $("#payment-category-id").val(id)
-
-                        payment_items = [{
-                            id: title,
-                            amount: cost * 100.0
-                        }]
-                        initialize()
+                    _selected_letter_cost = parseFloat(res.cost)
+                    if (_selected_letter_cost > 0) {
+                        $("#letter_request_modal_pay").removeClass("d-none")
                     } else {
-                        // if login
-                        const isLogged = "<%= patient_id %>"
-                        if (isLogged == 1) {
-                            $("#letter-fname").val("<%= patient_info.fname %>")
-                            $("#letter-lname").val("<%= patient_info.lname %>")
-                            $("#letter-phone").val("<%= patient_info.phone %>")
-                            $("#letter-dob").val("<%= patient_info.dob %>")
-                            $("#letter-email").val("<%= patient_info.email %>")
-                        } else {
-                            $("#letter-fname").val("")
-                            $("#letter-lname").val("")
-                            $("#letter-dob").val("")
-                            $("#letter-email").val("")
-                            $("#letter-phone").val("")
-                        }
-                        $("#letter-message").val("")
-                        $("#letter-captcha").val("")
-
-                        $("#letter_name").val(title)
-                        $("#letter_title").text(`<%= component_text.t_request_letter %> - ${title}`)
-
-                        $("#show-letter-modal-btn").click()
+                        $("#letter_request_modal_pay").addClass("d-none")
                     }
+                    const isLogged = "<%= patient_id %>"
+                    if (isLogged == 1) {
+                        $("#letter-fname").val("<%= patient_info.fname %>")
+                        $("#letter-lname").val("<%= patient_info.lname %>")
+                        $("#letter-phone").val("<%= patient_info.phone %>")
+                        $("#letter-dob").val("<%= patient_info.dob %>")
+                        $("#letter-email").val("<%= patient_info.email %>")
+                    } else {
+                        $("#letter-fname").val("")
+                        $("#letter-lname").val("")
+                        $("#letter-dob").val("")
+                        $("#letter-email").val("")
+                        $("#letter-phone").val("")
+                    }
+                    $("#letter-message").val("")
+                    $("#letter-captcha").val("")
+
+                    $("#letter_name").val(_selected_letter_title)
+                    $("#letter_title").text(`<%= component_text.t_request_letter %> - ${_selected_letter_title}`)
+
+                    $("#show-letter-modal-btn").click()
                 }
             })
         })
 
+        $("#letter_request_modal_pay").click(function() {
+            $("#payment-modal-title").text(_selected_letter_title + ` - $${_selected_letter_cost}`)
+
+            $("#show-letter-payment-modal-btn").click()
+
+            // initialize payment form
+            $("#payment-category").val("letter")
+            $("#payment-category-id").val(_selected_letter_id)
+
+            payment_items = [{
+                id: _selected_letter_title,
+                amount: _selected_letter_cost * 100.0
+            }]
+            initialize()
+        })
+        
         $("#letter_request_modal_send").click(function() {
             const entry = {
                 fname: $("#letter-fname").val(),

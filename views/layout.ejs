@@ -410,7 +410,7 @@
                             </div>
                             <div class="col-md-4 mb-2">
                                 <div class="form-focus">
-                                    <input type="date" id="service-dob" class="form-control floating" required />
+                                    <input type="date" id="service-dob" class="form-control floating floating-date-input" required />
                                     <label class="focus-label" for="service-dob"><%= component_text.placeholder_dob %></label>
                                 </div>
                             </div>
@@ -476,6 +476,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="service_request_modal_pay"><%= component_text.btn_pay %></button>
                         <button type="button" class="btn btn-primary" id="service_request_modal_send"><%= component_text.t_request %></button>
                         <button type="button" class="btn btn-danger" id="service_request_modal_close" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
                     </div>
@@ -558,7 +559,7 @@
                             </div>
                             <div class="col-md-4 mb-2">
                                 <div class="form-focus">
-                                    <input type="date" id="letter-dob" class="form-control floating" required />
+                                    <input type="date" id="letter-dob" class="form-control floating floating-date-input" required />
                                     <label class="focus-label" for="letter-dob"><%= component_text.placeholder_dob %></label>
                                 </div>
                             </div>
@@ -624,6 +625,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="letter_request_modal_pay"><%= component_text.btn_pay %></button>
                         <button type="button" class="btn btn-primary" id="letter_request_modal_send"><%= component_text.t_request %></button>
                         <button type="button" class="btn btn-danger" id="letter_request_modal_close" data-bs-dismiss="modal"><%= component_text.c_item_close %></button>
                     </div>
@@ -767,7 +769,7 @@
     <!-- Layout Script -->
     <%- include("js/layout-js") %>
     <!-- Payment Script -->
-    <% if (page_tag === "home" || page_tag === "services" || page_tag === "letters") { %>
+    <% if (page_tag === "home" || page_tag === "services" || page_tag === "letters" || page_tag === "service-detail" || page_tag === "letter-detail") { %>
         <%- include("js/payment-js") %>
     <% } %>
     <!-- Page Script -->

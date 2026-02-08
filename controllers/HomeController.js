@@ -383,6 +383,7 @@ exports.submit = async (req, res, next) => {
 
 		const newRecord = await FComContact.create({
 			type: data.type,
+			patient_type: data.patient_type,
 			reason: data.reason,
 			clinic_id: process.env.CLINIC_ID,
 			pt_emr_id: data.pt_emr_id,
