@@ -46,6 +46,10 @@ router.use("/area-toggle", areaToggleRoutes)
 router.use("/newsletter", newsletterRoutes)
 router.use("/fees", feesRoutes)
 
+// API routes
+const apiRoutes = require("./api/v1")
+router.use("/api/v1", apiRoutes)
+
 // patient auth routes
 router.get("/login", AuthController.signin)
 router.get("/signin", AuthController.signin)
