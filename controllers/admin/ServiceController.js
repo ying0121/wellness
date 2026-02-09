@@ -120,9 +120,10 @@ exports.addClinicService = async (req, res, next) => {
 	const request_service = req.body.request_service
 	const online_payment = req.body.online_payment
 	const home_page = req.body.home_page
+	const use_video = req.body.use_video
 	const cost = req.body.cost
 
-	await ClinicService.create({ order, key, language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, cost })
+	await ClinicService.create({ order, key, language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, use_video, cost })
 
 	res.status(200).json({ status: "success" })
 }
@@ -139,9 +140,10 @@ exports.updateClinicService = async (req, res, next) => {
 	const request_service = req.body.request_service
 	const online_payment = req.body.online_payment
 	const home_page = req.body.home_page
+	const use_video = req.body.use_video
 	const cost = req.body.cost
 
-	await ClinicService.update({ order, key, language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, cost }, { where: { id: id } })
+	await ClinicService.update({ order, key, language, category, title, short_desc, long_desc, status, request_service, online_payment, home_page, use_video, cost }, { where: { id: id } })
 
 	res.status(200).json({ status: "success" })
 }

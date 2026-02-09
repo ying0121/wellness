@@ -80,6 +80,11 @@ const ClinicService = sequelize.define("clinic_services", {
         allowNull: false,
         defaultValue: 0
     },
+    use_video: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 0
+    },
     cost: DataTypes.FLOAT,
     discount: DataTypes.FLOAT,
     currency: {

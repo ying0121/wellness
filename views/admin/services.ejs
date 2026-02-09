@@ -3,6 +3,30 @@
 
 <%- include('header') %>
 
+<style>
+    .clinic-service-video-preview {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 90px;
+        height: 60px;
+        border-radius: 4px;
+        background: #1a1a1a;
+        color: #fff;
+        transition: background 0.2s;
+    }
+    .clinic-service-video-preview:hover {
+        background: #333;
+    }
+    .clinic-service-video-preview i {
+        font-size: 2rem;
+        opacity: 0.9;
+    }
+    #clinic_service_video_modal .modal-dialog { max-width: 720px; }
+    #clinic_service_video_modal video { width: 100%; max-height: 70vh; }
+</style>
+
 <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
     <%- include('mobile-navbar') %>
     <div class="d-flex flex-column flex-root">
@@ -62,6 +86,7 @@
                                                         <th>Key</th>
                                                         <th>Short Description</th>
                                                         <th>Image</th>
+                                                        <th>Video</th>
                                                         <th>Amount</th>
                                                         <th>Status</th>
                                                         <th>Actions</th>
@@ -214,6 +239,12 @@
                                 <div class="mr-1 fs-2">&nbsp;Home Page</div>
                             </div>
                         </div>
+                        <div class="col-md-6 mb-5">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center"><input type="checkbox" id="clinic_service_use_video" style="width:24px; height:24px;"></div>
+                                <div class="mr-1 fs-2">&nbsp;Use Video</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -301,6 +332,16 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary" id="service_category_save_btn" data-dismiss="modal">Save</button>
                     <button type="button" class="btn btn-light-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="clinic_service_video_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-0 bg-dark">
+                    <video id="clinic_service_video_player" controls playsinline></video>
                 </div>
             </div>
         </div>
@@ -395,6 +436,15 @@
                     return row.image ? `<img src="<%= site_url %>/assets/service/image/${row.image}" width="140px" />` : ""
                 }
             }, {
+                data: 'video',
+                render: function(data, type, row) {
+                    if (!row.video) return ""
+                    const videoUrl = "<%= site_url %>/assets/service/video/" + row.video
+                    return `<div class="clinic-service-video-preview" data-video-url="${videoUrl}" data-video-filename="${row.video}" title="Click to play">
+                        <i class="fas fa-play"></i>
+                    </div>`
+                }
+            }, {
                 data: 'cost',
             }, {
                 data: 'status',
@@ -445,6 +495,7 @@
                 request_service: $("#clinic_service_request").prop("checked") == true ? 1 : 0,
                 online_payment: $("#clinic_service_payment").prop("checked") == true ? 1 : 0,
                 home_page: $("#clinic_service_home").prop("checked") == true ? 1 : 0,
+                use_video: $("#clinic_service_use_video").prop("checked") == true ? 1 : 0,
                 cost: $("#clinic_service_cost").val()
             }
 
@@ -573,6 +624,7 @@
                     $("#clinic_service_request").prop("checked", result.request_service == 0 ? false : true)
                     $("#clinic_service_payment").prop("checked", result.online_payment == 0 ? false : true)
                     $("#clinic_service_home").prop("checked", result.home_page == 0 ? false : true)
+                    $("#clinic_service_use_video").prop("checked", result.use_video == 0 ? false : true)
                     $("#clinic_service_cost").val(result.cost)
 
                     $("#clinic_service_modal").modal("show")
@@ -606,6 +658,25 @@
             $('#progress-percentage-file').text(Math.round(0) + '%');
 
             $("#clinic_service_file_modal").modal("show")
+        })
+
+        $(document).on("click", ".clinic-service-video-preview", function() {
+            const url = $(this).data("video-url")
+            const filename = $(this).data("video-filename")
+            if (!url) return
+            const player = document.getElementById("clinic_service_video_player")
+            $("#clinic_service_video_modal_title").text(filename || "Video")
+            player.src = url
+            player.load()
+            player.play()
+            $("#clinic_service_video_modal").modal("show")
+        })
+
+        $("#clinic_service_video_modal").on("hidden.bs.modal", function() {
+            const player = document.getElementById("clinic_service_video_player")
+            player.pause()
+            player.removeAttribute("src")
+            player.load()
         })
 
         $(document).on("click", ".clinic_service_download", function() {
