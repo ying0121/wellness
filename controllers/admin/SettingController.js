@@ -204,7 +204,7 @@ exports.updateSendToFriendText = async (req, res, next) => {
 
 // translations
 exports.readTranslations = async (req, res, next) => {
-    const translations = await Translation.findAll({ where: { type: { [Op.ne]: "template" } } })
+    const translations = await Translation.findAll()
 
     res.status(200).json({ data: translations })
 }

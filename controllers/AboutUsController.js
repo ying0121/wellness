@@ -186,6 +186,7 @@ exports.render = async (req, res, next) => {
 
 	attributes = [
         'id',
+		'catid',
         [siteLang === 'en' ? 'measure_en' : 'measure_es', 'measurename'],
         'denominator',
         'numerator',

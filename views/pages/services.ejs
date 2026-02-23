@@ -13,14 +13,14 @@
                             <img src="./assets/service/image/<%= services[i].image %>" alt="<%= services[i].title %>" class="img-fluid rounded-top-4 w-100">
                             <div class="mask-premium">
                                 <div class="d-flex justify-content-start align-items-center px-3">
-                                    <% if (services[i].online_payment == 1) { %>
+                                    <% if (services[i].cost > 0) { %>
                                         <i class="fa-solid fa-crown text-warning fs-4"></i>
                                     <% } %>
                                 </div>
                             </div>
                             <div class="mask-price">
                                 <div class="d-flex justify-content-end align-items-center px-3">
-                                    <% if (services[i].online_payment == 1) { %>
+                                    <% if (services[i].cost > 0) { %>
                                         <span class="badge badge-danger fs-6">$ <%= services[i].cost %></span>
                                     <% } else { %>
                                         <span class="badge badge-success fs-6"><%= component_text.c_eligible_health_plan %></span>

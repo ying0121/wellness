@@ -25,7 +25,7 @@ router.get('/', V1Controller.helloWorld)
  * {
  *   "status": "success",
  *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsImZuYW1lIjoiQWRtaW4iLCJsbmFtZSI6IkFkbWluIiwiaWF0IjoxNjg5MjM5MDIyfQ.4444444444444444444444444444444444444444"
- * }yes
+ * }
  * 
  */
 router.post('/auth', V1Controller.auth)
@@ -33,8 +33,7 @@ router.post('/auth', V1Controller.auth)
 /**
  * Get Patient API
  * @param {string} patient_id - The ID of the patient
- * @param {string} fname - The first name of the patient
- * @param {string} lname - The last name of the patient
+ * @param {string} name - The name of the patient
  * @param {string} email - The email of the patient
  * @param {string} phone - The phone of the patient
  * @param {string} dob - The date of birth of the patient
@@ -43,12 +42,13 @@ router.post('/auth', V1Controller.auth)
  * {
  *   "status": "success",
  *   "data": {
- *     "patient_id": 1,
- *     "fname": "John",
- *     "lname": "Doe",
+ *     "pt_emr_id": 1,
+ *     "clinic_id": 1,
+ *     "name": "John Doe",
  *     "email": "john.doe@example.com",
- *     "phone": "1234567890",
- *     "dob": "1990-01-01"
+ *     "cel": "1234567890",
+ *     "dob": "1990-01-01",
+ *     "lang": "en"
  *   }
  * }
  */

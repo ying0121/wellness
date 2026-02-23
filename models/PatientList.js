@@ -28,7 +28,8 @@ const PatientList= sequelize.define("patient_lists", {
     ethnicity: { type: DataTypes.STRING(32) },
     race: { type: DataTypes.STRING(32) },
     status: { type: DataTypes.TINYINT, defaultValue: 1 },
-    login_count: { type: DataTypes.TINYINT, defaultValue: 0 }
+    login_count: { type: DataTypes.TINYINT, defaultValue: 0 },
+    is_new: { type: DataTypes.TINYINT, defaultValue: 0 }
 }, {
     engine: "MyISAM",
     timestamps: true

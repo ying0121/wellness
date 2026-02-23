@@ -47,15 +47,15 @@
             <!-- Tabs navs -->
             <nav class="user-tabs mb-1">
                 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-                    <% let first = true; %>
+                    <% let first = true; let pane_index = 1; %>
                     <% for (let i = 0; i < qualities.length; i++) { %>
-                        <% if (!qualities[i + 1] || qualities[i + 1].id !== qualities[i].id) { %>
+                        <% if (!qualities[i + 1] || qualities[i + 1].catid !== qualities[i].catid) { %>
                             <li class="nav-item" role="presentation">
-                                <a data-mdb-tab-init class="nav-link <%= first ? 'active' : '' %>" id="ex3-tab-<%= i + 1 %>" href="#ex3-tabs-<%= i + 1 %>" data-bs-toggle="tab">
+                                <a data-mdb-tab-init class="nav-link <%= first ? 'active' : '' %>" id="ex3-tab-<%= pane_index %>" href="#ex3-tabs-<%= pane_index %>" data-bs-toggle="tab">
                                     <%= qualities[i].quality_cat.catname %>
                                 </a>
                             </li>
-                            <% first = false; %>
+                            <% first = false; pane_index ++; %>
                         <% } %>
                     <% } %>
                 </ul>
@@ -63,12 +63,13 @@
             <!-- Tabs navs -->
             <!-- Tabs content -->
             <div class="tab-content" id="ex2-content">
-                <% first = true; %>
+                <% first = true; pane_index = 1; %>
                 <% for (let i = 0; i < qualities.length; i++) { %>
-                    <% if (!qualities[i + 1] || qualities[i + 1].id !== qualities[i].id) { %>
-                        <div class="tab-pane fade <%= first ? 'show active' : '' %>" id="ex3-tabs-<%= i + 1 %>" role="tabpanel" aria-labelledby="ex3-tab-<%= i + 1 %>">
+                    <% if (!qualities[i - 1] || qualities[i - 1].catid !== qualities[i].catid) { %>
+                        <div class="tab-pane fade <%= first ? 'show active' : '' %>" id="ex3-tabs-<%= pane_index %>" role="tabpanel" aria-labelledby="ex3-tab-<%= pane_index %>">
                             <div class="card">
                                 <div class="card-body">
+                    <% } %>
                                     <p class="h1 my-4 ms-4"><%= qualities[i].measurename %></p>
                                     <p class="lead mb-3 ms-2"><%- qualities[i].mdesc %></p>
                                     <div class="w-100 px-1">
@@ -91,10 +92,11 @@
                                     <p class="lead">
                                         <%- qualities[i].mfdesc %>
                                     </p>
+                    <% if (!qualities[i + 1] || qualities[i + 1].catid !== qualities[i].catid) { %>
                                 </div>
                             </div>
                         </div>
-                        <% first = false; %>
+                        <% first = false; pane_index ++; %>
                     <% } %>
                 <% } %>
             </div>

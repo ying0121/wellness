@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken")
 
 const { Op, Sequelize } = require('sequelize')
 
-const PatientList = require('../../models/PatientList')
 const Managers = require('../../models/Managers')
+const FComContact = require('../../models/FComContact')
 
 /** Returns only digits from a string (for normalizing phone before compare). */
 const digitsOnly = s => (String(s || '').replace(/\D/g, ''))
@@ -48,19 +48,17 @@ exports.auth = async (req, res, next) => {
 }
 
 exports.getPatient = async (req, res, next) => {
-    const { patient_id, fname, lname, email, phone, dob } = req.query
+    const { patient_id, name, email, phone, dob } = req.query
     try {
-        const attributes = ['patient_id', 'fname', 'mname', 'lname', 'email', 'phone', 'mobile', 'address', 'city', 'state', 'zip', 'gender', 'dob', 'language', 'ethnicity', 'race']
+        const attributes = ['pt_emr_id', 'clinic_id', 'name', 'email', 'cel', 'dob', 'lang']
         
         let where = {}
+        where.patient_type = 2 // 2 = new patient
         if (patient_id) {
-            where.patient_id = patient_id
+            where.pt_emr_id = patient_id
         }
-        if (fname) {
-            where.fname = { [Op.like]: `%${fname}%` }
-        }
-        if (lname) {
-            where.lname = { [Op.like]: `%${lname}%` }
+        if (name) {
+            where.name = { [Op.like]: `%${name}%` }
         }
         if (email) {
             where.email = { [Op.like]: `%${email}%` }
@@ -72,11 +70,7 @@ exports.getPatient = async (req, res, next) => {
                 const digitsLike = { [Op.like]: `%${phoneDigits}%` }
                 where[Op.or] = [
                     Sequelize.where(
-                        Sequelize.fn('REGEXP_REPLACE', Sequelize.col('phone'), '[^0-9]', ''),
-                        digitsLike
-                    ),
-                    Sequelize.where(
-                        Sequelize.fn('REGEXP_REPLACE', Sequelize.col('mobile'), '[^0-9]', ''),
+                        Sequelize.fn('REGEXP_REPLACE', Sequelize.col('cel'), '[^0-9]', ''),
                         digitsLike
                     )
                 ]
@@ -93,7 +87,7 @@ exports.getPatient = async (req, res, next) => {
             }
         }
 
-        const patients = await PatientList.findAll({ attributes: attributes, where: where })
+        const patients = await FComContact.findAll({ attributes: attributes, where: where, group: ['pt_emr_id'] })
         return res.status(200).json({ status: 'success', data: patients })
     } catch (error) {
         return res.status(500).json({ status: 'error', message: error.message })

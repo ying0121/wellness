@@ -356,6 +356,10 @@ exports.submit = async (req, res, next) => {
 
 		const staffs = await Staff.findAll({ where: { general_online: { [Op.or]: [1, 3] } } })
 		const ptInfo = await PatientList.findOne({ where: { email: email } })
+		
+		if (patient_type == 2) { // new patient
+			await PatientList.update({ is_new: 1 }, { where: { id: ptInfo.id } })
+		}
 
 		const data = {
 			clinic: contactInfo.name,
