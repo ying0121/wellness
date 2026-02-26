@@ -69,12 +69,13 @@ exports.getAllContacts = async (req, res, next) => {
 	const assigned = req.body.assigned
 	const start_date = new Date(req.body.start_date)
 	const end_date = new Date(req.body.end_date)
+	end_date.setHours(23, 59, 59, 999)
 
 	const clinic_id = process.env.CLINIC_ID; // Assuming you have a config object
 
     const contacts = await FComContact.findAll({
         attributes: [
-            "id", "identifier", "clinic_id", "pt_emr_id", "type", "case_number", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
+            "id", "identifier", "clinic_id", "pt_emr_id", "patient_type", "type", "case_number", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
             [Sequelize.col('patient.fname'), 'patient_fname'],
             [Sequelize.col('patient.lname'), 'patient_lname'],
             [Sequelize.col('patient.dob'), 'patient_dob'],
@@ -113,7 +114,7 @@ exports.viewContact = async (req, res, next) => {
 	const id = req.body.id
 	const contact = await FComContact.findOne({
         attributes: [
-            "id", "identifier", "clinic_id", "pt_emr_id", "type", "case_number", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
+            "id", "identifier", "clinic_id", "pt_emr_id", "type", "case_number", "patient_type", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
             [Sequelize.col('staff.en_name'), 'staff_name'],
             [Sequelize.col('staff.email'), 'staff_email'],
             [Sequelize.col('staff.tel'), 'staff_tel'],
@@ -162,7 +163,7 @@ exports.viewCommunicationHistory = async (req, res, next) => {
 	// view track
 	const contacts = await FComContact.findOne({
         attributes: [
-            "id", "identifier", "clinic_id", "pt_emr_id", "type", "case_number", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
+            "id", "identifier", "clinic_id", "pt_emr_id", "type", "case_number", "patient_type", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
             [Sequelize.col('staff.en_name'), 'staff_name'],
             [Sequelize.col('staff.email'), 'staff_email'],
             [Sequelize.col('staff.tel'), 'staff_tel'],
@@ -243,7 +244,7 @@ exports.updateTrack = async (req, res, next) => {
 
 		const trackInfo = await FComContact.findOne({
 			attributes: [
-				"id", "identifier", "clinic_id", "pt_emr_id", "type", "case_number", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
+				"id", "identifier", "clinic_id", "pt_emr_id", "type", "case_number", "patient_type", "based_on", "part_of", "category", "priority", "medium", "subject", "sent", "received", "assign", "status", "reason", "date", "new_status", "best_time", "date", "opt_status", "survey_id", "closed_date", "message", "cel", "dob", "email", "name", "reason", "msg_type",
 				[Sequelize.col('staff.en_name'), 'staff_name'],
 				[Sequelize.col('staff.email'), 'staff_email'],
 				[Sequelize.col('staff.tel'), 'staff_tel'],
@@ -374,12 +375,25 @@ exports.addMessage = async (req, res, next) => {
 	const contactInfo = await ContactInfo.findOne({ where: { id: 1 } })
 	const contact = await FComContact.findOne({ where: { id: contact_id } })
 
+	// patient type
+	let pt_type = ""
+	if (contact.patient_type == 1) {
+		pt_type = "Existing Patient"
+	} else if (contact.patient_type == 2) {
+		pt_type = "New Patient"
+	} else if (contact.patient_type == 3) {
+		pt_type = "Patient Institution"
+	} else if (contact.patient_type == 4) {
+		pt_type = "General Institution"
+	}
+
 	// send email begin //
 	const emailConfig = {
 		id: 0,
 		site_url: process.env.SITE_URL,
 		acronym: contactInfo.acronym,
 		title: `Email From ${contactInfo.name}`,
+		patient_type: pt_type,
 		subject: `Message From ${contact.name}`,
 		reason: contact.reason,
 		name: contact.name,

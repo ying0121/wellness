@@ -2,6 +2,11 @@
 const AreaToggle = require("../../models/AreaToggle")
 const Translation = require("../../models/Translation")
 const ContactInfo = require("../../models/ContactInfo")
+const API = require("../../models/API")
+const FVsLanguage = require("../../models/FVsLanguage")
+const Staff = require("../../models/Staff")
+const SurveyData = require("../../models/SurveyData")
+const FComContact = require("../../models/FComContact")
 
 exports.render = async (req, res, next) => {
 	let data = {}
@@ -14,6 +19,7 @@ exports.render = async (req, res, next) => {
 	data.loginTime = req.session.loginTime
 	data.expiredTime = req.session.expiredTime
 	data.userFullName = req.session.adminUser.fname + " " + req.session.adminUser.lname
+    data.public_key = process.env.ENCRYPT_PUBLIC_KEY
 
 	const _a = await AreaToggle.findAll()
 	data.area_toggle = {}
@@ -24,8 +30,23 @@ exports.render = async (req, res, next) => {
 	_t.forEach(item => { data.component[item.keyvalue] = [], data.component[item.keyvalue].en = item.en, data.component[item.keyvalue].es = item.es })
 
 	data.contact_info = await ContactInfo.findOne({ where: { id: 1 } })
+    data.acronym = data.contact_info.acronym
+
+    data.api = await API.findAll()
+
+    data.languages = await FVsLanguage.findAll()
+
+    data.staffs = await Staff.findAll()
+
+    data.survey = await SurveyData.findAll()
+
+    data.statistic = { total: 0, open: 0, inprogress: 0, close: 0 }
+    data.statistic.total = await FComContact.count({ where: { new_status: 1 } })
+    data.statistic.open = await FComContact.count({ where: { new_status: 1, status: 1 } })
+    data.statistic.inprogress = await FComContact.count({ where: { new_status: 1, status: 2 } })
+    data.statistic.close = await FComContact.count({ where: { new_status: 1, status: 3 } })
 	
-	res.render('admin/home', data)
+	res.render('admin/patient_areas', data)
 }
 
 exports.updateHomeHeaderText = async (req, res, next) => {

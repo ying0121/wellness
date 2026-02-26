@@ -383,6 +383,7 @@ exports.addMessage = async (req, res, next) => {
 		acronym: acronym,
 		title: "Email From" + contactInfo.name,
 		subject: "Email From" + contact.name,
+		patient_type: "Existing Patient",
 		reason: contact.reason,
 		name: contact.name,
 		email: contact.email,

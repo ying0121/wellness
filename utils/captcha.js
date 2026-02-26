@@ -10,6 +10,7 @@ const getCaptcha = async (size, noise, color) => {
         size: size,
         noise: noise,
         color: color,
+        width: 200,
     })
 
     return { captcha: captcha.data, key: md5(md5(md5(captcha.text))) }
@@ -21,6 +22,7 @@ const getBeautifulCaptcha = async (size, noise, color) => {
         size: size,
         noise: noise,
         color: color,
+        width: 200,
     })
 
     return { captcha: captcha.data, key: md5(md5(md5(captcha.text))) }

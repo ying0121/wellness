@@ -82,12 +82,12 @@
                                                 <table class="table w-100" id="clinic_service_table">
                                                     <thead>
                                                         <th>Order</th>
+                                                        <th>Cost</th>
                                                         <th>Title</th>
                                                         <th>Key</th>
                                                         <th>Short Description</th>
                                                         <th>Image</th>
                                                         <th>Video</th>
-                                                        <th>Amount</th>
                                                         <th>Status</th>
                                                         <th>Actions</th>
                                                     </thead>
@@ -425,6 +425,8 @@
                     return row.order ? row.order : 9999
                 }
             }, {
+                data: 'cost',
+            }, {
                 data: 'title'
             }, {
                 data: 'key'
@@ -444,8 +446,6 @@
                         <i class="fas fa-play"></i>
                     </div>`
                 }
-            }, {
-                data: 'cost',
             }, {
                 data: 'status',
                 render: function(data, type, row) {

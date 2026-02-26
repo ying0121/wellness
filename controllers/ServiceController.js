@@ -638,12 +638,25 @@ exports.submitForService = async (req, res, next) => {
 
 		const emailSubject = "CASE # : " + case_number + acronym + " " + reason + " - Service Email From" + contactInfo.name
 
+		// patient type
+		let pt_type = ""
+		if (patient_type == 1) {
+			pt_type = "Existing Patient"
+		} else if (patient_type == 2) {
+			pt_type = "New Patient"
+		} else if (patient_type == 3) {
+			pt_type = "Patient Institution"
+		} else if (patient_type == 4) {
+			pt_type = "General Institution"
+		}
+
 		const emailConfig = {
 			site_url: process.env.SITE_URL,
 			id: 0,
 			acronym: acronym,
 			title: "Email From" + contactInfo.name,
 			reason: data.reason,
+			patient_type: pt_type,
 			name: data.name,
 			email: data.email,
 			cel: data.cel,
