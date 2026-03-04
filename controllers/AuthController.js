@@ -69,6 +69,8 @@ exports.signin = async (req, res, next) => {
 
 	data.patient_id = req.session.patient_id
 
+	data.isLoggedIn = req.session.isLoggedIn
+
 	// All text
 	const translations = await Translation.findAll()
 	data.component_text = []
@@ -184,6 +186,8 @@ exports.security = async (req, res, next) => {
 
 	data.patient_id = req.session.patient_id
 	data.patient_name = ""
+	
+	data.isLoggedIn = req.session.isLoggedIn
 
 	// All text
 	const translations = await Translation.findAll()

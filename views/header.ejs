@@ -130,7 +130,7 @@
                     </li>
                     <li class="nav-item"><a class="nav-link <%= page_tag == "insurances" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/insurances"><%= component_text.menu_insurances %></a></li>
                     <li class="nav-item"><a class="nav-link <%= page_tag == "contact" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/contact"><%= component_text.menu_contact %></a></li>
-                    <% if (patient_id && patient_name) { %>
+                    <% if (isLoggedIn) { %>
                         <li class="nav-item"><a class="nav-link <%= page_tag == "vault" ? "active fw-bold" : "fw-semibold" %>" href="<%= site_url %>/vault"><%= component_text.menu_vault %></a></li>
                     <% } %>
                 </ul>
@@ -194,7 +194,7 @@
                         <div class="btn p-1 langbtn <%= language === "en" ? "" : "active" %>" onclick="setLang('es');">
                             <img src="<%= site_url %>/assets/images/flags/es.png" style="min-width: 20px; max-width: 20px; min-height: 20px; max-height: 20px;" />
                         </div>
-                        <% if (patient_id && patient_name) { %>
+                        <% if (isLoggedIn) { %>
                             <div class="d-flex justify-content-center align-items-center mx-3">
                                 <button class="d-none" data-bs-toggle="modal" data-bs-target="#info-manage-modal" id="patient-info-modal-view"></button>
                                 <div class="patient-info text-white bg-primary d-flex justify-content-center align-items-center rounded rounded-pill fs-3 m-0" style="width: 36px; height: 36px; cursor: pointer;">
