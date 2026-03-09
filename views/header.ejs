@@ -54,47 +54,6 @@
                         </div>
                     <% } %>
                 </div>
-                <!-- Notifications -->
-                <ul class="nav header-navbar-rht">
-                    <li class="nav-item dropdown noti-nav ms-3 pe-0">
-                        <a href="javascript:;" class="dropdown-toggle nav-link p-0" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell fs-4"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle p-2 <%= alerts.length > 0 ? "bg-danger border border-light rounded-circle" : "" %>">
-                                <span class="visually-hidden">New alerts</span>
-                            </span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <div class="topnav-dropdown-header">
-                                <div class="d-flex justify-content-between align-items-center px-4 my-3">
-                                    <div class="fw-bold"><%= component_text.t_notification %></div>
-                                    <div class="avatar" style="width: 2rem !important; height: 2rem !important;">
-                                        <span class="avatar-title rounded-circle border border-white bg-danger"><%= alerts.length %></span>
-                                    </div>
-                                </div>
-                                <hr class="mt-0" />
-                            </div>
-                            <div class="noti-content px-3">
-                                <% if (!alerts.length) { %>
-                                    <div class="w-100 d-flex justify-content-center align-items-center text-secondary fs-4 my-4 mb-4"><%= component_text.t_no_alert %>!</div>
-                                <% } %>
-                                <% for (let i = 0; i < alerts.length; i ++) { %>
-                                    <div class="d-flex justify-content-between align-items-center gap-2 mb-4">
-                                        <% if (alerts[i].image) { %>
-                                            <img src="<%= site_url + "/assets/images/alerts/" + alerts[i].image %>" class="rounded-pill" style="width: 4rem !important; height: 4rem !important;" />
-                                        <%  } else { %>
-                                            <i class="fa fa-bell fs-2 text-secondary"></i>
-                                        <% } %>
-                                        <div class="w-100">
-                                            <div class="fst-italic fw-semibold" style="text-align: end;"><%= new Date(alerts[i].start).toLocaleDateString() %> ~ <%= new Date(alerts[i].end).toLocaleDateString() %></div>
-                                            <div><%- alerts[i].message %></div>
-                                        </div>
-                                    </div>
-                                <% } %>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <!-- /Notifications -->
             </div>
             <!-- Item Button In Mobile Mode -->
             <button class="btn btn-transparent-secondary navbar-toggler p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,47 +95,6 @@
                 </ul>
                 <!-- Sign In/Out, Pt Info, Language Buttons In Browser Mode -->
                 <div class="d-none d-lg-flex justify-content-lg-start align-items-lg-center gap-4">
-                    <!-- Notifications -->
-                    <ul class="nav header-navbar-rht">
-                        <li class="nav-item dropdown noti-nav me-3 pe-0">
-                            <a href="javascript:;" class="dropdown-toggle nav-link p-0" data-bs-toggle="dropdown">
-                                <i class="fa fa-bell fs-4"></i>
-                                <span class="position-absolute top-0 start-100 translate-middle p-2 <%= alerts.length > 0 ? "bg-danger border border-light rounded-circle" : "" %>">
-                                    <span class="visually-hidden">New alerts</span>
-                                </span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <div class="topnav-dropdown-header">
-                                    <div class="d-flex justify-content-between align-items-center px-4 my-3">
-                                        <div class="fw-bold"><%= component_text.t_notification %></div>
-                                        <div class="avatar" style="width: 2rem !important; height: 2rem !important;">
-                                            <span class="avatar-title rounded-circle border border-white bg-danger"><%= alerts.length %></span>
-                                        </div>
-                                    </div>
-                                    <hr class="mt-0" />
-                                </div>
-                                <div class="noti-content px-3">
-                                    <% if (!alerts.length) { %>
-                                        <div class="w-100 d-flex justify-content-center align-items-center text-secondary fs-4 my-4 mb-4"><%= component_text.t_no_alert %>!</div>
-                                    <% } %>
-                                    <% for (let i = 0; i < alerts.length; i ++) { %>
-                                        <div class="d-flex justify-content-between align-items-center gap-2 mb-4">
-                                            <% if (alerts[i].image) { %>
-                                                <img src="<%= site_url + "/assets/images/alerts/" + alerts[i].image %>" class="rounded-pill" style="width: 4rem !important; height: 4rem !important;" />
-                                            <%  } else { %>
-                                                <i class="fa fa-bell fs-2 text-secondary"></i>
-                                            <% } %>
-                                            <div class="w-100">
-                                                <div class="fst-italic fw-semibold" style="text-align: end;"><%= new Date(alerts[i].start).toLocaleDateString() %> ~ <%= new Date(alerts[i].end).toLocaleDateString() %></div>
-                                                <div><%- alerts[i].message %></div>
-                                            </div>
-                                        </div>
-                                    <% } %>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <!-- /Notifications -->
                     <div class="d-flex justify-content-start align-itmes-center gap-1">
                         <% if (contact_info.portal_show == 1) { %>
                             <a href="<%= contact_info.portal %>" class="themesflat-button font-default process mx-1 text-gray" target="_blank"><span><%= component_text.link_portal %></span></a>
@@ -208,8 +126,58 @@
         </div>
     </nav>
     <!-- /Nav Bar -->
+    <!-- Alert Banner (shown only when alerts exist) -->
+    <% if (typeof alerts !== 'undefined' && alerts.length > 0) { %>
+    <div class="alert-banner border-top border-2 border-danger bg-light py-2 px-3" style="background: linear-gradient(90deg, #fff5f5 0%, #ffe5e5 100%);">
+        <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <i class="fa fa-exclamation-circle text-danger fs-5"></i>
+                <span class="fw-semibold text-dark"><%= component_text.t_notification %>:</span>
+                <% for (let i = 0; i < alerts.length; i++) { %>
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn btn-link btn-sm p-0 text-danger fw-semibold text-decoration-none dropdown-toggle alert-title-dropdown" data-bs-toggle="dropdown" aria-expanded="false" style="white-space: nowrap;">
+                            <%= alerts[i].title %>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-start shadow-sm p-0" style="min-width: 380px; max-width: 480px; max-height: 90vh; overflow-y: auto;">
+                            <% if (alerts[i].image) { %>
+                                <div class="text-center bg-light border-bottom p-3">
+                                    <img src="<%= site_url + "/assets/images/alerts/" + alerts[i].image %>" alt="<%= alerts[i].title %>" class="img-fluid rounded" style="max-height: 360px; width: auto; object-fit: contain;" />
+                                </div>
+                            <% } %>
+                            <div class="p-3 fs-6">
+                                <div class="fst-italic text-muted mb-3"><%= new Date(alerts[i].start).toLocaleDateString() %> ~ <%= new Date(alerts[i].end).toLocaleDateString() %></div>
+                                <% 
+                                    var descText = (alerts[i].description && alerts[i].description.trim()) ? alerts[i].description : (alerts[i].desc && alerts[i].desc.trim()) ? alerts[i].desc : '';
+                                    var msgText = (alerts[i].message && alerts[i].message.trim()) ? alerts[i].message : '';
+                                %>
+                                <% if (descText) { %>
+                                    <div class="mb-3">
+                                        <div class="fw-semibold mb-1">Description</div>
+                                        <div class="alert-dropdown-body" style="max-height: 280px; overflow-y: auto; line-height: 1.5;"><%- descText %></div>
+                                    </div>
+                                <% } %>
+                                <% if (msgText) { %>
+                                    <div>
+                                        <div class="fw-semibold mb-1">Message</div>
+                                        <div class="alert-dropdown-body" style="max-height: 280px; overflow-y: auto; line-height: 1.5;"><%- msgText %></div>
+                                    </div>
+                                <% } %>
+                                <% if (!descText && !msgText) { %>
+                                    <div class="alert-dropdown-body text-muted">No content.</div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <% if (i < alerts.length - 1) { %><span class="text-muted mx-1">|</span><% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <!-- /Alert Banner -->
 </header>
 <!-- /Header -->
+<script>window.ALERTS_DATA = <%- JSON.stringify(typeof alerts !== 'undefined' ? alerts : []) %>;</script>
 <!-- Work Time -->
 <div id="hours-toggle" class="hours-toggle aos" data-aos="fade-left">
     <i class="fa fa-clock fs-5"></i>

@@ -36,6 +36,11 @@ const uploadImage = multer({
 router.get('/', AlertController.render)
 
 router.get('/read', AlertController.read)
+function stripHtml(html) {
+    if (typeof html !== 'string') return ''
+    return html.replace(/<[^>]*>/g, '').trim()
+}
+
 router.post('/create', async (req, res) => {
     uploadImage(req, res, async function (err) {
         if (err) {
@@ -45,6 +50,9 @@ router.post('/create', async (req, res) => {
         const title = req.body.title
         const message = req.body.message
         const description = req.body.description
+        if (!stripHtml(description)) {
+            return res.status(400).json({ error: 'Description is required.' })
+        }
         const title_es = req.body.title_es
         const message_es = req.body.message_es
         const description_es = req.body.description_es
@@ -83,6 +91,9 @@ router.post('/update', async (req, res) => {
             const title = req.body.title
             const message = req.body.message
             const description = req.body.description
+            if (!stripHtml(description)) {
+                return res.status(400).json({ error: 'Description is required.' })
+            }
             const title_es = req.body.title_es
             const message_es = req.body.message_es
             const description_es = req.body.description_es

@@ -3,6 +3,7 @@ require("dotenv").config()
 
 const express = require("express")
 const session = require('express-session')
+const MySQLStore = require('express-mysql-session')(session)
 const path = require("path")
 const bodyParser = require("body-parser")
 const { connectDB, sequelize } = require("./models/index")
@@ -15,13 +16,21 @@ const app = express()
 app.use(express.json())
 
 // session
+const sessionStore = new MySQLStore({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+})
 app.use(session({
+    key: "ying-session",
     secret: process.env.SESSION_KEY,
+    store: sessionStore,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        secure: false,
-        maxAge: 1 * 24 * 60 * 60 * 1000 // 1 day
+        maxAge: 30 * 60 * 1000 // 30 minutes
     }
 }))
 

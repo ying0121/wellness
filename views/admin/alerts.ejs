@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-6 mb-5">
                             <div class="ml-3">
-                                <h5>Alert Description(EN)</h5>
+                                <h5>Alert Description(EN) <span class="text-danger">*</span></h5>
                             </div>
                             <div id="alert-description" class="alert-summernote"></div>
                         </div>
@@ -238,6 +238,11 @@
         })
 
         $("#alert_modal_submit_btn").click(() => {
+            var descEn = ($("#alert-description").summernote('code') || '').replace(/<[^>]*>/g, '').trim()
+            if (!descEn) {
+                toastr.error("Description (EN) is required.")
+                return
+            }
             var fd = new FormData()
             fd.append("id", $("#alert-chosen_id").val())
             fd.append("title", $("#alert-title").val())
@@ -267,14 +272,15 @@
                 success: function(res) {
                     if (res.status == "success") {
                         toastr.success("Action Success!")
+                        $("#alert_modal").modal("hide")
+                        alertTable.ajax.reload()
                     } else {
-                        toastr.error("Action Failed!")
+                        toastr.error(res.error || "Action Failed!")
                     }
-                    $("#alert_modal").modal("hide")
-                    alertTable.ajax.reload()
                 },
-                error: function(error) {
-                    toastr.error("An error was occurred on the server!")
+                error: function(xhr) {
+                    var msg = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : "An error was occurred on the server!"
+                    toastr.error(msg)
                 }
             })
         })
