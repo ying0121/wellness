@@ -2,7 +2,12 @@
 <html lang="en">
 
 <%- include('header') %>
-
+<style>
+.popover .popover-body { padding: 0; }
+.alert-preview-landing .alert-preview-image-wrap img { border-radius: 4px; }
+.alert_preview_popover_close { cursor: pointer !important; padding: 4px 8px !important; }
+.alert_preview_readmore { text-decoration: underline; cursor: pointer; }
+</style>
 <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
     <%- include('mobile-navbar') %>
     <div class="d-flex flex-column flex-root">
@@ -118,9 +123,11 @@
                             </div>
                         </div>
                         <div class="col-md-8 mb-5 image-component d-none">
-                            <div class="custom-file form-group d-flex justify-content-start align-items-center">
-                                <h6 id="alert-image-path"></h6>
+                            <div class="alert-image-preview-wrap border rounded bg-light d-flex align-items-center justify-content-center overflow-hidden" style="min-height: 200px; max-height: 280px;">
+                                <img id="alert-image-preview" src="" alt="Preview" class="img-fluid" style="max-height: 280px; object-fit: contain; display: none;" />
+                                <span id="alert-image-preview-placeholder" class="text-muted">No image selected</span>
                             </div>
+                            <h6 id="alert-image-path" class="mt-2 small text-secondary"></h6>
                         </div>
                     </div>
                 </div>
@@ -143,9 +150,11 @@
             </div>
         </div>
     </div>
+
 </body>
 
 <script>
+    var ALERT_PREVIEW_IMAGE_BASE = "<%= site_url %>/assets/images/alerts/"
     $(document).ready(function() {
         $('.alert-summernote').summernote({
             tabsize: 1,
@@ -208,8 +217,9 @@
                     data: "id",
                     render: function(data, type, row) {
                         return `<div idkey="${row.id}">
-                            <span class="btn btn-icon btn-sm btn-light-primary alert_edit_btn"><i class="fas fa-edit"></i></span>
-                            <span class="btn btn-icon btn-sm btn-light-danger  alert_delete_btn"><i class="fas fa-trash"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-info alert_preview_btn" title="Preview"><i class="fas fa-eye"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-primary alert_edit_btn" title="Edit"><i class="fas fa-edit"></i></span>
+                            <span class="btn btn-icon btn-sm btn-light-danger alert_delete_btn" title="Delete"><i class="fas fa-trash"></i></span>
                         </div>`
                     }
                 }
@@ -233,8 +243,45 @@
             $("#alert-image-status").prop("checked", false)
             $(".image-component").addClass("d-none")
             $("#alert-image-path").text("")
+            $("#alert-image").val("")
+            $("#alert-image-preview").attr("src", "").hide()
+            $("#alert-image-preview-placeholder").show()
 
             $("#alert_modal").modal("show")
+        })
+
+        var alertPreviewObjectUrl = null
+        function setAlertImagePreview(src, isObjectUrl) {
+            if (alertPreviewObjectUrl) {
+                URL.revokeObjectURL(alertPreviewObjectUrl)
+                alertPreviewObjectUrl = null
+            }
+            var $img = $("#alert-image-preview")
+            var $ph = $("#alert-image-preview-placeholder")
+            if (src) {
+                $img.attr("src", src).show()
+                $ph.hide()
+                if (isObjectUrl) alertPreviewObjectUrl = src
+            } else {
+                $img.attr("src", "").hide()
+                $ph.show()
+            }
+        }
+
+        $("#alert-image").on("change", function() {
+            var file = this.files && this.files[0]
+            if (file && file.type.indexOf("image/") === 0) {
+                setAlertImagePreview(URL.createObjectURL(file), true)
+                $("#alert-image-path").text(file.name)
+                $("#alert-image").siblings(".custom-file-label").addClass("selected").text(file.name)
+            } else {
+                setAlertImagePreview(null)
+                $("#alert-image-path").text("")
+            }
+        })
+        
+        $("#alert_modal").on("hidden.bs.modal", function() {
+            setAlertImagePreview(null)
         })
 
         $("#alert_modal_submit_btn").click(() => {
@@ -285,6 +332,80 @@
             })
         })
 
+        $(document).on("click", ".alert_preview_btn", function(e) {
+            e.stopPropagation()
+            var id = $(this).parent().attr("idkey")
+            var $btn = $(this)
+            $(".alert_preview_btn").not($btn).popover("dispose")
+            $.post({
+                url: "<%= site_url + prefix %>/alerts/chosen",
+                method: "POST",
+                data: { id: id },
+                dataType: "json",
+                success: function(res) {
+                    var title = (res.title || "Alert").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                    var startStr = res.start ? new Date(res.start).toLocaleDateString() : ""
+                    var endStr = res.end ? new Date(res.end).toLocaleDateString() : ""
+                    var desc = (res.description && res.description.trim()) ? res.description : (res.description_es && res.description_es.trim()) ? res.description_es : ""
+                    var msg = (res.message && res.message.trim()) ? res.message : (res.message_es && res.message_es.trim()) ? res.message_es : ""
+                    var imgHtml = res.image ? '<div class="alert-preview-image-wrap text-center py-3"><img src="' + ALERT_PREVIEW_IMAGE_BASE + res.image + '" alt="" class="img-fluid" style="max-height: 320px; width: 100%; object-fit: contain;" /></div>' : ""
+                    var datesHtml = (startStr || endStr) ? '<div class="alert-preview-dates fst-italic mb-3 opacity-90">' + (startStr && endStr ? startStr + " ~ " + endStr : startStr || endStr) + '</div>' : ""
+                    var descHtml = desc ? '<div class="mb-3"><div class="fw-semibold mb-1">Description</div><div class="overflow-auto alert-preview-text" style="max-height: 200px; line-height: 1.5;">' + desc + '</div></div>' : ""
+                    var msgHtml = msg ? '<div><div class="fw-semibold mb-1">Message</div><div class="overflow-auto alert-preview-text" style="max-height: 200px; line-height: 1.5;">' + msg + '</div></div>' : ""
+                    var emptyHtml = (!desc && !msg) ? '<div class="opacity-75">No content.</div>' : ""
+                    var inner = '<div class="alert-preview-outer rounded border shadow-sm" style="min-width: 400px; max-width: 540px; border-color: #dee2e6 !important;">' +
+                        '<div class="d-flex align-items-center justify-content-between px-3 py-2 border-bottom bg-white rounded-top" style="border-color: #dee2e6 !important;">' +
+                        '<span class="font-weight-bold">Alert Preview (as on landing page)</span>' +
+                        '<button type="button" class="alert_preview_popover_close btn btn-link p-0 m-0 border-0" aria-label="Close" style="font-size: 1.5rem; line-height: 1; color: #6c757d; text-decoration: none;">&times;</button>' +
+                        '</div>' +
+                        '<div class="alert-preview-landing rounded-bottom overflow-hidden" style="background: #0d1b2a; color: #fff;">' +
+                        '<div class="px-4 pt-4 pb-2">' +
+                        '<div class="font-weight-bold mb-2" style="font-size: 1.35rem; color: #fff;">' + title + '</div>' +
+                        '<div class="mb-3" style="font-size: 0.95rem; color: rgba(255,255,255,0.9);">' + title + ' <a href="#" class="alert_preview_readmore" style="color: #fff;">Read more &gt;&gt;</a></div>' +
+                        imgHtml +
+                        '<div class="px-4 py-3">' + datesHtml + descHtml + msgHtml + emptyHtml + '</div>' +
+                        '<div class="px-4 pb-4"><button type="button" class="btn btn-outline-light btn-sm alert_preview_popover_close">Close</button></div>' +
+                        '</div></div>'
+                    $btn.popover("dispose")
+                    $btn.popover({
+                        content: inner,
+                        html: true,
+                        trigger: "manual",
+                        placement: "left"
+                    })
+                    $btn.popover("show")
+                    var outsideClickHandler
+                    var handlersAttached = false
+                    function attachCloseHandlers() {
+                        if (handlersAttached) return
+                        var $tip = ($btn.data("bs.popover") && $btn.data("bs.popover").$tip) || $(".popover").last()
+                        if (!$tip || !$tip.length) return
+                        handlersAttached = true
+                        function closePreview() {
+                            $btn.popover("dispose")
+                            $(document).off("click", outsideClickHandler)
+                        }
+                        $tip.on("click.preview", ".alert_preview_popover_close, .alert_preview_readmore", function(e) {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            closePreview()
+                        })
+                        outsideClickHandler = function(ev) {
+                            if (!$(ev.target).closest(".popover").length) closePreview()
+                        }
+                        setTimeout(function() {
+                            $(document).on("click", outsideClickHandler)
+                        }, 80)
+                    }
+                    $btn.one("shown.bs.popover", attachCloseHandlers)
+                    setTimeout(attachCloseHandlers, 150)
+                },
+                error: function() {
+                    toastr.error("Failed to load alert.")
+                }
+            })
+        })
+
         $(document).on("click", ".alert_edit_btn", function() {
             $("#alert-modal_type").val("1")
             $("#alert-chosen_id").val($(this).parent().attr("idkey"))
@@ -308,13 +429,22 @@
                     $("#alert-end").val(endDate ? endDate.toISOString().substr(0, 10) + " " + endDate.toTimeString().substr(0, 8) : "")
                     $("#alert-status").val(res.status)
                     $("#alert-image-status").prop("checked", res.image_actived == 1 ? true : false)
+                    $("#alert-image").val("")
                     if (res.image_actived == 1) {
                         $(".image-component").removeClass("d-none")
+                        if (res.image) {
+                            setAlertImagePreview("<%= site_url %>/assets/images/alerts/" + res.image, false)
+                            $("#alert-image-path").text(res.image)
+                        } else {
+                            setAlertImagePreview(null)
+                            $("#alert-image-path").text("")
+                        }
                     } else {
                         $(".image-component").addClass("d-none")
+                        setAlertImagePreview(null)
+                        $("#alert-image-path").text("")
                     }
                     res.type == "once" ? $("#alert-type").prop("checked", true) : $("#alert-type").prop("checked", false)
-                    $("#alert-image-path").text(res.image)
 
                     $("#alert_modal").modal("show")
                 },

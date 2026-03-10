@@ -7,6 +7,7 @@ const ContactInfo = require("../../models/ContactInfo")
 const SQuestion = require("../../models/SQuestion")
 const Managers = require("../../models/Managers")
 const UserSecurity = require("../../models/UserSecurity")
+const { generateQRCode } = require("../../utils/qrcode")
 
 exports.render = async (req, res, next) => {
 	let data = {}
@@ -140,4 +141,16 @@ exports.addUserSecurity = async (req, res, next) => {
 	}
 
 	res.status(200).json({ status: "success" })
+}
+
+exports.getQRCode = async (req, res, next) => {
+	// QR Code
+	let qrcode_text = "BEGIN:VCARD\n"
+	qrcode_text += "VERSION:3.0\n"
+	qrcode_text = `NAME : ${req.body.name} \n`
+	qrcode_text += `EMAIL : ${req.body.email} \n`
+	qrcode_text += "END:VCARD\n"
+	const qrcode = await generateQRCode(qrcode_text)
+
+	res.send(qrcode)
 }

@@ -198,7 +198,7 @@
                     </li>
                 <% } %>
                 <!-- Managers -->
-                <% if (userType === 1) { %>
+                <% if (topMenu.includes("Managers")) { %>
                     <li class="menu-item <%= sideItem === 'managers' ? 'menu-item-active' : '' %>" aria-haspopup="true">
                         <a href="<%= site_url + prefix %>/managers" class="menu-link">
                             <span class="menu-icon">

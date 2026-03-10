@@ -16,5 +16,6 @@ router.post('/updateAccessRights', ManagerController.updateAccessRights)
 router.post('/setSecurity', ManagerController.setSecurity)
 router.post('/readOnlyActive', ManagerController.readOnlyActive)
 router.post('/addUserSecurity', ManagerController.addUserSecurity)
+router.post('/getQRCode', ManagerController.getQRCode)
 
 module.exports = router
